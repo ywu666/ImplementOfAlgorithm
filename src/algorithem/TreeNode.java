@@ -21,12 +21,28 @@ class TreeNode {
 		if (root == null) return 0;
 		return size(root.left) + size(root.right) + 1;
 	}
-    
+
 	public int findMax(TreeNode root) { //recursion
 		if (root != null) {
 			return Math.max(root.data, Math.max(findMax(root.left), findMax(root.right)));
 		}
 		return Integer.MIN_VALUE;    
+	}
+
+	public int findMaxItr(TreeNode root) {
+		if (root == null) return Integer.MIN_VALUE;
+		Queue<TreeNode> q = new LinkedList<>();
+		q.add(root);
+		int max = root.data;
+		while (!q.isEmpty()) {
+			TreeNode node = q.poll();
+			if (node.data > max) {
+				max = node.data;
+			}
+			if (node.left != null) q.add(node.left);
+			if (node.right != null) q.add(node.right);
+		}
+		return max;
 	}
 	
 	public TreeNode findNode(TreeNode root, int val) {
@@ -38,14 +54,14 @@ class TreeNode {
 				if (node.data == val) {
 					return node;
 				}
-				
+
 				if (node.left != null) q.add(node.left);
 				if (node.right != null) q.add(node.right);
 			}
 		}
 		return null;
 	}
-	
+
 	//half nodes are the nodes with exactly one children.
 	public int numberOfHalfNodes(TreeNode root) {
 		if (root == null) return 0;
@@ -68,30 +84,30 @@ class TreeNode {
 
 		return count;
 	}
-	
+
 	public int numberOfFullNodes(TreeNode root) { 
 		return 0;
 	}
-	
+
 	public int numberOfLeaves(TreeNode root) {  //recursion
-		   /* int count = 0;
+		/* int count = 0;
 		    if (root == null) return count;
-		    
+
 		    Queue<TreeNode> q = new LinkedList<>();
 		    q.add(root);
-		    
+
 		    while(!q.isEmpty()) {
 		        TreeNode node = q.poll();
 		        if (node.left == null && node.right == null) count ++;
 		        if (node.left != null) q.add(node.left);
 		        if (node.right != null) q.add(node.right);
 		    }
-		    
+
 		    return count;*/
-		    if(root == null) return 0;
-		    if(root.left == null && root.right == null) return 1;            
-		    return numberOfLeaves(root.left) + numberOfLeaves(root.right); 
-		}
+		if(root == null) return 0;
+		if(root.left == null && root.right == null) return 1;            
+		return numberOfLeaves(root.left) + numberOfLeaves(root.right); 
+	}
 
 	public static ArrayList<Integer> preorderList = new ArrayList<>();
 	public void preorder (TreeNode root) {
@@ -108,15 +124,41 @@ class TreeNode {
 
 	}
 
+	public ArrayList<Integer> inorderItr(TreeNode root) {
+		ArrayList<Integer> inorder = new ArrayList<>();
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		while (true) {
+			if (root != null) {
+				stack.push(root);
+				root = root.left;
+			}
+			if (stack.isEmpty()) break;
+			root = stack.pop();
+			inorder.add(root.data);
+			root = root.right;
+		}
+		return inorder;
+	}
+
 	public ArrayList<Integer> levelorder(TreeNode root) {
 		ArrayList<Integer> list = new ArrayList<>();
 		return list;
 	}
-	
+
+	public int pathLengthFromRoot(TreeNode root, int val) {
+		if(root == null) return 0;
+		int out =0;
+		if ((root.data == val) || (out = pathLengthFromRoot(root.left,val))> 0 || (out = pathLengthFromRoot(root.left,val)) > 0) {
+			return out + 1;
+		}		
+		return 0;
+	}
+
+
 	public boolean isIdentical(TreeNode root1, TreeNode root2) {
 		return false;
 	}
-	
+
 	/**
 	 * Given a String, the null is represent in *. Each node is separate by ","
 	 * The order of the tree is from the root to lead (left-right)
@@ -137,7 +179,7 @@ class TreeNode {
 		Queue<TreeNode> q = new LinkedList<>();
 		q.add(root);
 		int i =0, size = list.size();	
-		 
+
 		while (i < size) { //iterate the tree
 			TreeNode node = q.poll();
 			if (node != null) { // Contract the tree
@@ -147,7 +189,7 @@ class TreeNode {
 				TreeNode rightNode = rightVal == null ? null:new TreeNode(rightVal);
 				node.left = leftNode;
 				node.right = rightNode;
-				
+
 				if (node.left != null) q.add(node.left);
 				if (node.right != null) q.add(root.right);	
 			}			
@@ -173,7 +215,6 @@ class TreeNode {
 		return findKthLargest(root.left, k - rightSize);
 
 	}
-
 	/**
 	 * @param root of a binary tree
 	 * @return The root of the mirroed tree.
