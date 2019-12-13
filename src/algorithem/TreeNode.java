@@ -44,7 +44,7 @@ class TreeNode {
 		}
 		return max;
 	}
-	
+
 	public TreeNode findNode(TreeNode root, int val) {
 		if (root != null) {
 			Queue<TreeNode> q = new LinkedList<TreeNode>();
@@ -119,6 +119,22 @@ class TreeNode {
 		}
 	}
 
+	public ArrayList<Integer> preorderItr(TreeNode root) {                   
+		ArrayList<Integer> preorderedList =  new ArrayList<Integer>();
+		Stack<TreeNode> s = new Stack<TreeNode>(); // use stack rather than queue
+
+		if (root == null){return preorderedList;}
+
+		s.push(root);
+		while(!s.isEmpty()) {
+			root = s.pop();
+			preorderedList.add(root.data);
+			if (root.right != null) {s.push(root.right);}
+			if (root.left  != null) {s.push(root.left);}
+		}
+		return preorderedList;
+	}
+
 	public static ArrayList<Integer> postorderList = new ArrayList<>();
 	public void postorder (TreeNode root) {
 
@@ -128,7 +144,7 @@ class TreeNode {
 		ArrayList<Integer> inorder = new ArrayList<>();
 		Stack<TreeNode> stack = new Stack<TreeNode>();
 		while (true) {
-			if (root != null) {
+		   while (root != null) {
 				stack.push(root);
 				root = root.left;
 			}
@@ -153,7 +169,6 @@ class TreeNode {
 		}		
 		return 0;
 	}
-
 
 	public boolean isIdentical(TreeNode root1, TreeNode root2) {
 		return false;
