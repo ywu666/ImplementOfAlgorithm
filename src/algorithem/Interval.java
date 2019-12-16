@@ -37,4 +37,23 @@ class Interval {
 			return out;
 		} 
 	}
+	
+	public static ArrayList<Interval> insertRange(ArrayList<Interval> intervalsList, Interval insert) {
+	    ArrayList<Interval> out = new ArrayList<>();
+	    for (Interval i: intervalsList) {
+	        if (i.end < insert.start) {
+	            out.add(i);
+	        }else if (i.start > insert.end) {
+	            out.add(insert);
+	            insert = i;
+	        }else if (i.start <= insert.end || i.end > insert.start) {
+	            int newStart = Math.min(i.start, insert.start);
+	            int newEnd = Math.max(i.end,insert.end);
+	            insert = new Interval(newStart, newEnd);
+	        }
+	    }    
+	        out.add(insert);
+	        return out;
+	}
+
 }

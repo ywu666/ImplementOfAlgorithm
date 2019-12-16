@@ -89,7 +89,7 @@ class ListNode {
 		if (count == 1) { // insert at head
 			newNode.next = head;
 			head = newNode;
-		} else { // insert at the middle && tail
+		}else { // insert at the middle && tail
 			prev.next = newNode;
 			newNode.next = curr;
 		}
@@ -102,7 +102,6 @@ class ListNode {
 
 	public ListNode reverseList(ListNode head) {
 		ListNode prev = null;
-
 		while (head != null) {
 			ListNode next = head.next;
 			head.next = prev;
@@ -210,6 +209,31 @@ class ListNode {
 			}   
 		}
 		return false;
+	}
+	
+	
+	public ListNode sumTwoLinkedLists(ListNode input1, ListNode input2) {
+		int carryComponent = 0;
+		ListNode result = new ListNode(0);
+		while (input1 != null || input2 != null) {
+			if (input1 != null) {
+				carryComponent += input1.data;
+				input1 = input1.next;
+			}
+			if (input2 != null) {
+				carryComponent += input2.data;
+				input2 = input2.next;
+			}
+
+			result.next = new ListNode(carryComponent%10);
+			result = result.next;
+			carryComponent /= 10;
+		}
+
+		if (carryComponent == 1) {
+			result.next = new ListNode(1);
+		}
+		return result.next;
 	}
 
 	//Circular linked list

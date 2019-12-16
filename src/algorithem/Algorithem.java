@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Algorithem {
 
-	public static String compressSreing() {
+	public static String compressString() {
 		return null;
 	}
 	
@@ -64,6 +64,19 @@ public class Algorithem {
 
 	public static int singleNumber(int[] A) {
 		Hashtable<Integer, Integer> table = new Hashtable<Integer, Integer>();
+		for (int i =0;i < A.length;i++) {
+			if(table.contains(A[i])) {
+				table.put(A[i], table.get(A[i])+1);
+			}else {
+				table.put(A[i], 1);
+			}
+		}
+
+		for (int i =0;i < A.length;i++) {
+			if (table.get(A[i]) == 1) {
+				return A[i];
+			}
+		}
 		return 0;
 	}
 	
@@ -87,14 +100,15 @@ public class Algorithem {
 
 	public static int reverseInt(int x) {
 		int reverse = 0;
-		while (x > 0) {
+		while (x != 0) {
 			reverse = reverse*10 + x%10;
 			x = x/10;
 		}
 		return reverse;
 	}
 
-	public static Boolean isIntPalindrome(int x) {            
+	public static Boolean isIntPalindrome(int x) { 
+		if (x < 0) return false;
 		int reverse = reverseInt(x);
 		return (reverse == x);   
 	}
@@ -139,7 +153,7 @@ public class Algorithem {
 		if (n == 1) return 1;
 		return fib(n-1) + fib(n-2);
 	}
-
+	
 	public static int betterFibonacci(int n) {
 		int n_2 = 0;
 		int n_1 = 1;
@@ -154,8 +168,51 @@ public class Algorithem {
 		return output;
 	}
 
-	public static ArrayList<String> generateIPAddrs(String s) {
-		return null;
+	public static ArrayList<String> generateIPAddrs(String input) {
+
+		class IpLevelNode{//local class
+			int level = 0;
+			String predecessor;
+			String successor;
+			public IpLevelNode(int level, String ipToAppend, String predecessor, String successor) {
+				this.level = level;
+				this.successor = successor;
+				if (level == 0) {
+					this.predecessor = ipToAppend;
+				}else {
+					this.predecessor = predecessor+ "." + ipToAppend;
+				}
+			}
+		}
+
+		ArrayList<String> out = new ArrayList<>();
+		Deque<IpLevelNode> stack = new LinkedList<>();
+		//push 3 possibilities onto the stack
+		stack.addFirst(new IpLevelNode(0, input.substring(0,1),"",input.substring(1)));
+		stack.addFirst(new IpLevelNode(0, input.substring(0,2),"",input.substring(2)));
+		stack.addFirst(new IpLevelNode(0, input.substring(0,3),"",input.substring(3)));
+		while(!stack.isEmpty()) {
+			IpLevelNode node = stack.removeFirst();
+			int currlevel = node.level;
+			String predecessor = node.predecessor;
+			String remaining = node.successor;
+			if (currlevel == 3 && remaining.length() == 0) {
+				out.add(node.predecessor);
+				continue;
+			}
+			int i =1;
+			while (i <=3) {
+				if (remaining.length() < i) break;
+				String IpToAppend= remaining.substring(0,i);
+				String successor = remaining.substring(i);
+				if (IpToAppend.length() > 0) {
+					int num = Integer.parseInt(IpToAppend);
+					if (num <=255) stack.addFirst(new IpLevelNode(currlevel+1,IpToAppend ,predecessor,successor));
+				}
+				i++;
+			}
+		}
+		return out;
 	}
 
 	public static int longestNRSubstringLen(String input) {
@@ -168,7 +225,7 @@ public class Algorithem {
 				charTable.put(ch, i++);
 			}else {
 				prev = Math.max(prev,charTable.size());
-				i = charTable.get(ch);
+				//i = charTable.get(ch);
 				charTable.clear();
 			}
 		}

@@ -3,9 +3,9 @@ package algorithem;
 import java.util.*;
 
 public class TreeNode {
-	 int data;
-	 TreeNode left;
-	 TreeNode right;
+	int data;
+	TreeNode left;
+	TreeNode right;
 
 	TreeNode() {}
 
@@ -17,15 +17,15 @@ public class TreeNode {
 		this.right = right;
 	}
 
-	public int sum (TreeNode root) {
+	public int sum(TreeNode root) {
 		if (root == null) return 0;
 		return sum(root.left) + sum(root.right) + root.data;
 	}
-	
+
 	public int sumItr(TreeNode root) {
 		int sum = 0;
 		if (root == null) return sum;
-		
+
 		Queue<TreeNode> q = new LinkedList<TreeNode>();
 		q.add(root);
 		while (!q.isEmpty()) {
@@ -36,16 +36,16 @@ public class TreeNode {
 		}
 		return sum;
 	}
-	
-	public int size (TreeNode root) {
+
+	public int size(TreeNode root) {
 		if (root == null) return 0;
 		return size(root.left) + size(root.right) + 1;
 	}
-	
-	public int diamter (TreeNode root) {
+
+	public int diamter(TreeNode root) {
 		return 0;
 	}
-	
+
 	public int findHeight(TreeNode root) {
 		if (root == null) return 0;
 		int left = findHeight(root.left);
@@ -109,7 +109,20 @@ public class TreeNode {
 		}
 		return deepest;
 	}
-	
+
+	//LCA = least common ancestor node = both n1 and n2 as descendants
+	//and the paths from N->n1 and N->n2 are the shortest possible
+	public TreeNode findLCA(TreeNode root, TreeNode a, TreeNode b) {
+		if (root == null || a == null || b == null) return null;
+		if (root == a || root == b) return root;
+
+		TreeNode left = findLCA(root.left,a,b);
+		TreeNode right = findLCA(root.right,a,b);
+		if (left != null && right != null) return root;
+		return (left != null ? left:right);
+
+	}
+
 	//half nodes are the nodes with exactly one children.
 	public int numberOfHalfNodes(TreeNode root) {
 		if (root == null) return 0;
@@ -171,7 +184,7 @@ public class TreeNode {
 	public int maxSumpath(TreeNode root) {
 		return 0;
 	}
-	
+
 	public static ArrayList<Integer> preorderList = new ArrayList<>();
 	public void preorder (TreeNode root) {
 		if (root != null) {
@@ -207,7 +220,7 @@ public class TreeNode {
 		ArrayList<Integer> inorder = new ArrayList<>();
 		Stack<TreeNode> stack = new Stack<TreeNode>();
 		while (true) {
-		   while (root != null) {
+			while (root != null) {
 				stack.push(root);
 				root = root.left;
 			}
@@ -296,7 +309,7 @@ public class TreeNode {
 		return findKthLargest(root.left, k - rightSize);
 
 	}
-	
+
 	/**
 	 * @param root of a binary tree
 	 * @return The root of the mirrored tree.
@@ -315,4 +328,6 @@ public class TreeNode {
 		}
 		return root;
 	}
+
+
 }   
