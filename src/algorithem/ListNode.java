@@ -122,6 +122,37 @@ class ListNode {
 	  return null;
 	}
 	
+	public ListNode removeNthFromEnd(ListNode head, int n) {
+		 if (head == null || head.next == null) return null;
+		    ListNode curr = head;
+		    int length = 0;
+		    
+		    while (curr != null) {
+		        curr = curr.next;
+		        length++;
+		    }
+		    
+		    int count = 0;
+		    int pos = length - n + 1;
+		    curr = head;
+		    ListNode prev = curr;
+		    
+		    while (curr != null) {
+		    	count++;
+		        if (count == pos) {
+		        	if (pos == 1) {//case: head
+		        		head = head.next;
+		        	}else { //case: tail && middle
+		            prev.next = curr.next;
+		            curr.next = null;
+		        	}
+		        }
+		        prev = curr;
+		        curr = curr.next;        
+		    }  
+		    return head;
+	}
+	
 	/**
 	 * This method determine if the list is a palindrome. A palindrome is a sequence
 	 *  that reads the same backward as forward.
@@ -154,7 +185,7 @@ class ListNode {
         return even;*/
 	}
 
-	public Boolean isCyclic(ListNode head) {
+	public Boolean isCyclic(ListNode head) { //Space complexity O(n)
 		Hashtable<ListNode,Integer> table = new Hashtable<ListNode, Integer>();
 		while (head != null) {
 			if (table.containsKey(head)) {
@@ -163,6 +194,20 @@ class ListNode {
 				table.put(head,1);
 			}
 			head = head.next;
+		}
+		return false;
+	}
+	
+	public Boolean isCyclic2(ListNode head) { //space complexity is O(1)
+		if (head == null) return false;
+		ListNode slow = head;
+		ListNode fast = head;
+		while (fast != null && fast.next != null && (fast.next).next != null) {
+			slow = slow.next;
+			fast = (fast.next).next;
+			if (fast.equals(slow)) {
+				return true;
+			}   
 		}
 		return false;
 	}
@@ -184,4 +229,16 @@ class ListNode {
 		return curr.next;
 	}   
 
+	public ListNode deleteAtTailCircular(ListNode head) {
+		ListNode curr = head;
+		ListNode prev = curr;
+		
+		while (curr.next != head) {
+			prev =curr;
+			curr = curr.next;
+		}
+		prev.next = head;
+		curr.next = null;
+		return head;
+	}
 }

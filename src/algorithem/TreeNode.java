@@ -2,10 +2,10 @@ package algorithem;
 
 import java.util.*;
 
-class TreeNode {
-	int data;
-	TreeNode left;
-	TreeNode right;
+public class TreeNode {
+	 int data;
+	 TreeNode left;
+	 TreeNode right;
 
 	TreeNode() {}
 
@@ -17,9 +17,44 @@ class TreeNode {
 		this.right = right;
 	}
 
+	public int sum (TreeNode root) {
+		if (root == null) return 0;
+		return sum(root.left) + sum(root.right) + root.data;
+	}
+	
+	public int sumItr(TreeNode root) {
+		int sum = 0;
+		if (root == null) return sum;
+		
+		Queue<TreeNode> q = new LinkedList<TreeNode>();
+		q.add(root);
+		while (!q.isEmpty()) {
+			TreeNode node = q.poll();
+			sum +=node.data;
+			if (node.left != null) q.add(node.left);
+			if (node.right != null) q.add(node.right);
+		}
+		return sum;
+	}
+	
 	public int size (TreeNode root) {
 		if (root == null) return 0;
 		return size(root.left) + size(root.right) + 1;
+	}
+	
+	public int diamter (TreeNode root) {
+		return 0;
+	}
+	
+	public int findHeight(TreeNode root) {
+		if (root == null) return 0;
+		int left = findHeight(root.left);
+		int right = findHeight(root.right);
+		if (left > right) {
+			return left+1;
+		}else {
+			return right+1;
+		}
 	}
 
 	public int findMax(TreeNode root) { //recursion
@@ -54,7 +89,6 @@ class TreeNode {
 				if (node.data == val) {
 					return node;
 				}
-
 				if (node.left != null) q.add(node.left);
 				if (node.right != null) q.add(node.right);
 			}
@@ -62,6 +96,20 @@ class TreeNode {
 		return null;
 	}
 
+	public TreeNode findDeepest(TreeNode root) {
+		TreeNode deepest = null;
+		if (root != null) {
+			Queue<TreeNode> q = new LinkedList<TreeNode>();
+			q.add(root);
+			while (!q.isEmpty()) {
+				deepest = q.poll();
+				if (deepest.left != null) q.add(deepest.left);
+				if (deepest.right != null) q.add(deepest.right);
+			}
+		}
+		return deepest;
+	}
+	
 	//half nodes are the nodes with exactly one children.
 	public int numberOfHalfNodes(TreeNode root) {
 		if (root == null) return 0;
@@ -86,7 +134,18 @@ class TreeNode {
 	}
 
 	public int numberOfFullNodes(TreeNode root) { 
-		return 0;
+		int count = 0;
+		if (root == null )return count;
+
+		Queue<TreeNode> q = new LinkedList<TreeNode>();
+		q.add(root);
+		while (!q.isEmpty()) {
+			TreeNode node = q.poll();
+			if (node.left != null && node.right != null) count++;
+			if (node.left != null) q.add(node.left);
+			if (node.right != null) q.add(node.right);
+		}
+		return count;	
 	}
 
 	public int numberOfLeaves(TreeNode root) {  //recursion
@@ -109,6 +168,10 @@ class TreeNode {
 		return numberOfLeaves(root.left) + numberOfLeaves(root.right); 
 	}
 
+	public int maxSumpath(TreeNode root) {
+		return 0;
+	}
+	
 	public static ArrayList<Integer> preorderList = new ArrayList<>();
 	public void preorder (TreeNode root) {
 		if (root != null) {
@@ -170,8 +233,11 @@ class TreeNode {
 		return 0;
 	}
 
-	public boolean isIdentical(TreeNode root1, TreeNode root2) {
-		return false;
+	public boolean isIdentical(TreeNode root1, TreeNode root2) { //recursion
+		if (root1 == null && root2 == null) return true;
+		if (root1 == null && root2 != null) return false;
+		if (root1 != null && root2 == null) return false;
+		return (root1.data == root2.data) && isIdentical(root1.left, root2.left) && isIdentical(root1.right,root2.right);
 	}
 
 	/**
@@ -230,9 +296,10 @@ class TreeNode {
 		return findKthLargest(root.left, k - rightSize);
 
 	}
+	
 	/**
 	 * @param root of a binary tree
-	 * @return The root of the mirroed tree.
+	 * @return The root of the mirrored tree.
 	 */
 	public TreeNode mirror(TreeNode root) {
 		//if (root == null) return null;

@@ -4,6 +4,10 @@ import java.util.*;
 
 public class Algorithem {
 
+	public static String compressSreing() {
+		return null;
+	}
+	
 	public static boolean isStrPalindrom(String str) {
 		if (str == null || str.equals("")) return true;
 
@@ -31,6 +35,20 @@ public class Algorithem {
 		return true;
 	}
 
+	//This method will replace the ' ' in String a with the specific pattern b.
+	public static String replace(String a, String b) {
+		StringBuffer str = new StringBuffer();
+
+		for (int i=0;i<a.length();i++) {
+			if (a.charAt(i) == ' ') {
+				str.append(b);
+			} else {
+				str.append(a.charAt(i));
+			}
+		}
+		return str.toString();
+	}
+
 	//this method will fail if integer is repeated more than 2 times.
 	public static String duplicate(int[] numbers){
 		TreeSet<Integer> set = new TreeSet<>();
@@ -45,9 +63,17 @@ public class Algorithem {
 	}
 
 	public static int singleNumber(int[] A) {
+		Hashtable<Integer, Integer> table = new Hashtable<Integer, Integer>();
 		return 0;
 	}
-
+	
+	//Maximum Gain is defined as the maximum difference between 2 elements in a list 
+	//such that the larger element appears after the smaller element. 
+	//If no gain is possible, return 0.
+	public static int maxGain(int[] arr) {
+		return 0;
+	}
+	
 	public static String computeBinary(int val) {
 		if (val == 0) return "0";
 		String binary = "";
@@ -60,7 +86,17 @@ public class Algorithem {
 	}
 
 	public static int reverseInt(int x) {
-		return 0;
+		int reverse = 0;
+		while (x > 0) {
+			reverse = reverse*10 + x%10;
+			x = x/10;
+		}
+		return reverse;
+	}
+
+	public static Boolean isIntPalindrome(int x) {            
+		int reverse = reverseInt(x);
+		return (reverse == x);   
 	}
 
 	public static int findMissingNumber(int[] arr) { // where are is 1 to 10
@@ -71,6 +107,14 @@ public class Algorithem {
 		return 55 - sum;
 	}
 
+	public static boolean isPowOfTwo(int num) {
+		if ((num & (num-1)) == 0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	public static double pow(double x, int n) {
 		double result  = 1;	     
 		for (int i = 0; i < Math.abs(n); i++) {
@@ -108,5 +152,87 @@ public class Algorithem {
 			n_1 = output;
 		}
 		return output;
+	}
+
+	public static ArrayList<String> generateIPAddrs(String s) {
+		return null;
+	}
+
+	public static int longestNRSubstringLen(String input) {
+		if (input == null || input.equals("")) return 0;
+		Hashtable<Character, Integer> charTable = new Hashtable<>();
+		int i = 0, prev =0;
+
+		for (char ch:input.toCharArray()) {
+			if (!charTable.containsKey(ch)) {
+				charTable.put(ch, i++);
+			}else {
+				prev = Math.max(prev,charTable.size());
+				i = charTable.get(ch);
+				charTable.clear();
+			}
+		}
+		return Math.max(prev,charTable.size());		
+	}
+
+	public static int minTriangleDepth(ArrayList<ArrayList<Integer>> input) {
+		int height = input.size();
+		int outsize = input.get(height -1).size();
+		int[] outBuffer = new int[outsize];
+
+		for (int i=0; i<outsize;i++) { //initialize the out buffer 
+			outBuffer[i] = input.get(height-1).get(i);
+		}
+
+		for (int r= height-2;r >=0; r--) {
+			ArrayList<Integer> row = input.get(r);
+			for (int i =0;i<row.size();i++) {
+				outBuffer[i] = row.get(i) + Math.min(outBuffer[i], outBuffer[i+1]);
+			}
+		}
+		return outBuffer[0];
+	}
+
+	public static boolean groupSum(int[] arr, int target) {  
+		return groupSum(0,arr,target);
+	}
+
+	/** Helper method to track input array
+	 * @param  start_index   starting index of array
+	 * @param  arr           an array of integers
+	 * @param  target        target sum
+	 * @return boolean       whether target sum can be reached using a subset of arr
+	 */
+	public static boolean groupSum(int start, int[] arr, int target) {
+		if (start >= arr.length) { //base case: There is no number left
+			return (target == 0);
+		}else {
+			//case1: The target including the 1st element. check the remaining
+			if (groupSum(start+1, arr, target- arr[start])) return true;
+			//case2: Does not include the first element,check the remaining
+			if (groupSum(start+1,arr,target)) return true;
+		}
+		return false;
+	}
+
+	//sort Algorithm
+	public static int[] selectionSort(int[] arr) {//improved performance over bubble sort
+		for (int i = 0; i<arr.length - 1; i++) {
+			int min_index = i;
+			for (int j = i+1;j<arr.length;j++) {
+				if (arr[j] < arr[min_index]) {
+					min_index = j;
+				}
+			}
+			//swap
+			int temp = arr[min_index];
+			arr[min_index] = arr[i];
+			arr[i] = temp;
+		}
+		return arr;
+	}
+
+	public static int[] bubbleSort(int[] arr) {
+		return null;
 	}
 }
