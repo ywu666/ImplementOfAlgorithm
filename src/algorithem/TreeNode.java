@@ -122,6 +122,35 @@ public class TreeNode {
 		return (left != null ? left:right);
 
 	}
+	
+	public int findMaxSumLevel(TreeNode root) { // the root i level 0
+		if (root == null) return -1;
+		int currlvl = 0, maxlvl = 0;
+		int currSum = 0, maxSum = 0;
+		Queue<TreeNode> q = new LinkedList<TreeNode>();
+		q.add(root);
+		q.add(null);   //indicated for the end of first level
+		while (!q.isEmpty()) {
+			TreeNode node = q.poll();
+			
+			if (node == null) {
+				if (currSum > maxSum) {
+					maxSum = currSum;
+					maxlvl = currlvl;
+				}
+				currSum = 0; //reset
+				if (!q.isEmpty()) {
+					q.add(null); //indicate the end of the level 
+				}
+				currlvl++; // begin a new level
+			}else {
+				currSum +=node.data;
+				if (node.left != null) q.add(node.left);
+				if (node.right != null) q.add(node.right);
+			}
+		}
+		return maxlvl;		
+	}
 
 	//half nodes are the nodes with exactly one children.
 	public int numberOfHalfNodes(TreeNode root) {
@@ -236,7 +265,11 @@ public class TreeNode {
 		ArrayList<Integer> list = new ArrayList<>();
 		return list;
 	}
-
+	
+	public ArrayList<ArrayList<Integer>> printLevelByLevel(TreeNode root) {
+		return null;
+	}
+	
 	public int pathLengthFromRoot(TreeNode root, int val) {
 		if(root == null) return 0;
 		int out =0;
@@ -327,6 +360,15 @@ public class TreeNode {
 			root.right  = temp;
 		}
 		return root;
+	}
+
+	public boolean isMirror(TreeNode root1, TreeNode root2) {	//recursion              
+		//case when both or one of the tree is null
+		if(root1 == null && root2 == null) return true;
+		if(root1 == null || root2 == null) return false;
+		//if both trees are not null
+		if(root1.data != root2.data) return false;
+		return (isMirror(root1.left, root2.right) && isMirror(root1.right, root2.left));
 	}
 
 

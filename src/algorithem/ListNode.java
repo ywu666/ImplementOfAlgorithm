@@ -215,6 +215,7 @@ class ListNode {
 	public ListNode sumTwoLinkedLists(ListNode input1, ListNode input2) {
 		int carryComponent = 0;
 		ListNode result = new ListNode(0);
+		ListNode n = result;
 		while (input1 != null || input2 != null) {
 			if (input1 != null) {
 				carryComponent += input1.data;
@@ -225,14 +226,15 @@ class ListNode {
 				input2 = input2.next;
 			}
 
-			result.next = new ListNode(carryComponent%10);
-			result = result.next;
+			n.next = new ListNode(carryComponent%10);
+			n = n.next;
 			carryComponent /= 10;
 		}
 
 		if (carryComponent == 1) {
-			result.next = new ListNode(1);
+			n.next = new ListNode(1);
 		}
+		
 		return result.next;
 	}
 

@@ -98,12 +98,12 @@ public class Matrix {
 		return spiralOrder;
 	}
 
-	public static int matrixMaxSumDfs(int[][] grid) {
+	public static int matrixMaxSumDfs(int[][] grid) { // recursion
 		class TravelNode { //Inner Class
 			int row;
 			int col;
 			int nodeSum;
-			
+
 			TravelNode(int row, int col, int sum, int[][]matrix) {
 				this.row = row;
 				this.col = col;
@@ -137,6 +137,28 @@ public class Matrix {
 			}
 		}
 		return maxSum;
+	}
+
+	public static int matrixMaxSumDP(int[][] grid) { //dynamic programming, more efficiency
+		if(grid == null || grid.length == 0) return 0;
+		int m = grid.length, n = grid[0].length;
+		int[][] memo = new int[m][n];
+		memo[0][0] = grid[0][0];
+		// Pre-Fill first Column
+		for(int i = 1; i < m; i++){
+			memo[i][0] = memo[i-1][0] + grid[i][0]; 
+		}
+		// Pre-Fill first Row
+		for(int j = 1; j < n; j++){
+			memo[0][j] = memo[0][j-1] + grid[0][j]; 
+		}
+		// Fill remaining cells
+		for(int i = 1; i < m; i++){
+			for(int j = 1; j < n; j++){
+				memo[i][j] = grid[i][j] + Math.max(memo[i-1][j], memo[i][j-1]);
+			}
+		}
+		return memo[m-1][n-1];
 	}
 
 }

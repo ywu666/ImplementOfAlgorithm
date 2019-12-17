@@ -2,12 +2,31 @@ package algorithem;
 
 import java.util.*;
 
-public class Algorithem {
+public class Algorithm {
 
 	public static String compressString() {
 		return null;
 	}
-	
+
+	public static boolean isAnagram(String input1, String input2) {
+		if (input1 == null && input2 == null) return false;
+		if (input1.equals(input2)) return true;
+		if (input1.length() != input2.length()) return false;
+
+		int[] buffer = new int[26]; 
+		for (int i = 0; i < input1.length(); i++) {
+			buffer[input1.charAt(i) - 'a']++;
+			buffer[input2.charAt(i) - 'a']--;
+		}
+
+		for (int i = 0; i < buffer.length; i++) {
+			if (buffer[i] != 0) {
+				return false;
+			}
+		}    
+		return true;
+	}
+
 	public static boolean isStrPalindrom(String str) {
 		if (str == null || str.equals("")) return true;
 
@@ -79,25 +98,34 @@ public class Algorithem {
 		}
 		return 0;
 	}
-	
+
 	//Maximum Gain is defined as the maximum difference between 2 elements in a list 
 	//such that the larger element appears after the smaller element. 
 	//If no gain is possible, return 0.
 	public static int maxGain(int[] arr) {
 		return 0;
 	}
-	
+
 	public static String computeBinary(int val) {
 		if (val == 0) return "0";
 		String binary = "";
 		while (val > 0) {
-			int remainder = val % 2;
-			val = val/2;
-			binary = remainder + binary;	        
+			binary = val % 2 + binary;	
+			val = val/2;	        
 		}	        
 		return binary;
 	}
 
+	public static String computeBinaryRecursion(int val) {
+		// Base case: value is less than 2
+		if (val < 2)
+			return Integer.toString(val);
+		// Recursive case: binary rep = binary of the header + last digit (odd/even)
+		else {
+			return computeBinary(val/2)+computeBinary(val%2);
+		}
+	}
+	
 	public static int reverseInt(int x) {
 		int reverse = 0;
 		while (x != 0) {
@@ -128,7 +156,7 @@ public class Algorithem {
 			return false;
 		}
 	}
-	
+
 	public static double pow(double x, int n) {
 		double result  = 1;	     
 		for (int i = 0; i < Math.abs(n); i++) {
@@ -153,7 +181,7 @@ public class Algorithem {
 		if (n == 1) return 1;
 		return fib(n-1) + fib(n-2);
 	}
-	
+
 	public static int betterFibonacci(int n) {
 		int n_2 = 0;
 		int n_1 = 1;
@@ -166,6 +194,25 @@ public class Algorithem {
 			n_1 = output;
 		}
 		return output;
+	}
+
+	/**
+	 * Given two input integers a and b. The method is to determine the number of bits required 
+	 * to be swapped to convert a to b.
+	 * @param a, b
+	 */
+	public static int bitSwapRequired(int a, int b) {
+		int count =0;
+		for (int c = a^b;c !=0;c = c&(c-1)) { // ^ = XOR gate 
+			count++;
+		}
+		return count;
+	}
+
+	public static int swapOddEvenBit(int x) {
+		int odd = (x & 0xaaaaaaaa)>>1; // bitMask odd and shift right
+		int even = (x & 0x5555555)<<1; //bisMask even and shift left
+		return odd | even;
 	}
 
 	public static ArrayList<String> generateIPAddrs(String input) {
@@ -270,6 +317,79 @@ public class Algorithem {
 			if (groupSum(start+1,arr,target)) return true;
 		}
 		return false;
+	}
+
+	public ArrayList<String> boggleSearchWithDict(char[][] board, Trie dictionary){
+		TreeSet<String> output = new TreeSet<String>();
+		int rows = board.length;
+		int cols = board[0].length;
+
+		for (int i = 0; i<rows; i++) {
+			for (int j=0;j < cols; j++) {
+				search(i,j,board,dictionary,"",output);
+			}
+		}
+		return new ArrayList<>(output);
+	}
+
+	/**
+	 * This method is a help method for boggleSearchWithDict.
+	 * @param r = row of the board
+	 * @param c = column of the board
+	 * @param board = board you want to search
+	 * @param dictionary = the dictionary that is provided
+	 * @param prefix 
+	 * @param output
+	 */
+	public static void search(int r, int c, char[][] board, Trie dictionary, String prefix, TreeSet<String> output) {
+		int rows = board.length;
+		int cols = board[0].length;
+
+		if (r > (rows - 1) || r < 0 || c> (cols-1) || c < 0 || !dictionary.searchPrefix(prefix) || board[r][c] == '@') {
+			return ;
+		}
+
+		char ch = board[r][c];
+		String s = prefix + ch;
+		if (dictionary.searchWord(s)) {
+			output.add(s);
+		}
+
+		board[r][c] = '@'; // Marked as visited
+
+		search(r+1,c,board,dictionary,s,output); // check up
+		search(r-1,c,board,dictionary,s,output); // check down
+		search(r,c+1,board,dictionary,s,output); // check left
+		search(r,c-1,board,dictionary,s,output); // check down
+
+		board[r][c] = ch; // unmark the board node
+	}
+
+	private static String open = "([{";
+	private static String close = ")]>}";
+	public static boolean isBalanced(String input) {
+	      return isBalanced(input,"");
+	}
+
+	public static boolean isBalanced(String input, String stack) {
+	    if (input.isEmpty()) { // base case : input string is empty
+	        return stack.isEmpty();
+	    }else if (isOpen(input.charAt(0))) { //base case 2: is open case
+	        return isBalanced(input.substring(1),input.charAt(0) + stack);
+	    }else if (isClose(input.charAt(0))) {
+	        return (!stack.isEmpty() && isMatching(stack.charAt(0), input.charAt(0)) && isBalanced(input.substring(1), stack.substring(1)));
+	    }
+	     return isBalanced(input.substring(1),stack);
+	}
+
+	public static boolean isOpen (char ch) {
+	    return open.indexOf(ch) != -1;
+	}
+	public static boolean isClose(char ch) {
+	    return close.indexOf(ch) != -1;
+	}	
+	public static boolean isMatching(char charopen, char charclose) {
+	    return open.indexOf(charopen) == close.indexOf(charclose);
 	}
 
 	//sort Algorithm
