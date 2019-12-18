@@ -70,11 +70,11 @@ class ListNode {
 	public ListNode deleteAtPosition (ListNode head, int pos) {
 		return head;
 	}
-    
+
 	public ListNode insertAtPosition(ListNode head, int data, int pos) {
 		ListNode newNode = new ListNode(data);
 		if (head == null) return newNode;
-		
+
 		int count = 0;
 		ListNode curr = head;
 		ListNode prev = curr;
@@ -85,7 +85,7 @@ class ListNode {
 			prev = curr;
 			curr = curr.next;
 		}
-		
+
 		if (count == 1) { // insert at head
 			newNode.next = head;
 			head = newNode;
@@ -95,7 +95,7 @@ class ListNode {
 		}
 		return head;
 	}
-	
+
 	public ListNode removeDuplicates(ListNode head) { 
 		return head;
 	}
@@ -111,6 +111,18 @@ class ListNode {
 		return prev;
 	}
 
+	public ListNode reverseInPair(ListNode head) {
+		if (head == null) return null;
+		ListNode curr = head;    
+		while (curr != null && curr.next != null) {
+			int temp = curr.data; // swap
+			curr.data = curr.next.data;
+			curr.next.data = temp;
+			curr = (curr.next).next; // next pair 
+		}
+		return head;
+	}
+
 	// this method allowed to use the exact memory
 	public ListNode findNthNodeFromEnd(ListNode head, int n) {
 		return head;
@@ -118,40 +130,40 @@ class ListNode {
 
 	//this method will not use the exact memory
 	public ListNode findNthNodeFromEnd2(ListNode head, int n) {
-	  return null;
+		return null;
 	}
-	
+
 	public ListNode removeNthFromEnd(ListNode head, int n) {
-		 if (head == null || head.next == null) return null;
-		    ListNode curr = head;
-		    int length = 0;
-		    
-		    while (curr != null) {
-		        curr = curr.next;
-		        length++;
-		    }
-		    
-		    int count = 0;
-		    int pos = length - n + 1;
-		    curr = head;
-		    ListNode prev = curr;
-		    
-		    while (curr != null) {
-		    	count++;
-		        if (count == pos) {
-		        	if (pos == 1) {//case: head
-		        		head = head.next;
-		        	}else { //case: tail && middle
-		            prev.next = curr.next;
-		            curr.next = null;
-		        	}
-		        }
-		        prev = curr;
-		        curr = curr.next;        
-		    }  
-		    return head;
+		if (head == null || head.next == null) return null;
+		ListNode curr = head;
+		int length = 0;
+
+		while (curr != null) {
+			curr = curr.next;
+			length++;
+		}
+
+		int count = 0;
+		int pos = length - n + 1;
+		curr = head;
+		ListNode prev = curr;
+
+		while (curr != null) {
+			count++;
+			if (count == pos) {
+				if (pos == 1) {//case: head
+					head = head.next;
+				}else { //case: tail && middle
+					prev.next = curr.next;
+					curr.next = null;
+				}
+			}
+			prev = curr;
+			curr = curr.next;        
+		}  
+		return head;
 	}
-	
+
 	/**
 	 * This method determine if the list is a palindrome. A palindrome is a sequence
 	 *  that reads the same backward as forward.
@@ -161,7 +173,7 @@ class ListNode {
 	public Boolean isListPalindrome(ListNode head) {
 		return false;
 	}
-	
+
 	/**
 	 * Check whether its length is even or odd in a single pass. 
 	 * An Empty list has 0 nodes which makes the number of nodes in it even.
@@ -196,7 +208,7 @@ class ListNode {
 		}
 		return false;
 	}
-	
+
 	public Boolean isCyclic2(ListNode head) { //space complexity is O(1)
 		if (head == null) return false;
 		ListNode slow = head;
@@ -210,8 +222,7 @@ class ListNode {
 		}
 		return false;
 	}
-	
-	
+
 	public ListNode sumTwoLinkedLists(ListNode input1, ListNode input2) {
 		int carryComponent = 0;
 		ListNode result = new ListNode(0);
@@ -234,7 +245,7 @@ class ListNode {
 		if (carryComponent == 1) {
 			n.next = new ListNode(1);
 		}
-		
+
 		return result.next;
 	}
 
@@ -242,7 +253,7 @@ class ListNode {
 	public ListNode insertAtTailCircural (ListNode head) {
 		return head;
 	}
-	
+
 	public ListNode deleteAtHeadCircular(ListNode head) {
 		if (head == null)  return null;
 
@@ -258,7 +269,7 @@ class ListNode {
 	public ListNode deleteAtTailCircular(ListNode head) {
 		ListNode curr = head;
 		ListNode prev = curr;
-		
+
 		while (curr.next != head) {
 			prev =curr;
 			curr = curr.next;
@@ -266,5 +277,31 @@ class ListNode {
 		prev.next = head;
 		curr.next = null;
 		return head;
+	}
+
+
+	public ListNode mergeKLists(ArrayList<ListNode> lists) {
+		if (lists.size() == 0) return null;
+		PriorityQueue<ListNode> queue = new PriorityQueue<ListNode>(lists.size(), new Comparator<ListNode>() {
+			@Override
+			public int compare(ListNode o1, ListNode o2) {
+				if (o1.data > o2.data) return 1;
+				if (o1.data == o2.data) return 0;
+				return -1;
+			} 
+		});
+
+		for (ListNode node:lists) {
+			if (node != null) queue.add(node);
+		}
+		
+		ListNode head = new ListNode(0), curr = head;
+		while (queue.size()>0) {
+			ListNode temp = queue.poll();
+			curr.next = temp;
+			if (temp.next != null) queue.add(temp.next);
+			curr = curr.next;
+		}
+		return head.next;
 	}
 }
