@@ -8,7 +8,7 @@ public class Algorithm {
 		return null;
 	}
 
-	public static boolean isAnagram(String input1, String input2) {
+	public static boolean isAnagram(String input1, String input2) { // the inputs are also lower case
 		if (input1 == null && input2 == null) return false;
 		if (input1.equals(input2)) return true;
 		if (input1.length() != input2.length()) return false;
@@ -39,19 +39,64 @@ public class Algorithm {
 	}
 
 	public static boolean isPermutation(String str1, String str2) {
-		if (str1.length() != str2.length()) return false;
-		List<Character> list = new ArrayList<Character>();
+		/*if (str1.length() != str2.length()) return false;
+				List<Character> list = new ArrayList<Character>();
 
-		for (char ch: str1.toCharArray()) { //store all the char in list
-			list.add(ch);
+				for (char ch: str1.toCharArray()) { //store all the char in list
+					list.add(ch);
+				}
+
+				for (char ch:str2.toCharArray()) {
+					if (!list.contains(ch)) {
+						return false;
+					}
+				}
+				return true;*/
+
+		// improve the method
+		if (str1.length() != str2.length()) {
+			return false;
 		}
 
-		for (char ch:str2.toCharArray()) {
-			if (!list.contains(ch)) {
+		int[] letters = new int[256];
+		char[] str1_arr = str1.toCharArray();
+		for (char c : str1_arr) {
+			letters[c]++;
+		}
+
+		for (char c:str2.toCharArray()) {
+			if (--letters[c] < 0) {
 				return false;
 			}
 		}
 		return true;
+
+	}
+
+	public static ArrayList<String> getPermutations(String str) {
+		ArrayList<String> permutations = new ArrayList<String>();
+		if (str == null) return null;
+		if (str.isEmpty()) {
+			permutations.add("");
+			return permutations;
+		}
+
+		char first = str.charAt(0);
+		ArrayList<String> list = getPermutations(str.substring(1));
+
+		for (String word: list) {
+			for (int i =0;i< word.length();i++) {
+				permutations.add(insert(word,first,i));
+			}
+		}
+		return permutations;
+	}
+
+	//This is a help method for getPermutations to insert char at specific location
+	public static String  insert(String word, char insert, int i) {
+		String start = word.substring(i);
+		String end = word.substring(i);
+		return start + insert + end;
 	}
 
 	//This method will replace the ' ' in String a with the specific pattern b.
@@ -81,6 +126,16 @@ public class Algorithm {
 		return set.toString();    
 	}
 
+	//Given a list of String, this method will remove the duplicate words in the list.
+	public static ArrayList<String> removeDuplicates(List<String> input) {
+		TreeSet<String> treeSet = new TreeSet<String>();
+		treeSet.addAll(input);
+		ArrayList<String> newList = new ArrayList<String>(treeSet); 
+
+		return newList;
+
+	}
+
 	public static int singleNumber(int[] A) {
 		Hashtable<Integer, Integer> table = new Hashtable<Integer, Integer>();
 		for (int i =0;i < A.length;i++) {
@@ -99,9 +154,10 @@ public class Algorithm {
 		return 0;
 	}
 
-	//Maximum Gain is defined as the maximum difference between 2 elements in a list 
-	//such that the larger element appears after the smaller element. 
-	//If no gain is possible, return 0.
+	/* Maximum Gain is defined as the maximum difference between 2 elements in a list 
+	 * such that the larger element appears after the smaller element. 
+	 * If no gain is possible, return 0.
+	 */
 	public static int maxGain(int[] arr) {
 		return 0;
 	}
@@ -125,7 +181,7 @@ public class Algorithm {
 			return computeBinary(val/2)+computeBinary(val%2);
 		}
 	}
-	
+
 	public static int reverseInt(int x) {
 		int reverse = 0;
 		while (x != 0) {
@@ -133,6 +189,16 @@ public class Algorithm {
 			x = x/10;
 		}
 		return reverse;
+	}
+
+	public static String reverseStr(String str) {
+		if (str == null || str.isEmpty()) return str;
+		String inputStr = str;
+		String outputStr = "";
+		for (int i = inputStr.length() -1; i>=0;i--) {
+			outputStr +=inputStr.charAt(i);
+		}
+		return outputStr;
 	}
 
 	public static Boolean isIntPalindrome(int x) { 
@@ -365,33 +431,37 @@ public class Algorithm {
 		board[r][c] = ch; // unmark the board node
 	}
 
+
 	private static String open = "([{";
 	private static String close = ")]>}";
 	public static boolean isBalanced(String input) {
-	      return isBalanced(input,"");
+		return isBalanced(input,"");
 	}
 
+	//These methods are all help methods for isBalances()method above
 	public static boolean isBalanced(String input, String stack) {
-	    if (input.isEmpty()) { // base case : input string is empty
-	        return stack.isEmpty();
-	    }else if (isOpen(input.charAt(0))) { //base case 2: is open case
-	        return isBalanced(input.substring(1),input.charAt(0) + stack);
-	    }else if (isClose(input.charAt(0))) {
-	        return (!stack.isEmpty() && isMatching(stack.charAt(0), input.charAt(0)) && isBalanced(input.substring(1), stack.substring(1)));
-	    }
-	     return isBalanced(input.substring(1),stack);
+		if (input.isEmpty()) { // base case : input string is empty
+			return stack.isEmpty();
+		}else if (isOpen(input.charAt(0))) { //base case 2: is open case
+			return isBalanced(input.substring(1),input.charAt(0) + stack);
+		}else if (isClose(input.charAt(0))) {
+			return (!stack.isEmpty() && isMatching(stack.charAt(0), input.charAt(0)) && isBalanced(input.substring(1), stack.substring(1)));
+		}
+		return isBalanced(input.substring(1),stack);
 	}
-
 	public static boolean isOpen (char ch) {
-	    return open.indexOf(ch) != -1;
+		return open.indexOf(ch) != -1;
 	}
 	public static boolean isClose(char ch) {
-	    return close.indexOf(ch) != -1;
+		return close.indexOf(ch) != -1;
 	}	
 	public static boolean isMatching(char charopen, char charclose) {
-	    return open.indexOf(charopen) == close.indexOf(charclose);
+		return open.indexOf(charopen) == close.indexOf(charclose);
 	}
 
+	public static int[] merge(int[] arrLeft, int[] arrRight){ //merge 2 sorted lists
+		return null;
+	}
 	//sort Algorithm
 	public static int[] selectionSort(int[] arr) {//improved performance over bubble sort
 		for (int i = 0; i<arr.length - 1; i++) {
