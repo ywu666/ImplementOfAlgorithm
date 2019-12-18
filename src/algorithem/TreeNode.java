@@ -17,6 +17,13 @@ public class TreeNode {
 		this.right = right;
 	}
 
+	public TreeNode insert(TreeNode root, int data) {
+		if (root == null) return new TreeNode(data);
+		if (root.data > data) insert(root.left,data);
+		if (root.data < data) insert (root.right, data);
+		return root;
+	}
+
 	public int sum(TreeNode root) {
 		if (root == null) return 0;
 		return sum(root.left) + sum(root.right) + root.data;
@@ -55,6 +62,12 @@ public class TreeNode {
 		}else {
 			return right+1;
 		}
+	}
+
+	public TreeNode findMin(TreeNode root) {
+		if(root == null) return null;
+		if(root.left == null) return root;
+		return findMin(root.left);
 	}
 
 	public int findMax(TreeNode root) { //recursion
@@ -122,7 +135,35 @@ public class TreeNode {
 		return (left != null ? left:right);
 
 	}
-	
+
+	public TreeNode findLCA(TreeNode root,int a, int b) {
+		if (root == null) return null;
+		if (root.data == a || root.data == b) return root;
+
+		TreeNode left = findLCA(root.left,a,b);
+		TreeNode right = findLCA(root.right,a,b);
+		if (left != null && right != null) return root;
+		return (left != null ? left:right);
+	}
+
+	/**
+	 * @param root of the binary Tree.
+	 * @return The kth largest for a given binary tree.
+	 */
+	public TreeNode findKthLargest(TreeNode root, int k) {
+		if (root == null) return null;
+		int rightSize = 1;
+
+		if (root.right != null) {
+			rightSize = size(root.right) + 1;
+		}
+		//3 conditions
+		if (k == rightSize) return root;
+		if (k < rightSize) return findKthLargest(root.right,k);
+		return findKthLargest(root.left, k - rightSize);
+
+	}
+
 	public int findMaxSumLevel(TreeNode root) { // the root i level 0
 		if (root == null) return -1;
 		int currlvl = 0, maxlvl = 0;
@@ -132,7 +173,7 @@ public class TreeNode {
 		q.add(null);   //indicated for the end of first level
 		while (!q.isEmpty()) {
 			TreeNode node = q.poll();
-			
+
 			if (node == null) {
 				if (currSum > maxSum) {
 					maxSum = currSum;
@@ -265,18 +306,45 @@ public class TreeNode {
 		ArrayList<Integer> list = new ArrayList<>();
 		return list;
 	}
-	
+
+	public ArrayList<Integer> levelorderRev(TreeNode root) { 
+		ArrayList<Integer> list = new ArrayList<>();
+		if(root == null) return list; 
+
+		Queue<TreeNode> q = new LinkedList<TreeNode>();
+		Stack<TreeNode> s = new Stack<>();
+		q.add(root);
+
+		while (!q.isEmpty()) {
+			TreeNode node = q.poll();
+			s.push(node);
+			if (node.right != null) q.add(node.right);
+			if (node.left != null) q.add(node.left);
+
+		}
+
+		while (!s.isEmpty()) {
+			list.add(s.pop().data);
+		}
+		return list;
+	}
+
 	public ArrayList<ArrayList<Integer>> printLevelByLevel(TreeNode root) {
 		return null;
 	}
-	
+
 	public int pathLengthFromRoot(TreeNode root, int val) {
 		if(root == null) return 0;
-		int out =0;
-		if ((root.data == val) || (out = pathLengthFromRoot(root.left,val))> 0 || (out = pathLengthFromRoot(root.left,val)) > 0) {
+		int out = 0;
+		if ((root.data == val) || (out = pathLengthFromRoot(root.left,val))> 0 || (out = pathLengthFromRoot(root.right,val)) > 0) {
 			return out + 1;
 		}		
 		return 0;
+	}
+
+	public int getNodeDistance(TreeNode root, int n1, int n2) { //ignore the given keys are all exist.
+		int lca = findLCA(root,n1,n2).data;
+		return (pathLengthFromRoot(root,n1) + pathLengthFromRoot(root,n2) - 2) - 2*(pathLengthFromRoot(root,lca) - 1);
 	}
 
 	public boolean isIdentical(TreeNode root1, TreeNode root2) { //recursion
@@ -323,24 +391,6 @@ public class TreeNode {
 			i += 2;
 		}
 		return root;
-	}
-
-	/**
-	 * @param root of the binary Tree.
-	 * @return The kth largest for a given binary tree.
-	 */
-	public TreeNode findKthLargest(TreeNode root, int k) {
-		if (root == null) return null;
-		int rightSize = 1;
-
-		if (root.right != null) {
-			rightSize = size(root.right) + 1;
-		}
-		//3 conditions
-		if (k == rightSize) return root;
-		if (k < rightSize) return findKthLargest(root.right,k);
-		return findKthLargest(root.left, k - rightSize);
-
 	}
 
 	/**
