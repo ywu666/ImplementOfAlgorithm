@@ -4,8 +4,29 @@ import java.util.*;
 
 public class Algorithm {
 
-	public static String compressString() {
-		return null;
+	public static String compressString(String text) {
+		int length = text.length();
+		if (length >= 2) {
+			StringBuilder compress = new StringBuilder();
+			char lastChar = text.charAt(0);
+			int count = 1;
+			for (int i = 1; i<length; i++) {
+				if (text.charAt(i) == lastChar) {		        	  
+					count++;
+				}else {
+					compress.append(lastChar);
+					if(count > 1) {
+						compress.append(count);
+					}
+					lastChar = text.charAt(i);
+					count = 1;
+				}
+			}
+			compress.append(lastChar);
+			if(count > 1) compress.append(count);
+			if (compress.length() < length) return compress.toString();
+		}
+		return text;
 	}
 
 	public static boolean isAnagram(String input1, String input2) { // the inputs are also lower case
@@ -76,7 +97,7 @@ public class Algorithm {
 	public static ArrayList<String> getPermutations(String str) {
 		ArrayList<String> permutations = new ArrayList<String>();
 		if (str == null) return null;
-		if (str.isEmpty()) {
+		if (str.equals("")) {
 			permutations.add("");
 			return permutations;
 		}
@@ -85,18 +106,43 @@ public class Algorithm {
 		ArrayList<String> list = getPermutations(str.substring(1));
 
 		for (String word: list) {
-			for (int i =0;i< word.length();i++) {
+			for (int i =0;i<= word.length();i++) {
 				permutations.add(insert(word,first,i));
 			}
 		}
 		return permutations;
 	}
+	//list all possible combinations and permutations of its characters
+	public static ArrayList<String> getCombPerms(String str) {
+		ArrayList<String> permutations = new ArrayList<String>();
+		if (str == null) return null;
+		if (str.equals("") || str.length() ==1) {
+			permutations.add(str);
+			return permutations;
+		}
+
+		char first = str.charAt(0);
+		permutations.add(first+""); //convert to string type
+		ArrayList<String> list = getCombPerms(str.substring(1));
+		for (String word: list) {
+			for (int i =0;i<= word.length();i++) {
+				permutations.add(insert(word,first,i));
+			}
+		}
+		permutations.addAll(list);
+		return permutations;
+	}
 
 	//This is a help method for getPermutations to insert char at specific location
-	public static String  insert(String word, char insert, int i) {
-		String start = word.substring(i);
-		String end = word.substring(i);
-		return start + insert + end;
+	public static String insert(String word, char insert, int i) {
+		return word.substring(0,i) + insert + word.substring(i);
+	}
+
+	public static String insertPairStar(String s) { //recursion
+		if(s == null || s.length() <= 1) return s;
+		return s.charAt(0) + 
+				(s.charAt(0)==s.charAt(1) ? "*" : "") +
+				insertPairStar(s.substring(1));
 	}
 
 	//This method will replace the ' ' in String a with the specific pattern b.
@@ -281,6 +327,10 @@ public class Algorithm {
 		return odd | even;
 	}
 
+	public int editDistance(String a, String b){
+		return 0;
+	}
+
 	public static ArrayList<String> generateIPAddrs(String input) {
 
 		class IpLevelNode{//local class
@@ -385,6 +435,10 @@ public class Algorithm {
 		return false;
 	}
 
+	public static boolean boggleSearch(char[][] board, String word){
+		return true;
+	}
+
 	public ArrayList<String> boggleSearchWithDict(char[][] board, Trie dictionary){
 		TreeSet<String> output = new TreeSet<String>();
 		int rows = board.length;
@@ -459,6 +513,7 @@ public class Algorithm {
 		return open.indexOf(charopen) == close.indexOf(charclose);
 	}
 
+	//merge algorithm 
 	public static int[] merge(int[] arrLeft, int[] arrRight){ //merge 2 sorted lists
 		return null;
 	}
