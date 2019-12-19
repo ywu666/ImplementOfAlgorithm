@@ -93,6 +93,30 @@ public class Algorithm {
 		return true;
 
 	}
+	
+	/**
+	 * Two strings are isomorphic if the letters in one string can be remapped 
+	 * to get the second string. Remapping a letter means replacing all 
+	 * occurrences of it with another letter.
+	 * @param str
+	 * @return True if the 2 string are isomorphic
+	 */
+	public static boolean isIsomorphic(String str1, String str2) {
+		if (str1.length() != str2.length()) return false;
+		Hashtable<Character, Integer> table1 = new Hashtable<Character,Integer>();
+		Hashtable<Character, Integer> table2 = new Hashtable<Character,Integer>();
+		for (int  i=0;i<str1.length();i++) {
+			Character ch1 = str1.charAt(i);
+			Integer val1 = table1.containsKey(ch1)? table1.get(ch1) +1 :1; 
+			table1.put(ch1,val1);
+			
+			Character ch2 = str2.charAt(i);
+			Integer val2 = table2.containsKey(ch2) ? table2.get(ch2) +1 :1; 
+			table2.put(ch2,val2);
+			if (table1.get(ch1) != table2.get(ch2)) return false;
+		}
+		return true;	
+	}
 
 	public static ArrayList<String> getPermutations(String str) {
 		ArrayList<String> permutations = new ArrayList<String>();
@@ -217,7 +241,13 @@ public class Algorithm {
 	 * If no gain is possible, return 0.
 	 */
 	public static int maxGain(int[] arr) {
-		return 0;
+		int maxGain = 0;
+		int min = arr[0];
+		for (int i=1;i<arr.length;i++) {
+			 min = Math.min(min, arr[i]);
+		     maxGain = Math.max(maxGain, arr[i] - min);
+		}	
+		return maxGain;
 	}
 
 	public static String computeBinary(int val) {
