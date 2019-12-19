@@ -52,6 +52,17 @@ public class TreeNode {
 	public int diamter(TreeNode root) {
 		return 0;
 	}
+	
+	public static boolean validBST(TreeNode root) {
+		return validBST(root,Integer.MIN_VALUE,Integer.MAX_VALUE);
+	}
+	
+	// This is a help method for validBST() method above
+	public static boolean validBST(TreeNode root, int min , int max) { //recursion
+		if (root == null) return true;
+		if (root.data <=min || root.data >= max) return false;
+		return validBST(root.left,min,root.data) && validBST(root.right,root.data,max);
+	}
 
 	public int findHeight(TreeNode root) {
 		if (root == null) return 0;
@@ -62,7 +73,7 @@ public class TreeNode {
 		}else {
 			return right+1;
 		}
-	}
+}
 
 	public TreeNode findMin(TreeNode root) {
 		if(root == null) return null;
@@ -353,6 +364,7 @@ public class TreeNode {
 		if (root1 != null && root2 == null) return false;
 		return (root1.data == root2.data) && isIdentical(root1.left, root2.left) && isIdentical(root1.right,root2.right);
 	}
+	
 
 	/**
 	 * Given a String, the null is represent in *. Each node is separate by ","
