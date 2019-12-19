@@ -67,8 +67,21 @@ class ListNode {
 	 * @param pos
 	 * @return
 	 */
-	public ListNode deleteAtPosition (ListNode head, int pos) {
-		return head;
+	public ListNode deleteAtPosition (ListNode head, int pos) { //assume pos is positive integer
+		if (pos == 1) return head == null ? head:head.next;
+		ListNode curr = head;
+		ListNode prev = curr;
+		int count  = 1; // start from the head, assume the head position is 1.
+		while (curr != null) {
+			if (count == pos) {
+				prev.next = curr.next;
+				curr.next = null;
+			}
+			prev = curr;
+			curr = curr.next;
+			count++;
+		}
+		return head; 
 	}
 
 	public ListNode insertAtPosition(ListNode head, int data, int pos) {
@@ -250,7 +263,16 @@ class ListNode {
 	}
 
 	//Circular linked list
-	public ListNode insertAtTailCircural (ListNode head) {
+	public ListNode insertAtTailCircural (ListNode head, int data) {
+		ListNode newNode = new ListNode(data);
+		newNode.next = newNode;
+		if (head == null) return newNode;
+		ListNode curr = head;
+		while (curr.next != head) { // find the tail
+			curr = curr.next;
+		}
+		curr.next = newNode;
+		newNode.next = head;
 		return head;
 	}
 
