@@ -279,7 +279,21 @@ class ListNode {
 		return head;
 	}
 
-
+    //merge
+	public ListNode mergeTwoSortedList(ListNode l1, ListNode l2) { //recursion  
+		ListNode newHead = null;
+		if(l1==null) return l2;
+		if(l2==null) return l1;
+		if(l1.data <= l2.data) {
+			newHead = l1;
+			newHead.next = mergeTwoSortedList(l1.next, l2);
+		} else {
+			newHead = l2;
+			newHead.next = mergeTwoSortedList(l2.next, l1);
+		}
+		return newHead;
+	}
+	
 	public ListNode mergeKLists(ArrayList<ListNode> lists) {
 		if (lists.size() == 0) return null;
 		PriorityQueue<ListNode> queue = new PriorityQueue<ListNode>(lists.size(), new Comparator<ListNode>() {
