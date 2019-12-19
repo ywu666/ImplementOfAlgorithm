@@ -29,13 +29,13 @@ class DoublyLinkedNode {
 			curr = curr.next;
 			temp.next = null;
 			return curr;
-		}else if (curr.next == null) { //delete at tail
+		}else if (curr.next == null) { //delete at tail which is important,cause can't use as the insertMehod 
 			prev.next = null;
 			curr.prev = null;
 			return head;
 		}else { //delete at pos
 			prev.next = curr.next;
-			curr.next.prev = prev;
+			curr.next.prev = prev; // due to this line can't write curr != null
 			curr.next = null;
 			curr.prev = null;
 			return head;
