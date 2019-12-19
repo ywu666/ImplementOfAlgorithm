@@ -129,7 +129,7 @@ public class Algorithm {
 				permutations.add(insert(word,first,i));
 			}
 		}
-		permutations.addAll(list);
+		permutations.addAll(list); // add all the combination 
 		return permutations;
 	}
 
@@ -182,7 +182,7 @@ public class Algorithm {
 
 	}
 
-	public static int singleNumber(int[] A) {
+	public static int singleNumber(int[] A) { // return the first number that appears once
 		Hashtable<Integer, Integer> table = new Hashtable<Integer, Integer>();
 		for (int i =0;i < A.length;i++) {
 			if(table.contains(A[i])) {
@@ -198,6 +198,18 @@ public class Algorithm {
 			}
 		}
 		return 0;
+	}
+
+	public static boolean areAllCharactersUnique(String str){
+		if (str == null || str.equals("")) return true;
+		for ( int i = 0; i < str.length(); i++) {
+			for (int j = i + 1; j < str.length(); j++) {
+				if ( str.charAt(i) == str.charAt(j)) {
+					return false;
+				}
+			}
+		}	    
+		return true;
 	}
 
 	/* Maximum Gain is defined as the maximum difference between 2 elements in a list 
@@ -513,6 +525,92 @@ public class Algorithm {
 		return open.indexOf(charopen) == close.indexOf(charclose);
 	}
 
+	//search algorithm
+	public static Boolean binarySearch(int[] arr, int n){
+		int low =0;
+		int high = arr.length;
+		while (low < high) {
+			int mid = low + (high-low)/2;
+			if (arr[mid] > n) high = mid -1;
+			if (arr[mid] < n) low = mid + 1;
+			return true; // if arr[mid] == n;
+		}
+		return false;
+	}
+	// java.util.* and java.util.streams.* have been imported for this problem.
+	// You don't need any other imports.
+
+	public static  ArrayList<String> getStringsFromNums(String digits) {
+	    //Create the phone key mapping 
+	    HashMap<Character,String> mapping = new HashMap<>();
+	    mapping.put('2',"abc");
+	    mapping.put('3',"def");
+	    mapping.put('4',"ghi");
+	    mapping.put('5',"jkl");
+	    mapping.put('6',"mno");
+	    mapping.put('7',"pqrs");
+	    mapping.put('8',"tuv");
+	    mapping.put('9',"wxyz");
+	    
+	    class PhoneNode { //local class
+	        String word;
+	        int digitCount;
+	        
+	        PhoneNode(String word,int digitCount) {
+	            this.word = word;
+	            this.digitCount = digitCount;
+	        }
+	    }
+	    
+	    //declare the Stack
+	    ArrayList<String> out = new ArrayList<>();
+	    Deque<PhoneNode> stack = new LinkedList<>();
+	    int len = digits.length();
+	    for (Character ch: mapping.get(digits.charAt(0)).toCharArray()) { // push the first node on the stack
+	        stack.addFirst(new PhoneNode(String.valueOf(ch),1));
+	    }
+	    
+	    //classic DFS
+	    while (!stack.isEmpty()) {
+	    	PhoneNode node = stack.removeFirst();
+	    	if (node.digitCount == len) {
+	    		out.add(node.word);
+	    	} else {
+	    		for (Character ch: mapping.get(digits.charAt(node.digitCount)).toCharArray()) {
+	    			stack.addFirst(new PhoneNode(node.word+ch,node.digitCount+1));
+	    		}
+	    	}
+	    }
+	   return out;
+	}
+	
+	/*
+	 * Given an integer array containing the available denominations of coins 
+	 * in descending order.This method to compute the number of possible ways 
+	 * of representing a monetary amount in cents.
+	 */
+	public static int makeChange(int[] coins, int amount) {
+          if (coins != null && coins.length >0 && amount >=0) {
+        	  return makeChange(coins,amount,0);
+          }else {
+        	  return 0;
+          }
+	}
+	
+	public static int makeChange(int[] coins, int amount, int curr_coin_index) {
+		int next_coin_index;
+		if (curr_coin_index < coins.length -1) {
+			next_coin_index = curr_coin_index +1;
+		}else { // The curr_index == the last index of the array
+			return coins[curr_coin_index];
+		}
+		int res = 0; // Calculate the number of combinations way
+		for (int i = 0;i*coins[curr_coin_index] <=amount;i++) {
+			res += makeChange(coins,amount -i*coins[curr_coin_index],next_coin_index);
+		}
+		return res;
+	}
+	
 	//merge algorithm 
 	public static int[] merge(int[] arrLeft, int[] arrRight){ //merge 2 sorted lists
 		return null;
@@ -535,6 +633,15 @@ public class Algorithm {
 	}
 
 	public static int[] bubbleSort(int[] arr) {
-		return null;
+		for (int i= 0;i<arr.length;i++) {
+			for (int j = i;j<arr.length;j++) {
+				if (arr[i] > arr[j]) { //swap one find a greater number
+					int temp = arr[i];
+					arr[i] = arr[j];
+					arr[j] = temp;
+				}
+			}
+		}
+		return arr;
 	}
 }
