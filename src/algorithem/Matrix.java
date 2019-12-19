@@ -47,7 +47,7 @@ public class Matrix {
 		}	
 	}
 
-	public static int[][] rotate(int[][] matrix) {
+	public static int[][] rotate(int[][] matrix) { //rotate CW 90 degree
 		int n = matrix.length;
 		for (int i = 0; i < n / 2; i++) {
 			for (int j = 0; j < Math.ceil(((double) n) / 2.); j++) {
