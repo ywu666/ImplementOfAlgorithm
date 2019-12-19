@@ -613,8 +613,29 @@ public class Algorithm {
 	
 	//merge algorithm 
 	public static int[] merge(int[] arrLeft, int[] arrRight){ //merge 2 sorted lists
-		return null;
+		int leftlength = arrLeft.length;
+		int rightlength = arrRight.length;
+		int left = 0, right =0, merge =0;
+		int[] arrResult = new int[leftlength+rightlength];
+		
+		while (left<leftlength && right<rightlength) {
+			if (arrLeft[left] < arrRight[right] ) {
+				arrResult[merge++] = arrLeft[left++];
+			}else {
+				arrResult[merge++] = arrRight[right++];
+			}
+		}
+        // merge the elements that was left in the arrLeft
+		while (left < leftlength) {
+			arrResult[merge++] = arrLeft[left++];
+		}
+        //merge teh elements that was left in the arrRight
+		while (right < rightlength) {
+			arrResult[merge++] = arrRight[right++];
+		}
+		return arrResult;
 	}
+	
 	//sort Algorithm
 	public static int[] selectionSort(int[] arr) {//improved performance over bubble sort
 		for (int i = 0; i<arr.length - 1; i++) {
