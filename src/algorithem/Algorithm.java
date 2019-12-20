@@ -369,10 +369,6 @@ public class Algorithm {
 		return odd | even;
 	}
 
-	public int editDistance(String a, String b){
-		return 0;
-	}
-
 	public static ArrayList<String> generateIPAddrs(String input) {
 
 		class IpLevelNode{//local class
@@ -639,6 +635,30 @@ public class Algorithm {
 			res += makeChange(coins,amount -i*coins[curr_coin_index],next_coin_index);
 		}
 		return res;
+	}
+	
+	public int editDistance(String a, String b) {
+		int lengthA = a.length();
+		int lengthB = b.length();
+		int[][] memo = new int [lengthA+1][lengthB+1];
+		for (int i=0;i<=lengthA;i++) memo[i][0] = i;
+		for (int i=0;i<=lengthB;i++) memo[0][i] = i;
+		for (int i = 1;i<=lengthA;i++) {
+			char cha = a.charAt(i);
+			for (int j=0;j<=lengthB;j++) {
+				char chb = b.charAt(j);
+				if (cha == chb) {
+					memo[i][j] = memo[i-1][j-1];
+				}else {
+					int replaceDist = memo[i][j];
+					int insertDist = memo[i][j-1] + 1;
+					int delateDist = memo[i-1][j] + 1;
+					int minDist = Math.min(replaceDist, Math.min(insertDist, delateDist));
+					memo[i][j] = minDist;
+				}
+			}
+		}
+		return memo[lengthA][lengthB];
 	}
 	
 	//merge algorithm 
