@@ -637,6 +637,17 @@ public class Algorithm {
 		return res;
 	}
 	
+	/**
+	 * Given two Strings, a and b, write a method - editDistance that 
+	 * returns the minimum number of operations needed to transform a into b. 
+	 * The following character operations are allowed :
+	 *a) Replace character
+	 *b) Insert character
+	 *c) Delete character
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	public int editDistance(String a, String b) {
 		int lengthA = a.length();
 		int lengthB = b.length();
@@ -660,24 +671,24 @@ public class Algorithm {
 		}
 		return memo[lengthA][lengthB];
 	}
-	
+
 	public static boolean groupSumWithNum(int[] arr, int must_have, int target) {
 		return groupSumWithNum(0,arr,must_have,target);
 	}
-	
-   //this is a help method 
+
+	//this is a help method 
 	public static boolean groupSumWithNum(int start_index,int[] arr, int must_have, int target) { //recursion
-       if (start_index >= arr.length) return target == 0;
-       //case1: The array contains the must_have
-       if (arr[start_index] == target) {
-    	   return groupSumWithNum(start_index + 1,arr,must_have,target- must_have);
-       } else {
-    	   //case2: Include the first element, check the remaining
-    	   if (groupSumWithNum(start_index + 1,arr,must_have,target- arr[start_index])) return true;
-    	   //case3: does not include the first element, check the remaining
-    	   if (groupSumWithNum(start_index + 1,arr,must_have,target- must_have)) return true;
-       }
-      return false;
+		if (start_index >= arr.length) return target == 0;
+		//case1: The array contains the must_have
+		if (arr[start_index] == target) {
+			return groupSumWithNum(start_index + 1,arr,must_have,target- must_have);
+		} else {
+			//case2: Include the first element, check the remaining
+			if (groupSumWithNum(start_index + 1,arr,must_have,target- arr[start_index])) return true;
+			//case3: does not include the first element, check the remaining
+			if (groupSumWithNum(start_index + 1,arr,must_have,target- must_have)) return true;
+		}
+		return false;
 	}
 	
 	//merge algorithm 
