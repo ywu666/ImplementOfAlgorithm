@@ -93,7 +93,7 @@ public class Algorithm {
 		return true;
 
 	}
-	
+
 	/**
 	 * Two strings are isomorphic if the letters in one string can be remapped 
 	 * to get the second string. Remapping a letter means replacing all 
@@ -109,7 +109,7 @@ public class Algorithm {
 			Character ch1 = str1.charAt(i);
 			Integer val1 = table1.containsKey(ch1)? table1.get(ch1) +1 :1; 
 			table1.put(ch1,val1);
-			
+
 			Character ch2 = str2.charAt(i);
 			Integer val2 = table2.containsKey(ch2) ? table2.get(ch2) +1 :1; 
 			table2.put(ch2,val2);
@@ -244,8 +244,8 @@ public class Algorithm {
 		int maxGain = 0;
 		int min = arr[0];
 		for (int i=1;i<arr.length;i++) {
-			 min = Math.min(min, arr[i]);
-		     maxGain = Math.max(maxGain, arr[i] - min);
+			min = Math.min(min, arr[i]);
+			maxGain = Math.max(maxGain, arr[i] - min);
 		}	
 		return maxGain;
 	}
@@ -473,8 +473,64 @@ public class Algorithm {
 		return false;
 	}
 
+	public static boolean groupSumWithNum(int[] arr, int must_have, int target) {
+		return groupSumWithNum(0,arr,must_have,target);
+	}
+
+	//this is a help method 
+	public static boolean groupSumWithNum(int start_index,int[] arr, int must_have, int target) { //recursion
+		if (start_index >= arr.length) return target == 0;
+		//case1: The array contains the must_have
+		if (arr[start_index] == target) {
+			return groupSumWithNum(start_index + 1,arr,must_have,target- must_have);
+		} else {
+			//case2: Include the first element, check the remaining
+			if (groupSumWithNum(start_index + 1,arr,must_have,target- arr[start_index])) return true;
+			//case3: does not include the first element, check the remaining
+			if (groupSumWithNum(start_index + 1,arr,must_have,target- must_have)) return true;
+		}
+		return false;
+	}
+
 	public static boolean boggleSearch(char[][] board, String word){
-		return true;
+		int rows = board.length;
+		int cols = board[0].length;
+		boolean out = false;
+
+		for (int i = 0; i< rows;i++) {
+			for (int j = 0;j<cols;j++) {
+				out = search2(i,j,board,word,"");
+				if (out) return true;
+			}
+		}
+		return out;
+	}
+
+	public static boolean search2(int r, int c, char[][] board, String word, String predecessor) {
+		int rows = board.length;
+		int cols = board[0].length;
+		//out of bound // not match pattern // visited
+		if (r > (rows - 1) || r < 0 || c> (cols-1) || c < 0 || !word.contains(predecessor) || board[r][c] == '@') {
+			return false;
+		}
+
+		char ch = board[r][c];
+		String s = predecessor + ch;
+		boolean out = false;
+		if (s.equals(word)) {
+			return true;
+		}else {
+
+			board[r][c] = '@'; // Marked as visited
+
+			out = search2(r+1,c,board,word,s)        // check up
+					|| search2(r-1,c,board,word,s)   // check down
+					|| search2(r,c+1,board,word,s)   // check left
+					|| search2(r,c-1,board,word,s);  // check down
+
+			board[r][c] = ch; // unmark the board node
+		}
+		return out;
 	}
 
 	public ArrayList<String> boggleSearchWithDict(char[][] board, Trie dictionary){
@@ -567,62 +623,62 @@ public class Algorithm {
 	// You don't need any other imports.
 
 	public static  ArrayList<String> getStringsFromNums(String digits) {
-	    //Create the phone key mapping 
-	    HashMap<Character,String> mapping = new HashMap<>();
-	    mapping.put('2',"abc");
-	    mapping.put('3',"def");
-	    mapping.put('4',"ghi");
-	    mapping.put('5',"jkl");
-	    mapping.put('6',"mno");
-	    mapping.put('7',"pqrs");
-	    mapping.put('8',"tuv");
-	    mapping.put('9',"wxyz");
-	    
-	    class PhoneNode { //local class
-	        String word;
-	        int digitCount;
-	        
-	        PhoneNode(String word,int digitCount) {
-	            this.word = word;
-	            this.digitCount = digitCount;
-	        }
-	    }
-	    
-	    //declare the Stack
-	    ArrayList<String> out = new ArrayList<>();
-	    Deque<PhoneNode> stack = new LinkedList<>();
-	    int len = digits.length();
-	    for (Character ch: mapping.get(digits.charAt(0)).toCharArray()) { // push the first node on the stack
-	        stack.addFirst(new PhoneNode(String.valueOf(ch),1));
-	    }
-	    
-	    //classic DFS
-	    while (!stack.isEmpty()) {
-	    	PhoneNode node = stack.removeFirst();
-	    	if (node.digitCount == len) {
-	    		out.add(node.word);
-	    	} else {
-	    		for (Character ch: mapping.get(digits.charAt(node.digitCount)).toCharArray()) {
-	    			stack.addFirst(new PhoneNode(node.word+ch,node.digitCount+1));
-	    		}
-	    	}
-	    }
-	   return out;
+		//Create the phone key mapping 
+		HashMap<Character,String> mapping = new HashMap<>();
+		mapping.put('2',"abc");
+		mapping.put('3',"def");
+		mapping.put('4',"ghi");
+		mapping.put('5',"jkl");
+		mapping.put('6',"mno");
+		mapping.put('7',"pqrs");
+		mapping.put('8',"tuv");
+		mapping.put('9',"wxyz");
+
+		class PhoneNode { //local class
+			String word;
+			int digitCount;
+
+			PhoneNode(String word,int digitCount) {
+				this.word = word;
+				this.digitCount = digitCount;
+			}
+		}
+
+		//declare the Stack
+		ArrayList<String> out = new ArrayList<>();
+		Deque<PhoneNode> stack = new LinkedList<>();
+		int len = digits.length();
+		for (Character ch: mapping.get(digits.charAt(0)).toCharArray()) { // push the first node on the stack
+			stack.addFirst(new PhoneNode(String.valueOf(ch),1));
+		}
+
+		//classic DFS
+		while (!stack.isEmpty()) {
+			PhoneNode node = stack.removeFirst();
+			if (node.digitCount == len) {
+				out.add(node.word);
+			} else {
+				for (Character ch: mapping.get(digits.charAt(node.digitCount)).toCharArray()) {
+					stack.addFirst(new PhoneNode(node.word+ch,node.digitCount+1));
+				}
+			}
+		}
+		return out;
 	}
-	
+
 	/*
 	 * Given an integer array containing the available denominations of coins 
 	 * in descending order.This method to compute the number of possible ways 
 	 * of representing a monetary amount in cents.
 	 */
 	public static int makeChange(int[] coins, int amount) {
-          if (coins != null && coins.length >0 && amount >=0) {
-        	  return makeChange(coins,amount,0);
-          }else {
-        	  return 0;
-          }
+		if (coins != null && coins.length >0 && amount >=0) {
+			return makeChange(coins,amount,0);
+		}else {
+			return 0;
+		}
 	}
-	
+
 	public static int makeChange(int[] coins, int amount, int curr_coin_index) {
 		int next_coin_index;
 		if (curr_coin_index < coins.length -1) {
@@ -636,7 +692,7 @@ public class Algorithm {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * Given two Strings, a and b, write a method - editDistance that 
 	 * returns the minimum number of operations needed to transform a into b. 
@@ -672,32 +728,13 @@ public class Algorithm {
 		return memo[lengthA][lengthB];
 	}
 
-	public static boolean groupSumWithNum(int[] arr, int must_have, int target) {
-		return groupSumWithNum(0,arr,must_have,target);
-	}
-
-	//this is a help method 
-	public static boolean groupSumWithNum(int start_index,int[] arr, int must_have, int target) { //recursion
-		if (start_index >= arr.length) return target == 0;
-		//case1: The array contains the must_have
-		if (arr[start_index] == target) {
-			return groupSumWithNum(start_index + 1,arr,must_have,target- must_have);
-		} else {
-			//case2: Include the first element, check the remaining
-			if (groupSumWithNum(start_index + 1,arr,must_have,target- arr[start_index])) return true;
-			//case3: does not include the first element, check the remaining
-			if (groupSumWithNum(start_index + 1,arr,must_have,target- must_have)) return true;
-		}
-		return false;
-	}
-	
 	//merge algorithm 
 	public static int[] merge(int[] arrLeft, int[] arrRight){ //merge 2 sorted lists
 		int leftlength = arrLeft.length;
 		int rightlength = arrRight.length;
 		int left = 0, right =0, merge =0;
 		int[] arrResult = new int[leftlength+rightlength];
-		
+
 		while (left<leftlength && right<rightlength) {
 			if (arrLeft[left] < arrRight[right] ) {
 				arrResult[merge++] = arrLeft[left++];
@@ -705,17 +742,17 @@ public class Algorithm {
 				arrResult[merge++] = arrRight[right++];
 			}
 		}
-        // merge the elements that was left in the arrLeft
+		// merge the elements that was left in the arrLeft
 		while (left < leftlength) {
 			arrResult[merge++] = arrLeft[left++];
 		}
-        //merge teh elements that was left in the arrRight
+		//merge teh elements that was left in the arrRight
 		while (right < rightlength) {
 			arrResult[merge++] = arrRight[right++];
 		}
 		return arrResult;
 	}
-	
+
 	//sort Algorithm
 	public static int[] selectionSort(int[] arr) {//improved performance over bubble sort
 		for (int i = 0; i<arr.length - 1; i++) {
