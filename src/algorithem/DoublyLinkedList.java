@@ -42,18 +42,6 @@ class DoublyLinkedNode {
 		}
 	}   
 
-	public DoublyLinkedNode insertAtHead(DoublyLinkedNode head, int data) {
-		DoublyLinkedNode newNode = new DoublyLinkedNode (data);
-		if (head == null) {
-			return newNode;
-		}else {
-			newNode.next = head;
-			head.prev = newNode;
-		}
-
-		return head;
-	}
-
 	public DoublyLinkedNode insertAtPos(DoublyLinkedNode head, int data, int pos) {
 		DoublyLinkedNode newNode = new DoublyLinkedNode (data);
 		if (head == null && pos == 1) {
