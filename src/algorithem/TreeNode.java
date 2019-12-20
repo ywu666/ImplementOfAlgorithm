@@ -48,9 +48,27 @@ public class TreeNode {
 		if (root == null) return 0;
 		return size(root.left) + size(root.right) + 1;
 	}
+	
+	//The diameter of a Binary Tree  = The "Number of nodes on the longest path between two leaf nodes".
+	public int diameter(TreeNode root) {
+	    int[] diameter = diameterAndHeight(root);
+	    return diameter[0];
+	}
 
-	public int diamter(TreeNode root) {
-		return 0;
+	public int[] diameterAndHeight(TreeNode root) {
+	    int[] heightDiameter = {0, 0}; // The first index store the diameter, the second store the height.
+	    if (root != null) {
+	         int[] left = diameterAndHeight(root.left);
+	         int[] right = diameterAndHeight(root.right);
+	         int height = Math.max(left[1],right[1]) + 1;
+	         int leftDiameter = left[0];
+	         int rightDiameter = right[0];
+	         int rootDiameter = right[1] + left[1] + 1;
+	         int finalDiameter = Math.max(rootDiameter, Math.max(leftDiameter, rightDiameter));
+	         heightDiameter[0] = finalDiameter;
+	         heightDiameter[1] = height;
+	    }
+	    return heightDiameter;
 	}
 	
 	public static boolean validBST(TreeNode root) {
