@@ -661,6 +661,25 @@ public class Algorithm {
 		return memo[lengthA][lengthB];
 	}
 	
+	public static boolean groupSumWithNum(int[] arr, int must_have, int target) {
+		return groupSumWithNum(0,arr,must_have,target);
+	}
+	
+   //this is a help method 
+	public static boolean groupSumWithNum(int start_index,int[] arr, int must_have, int target) { //recursion
+       if (start_index >= arr.length) return target == 0;
+       //case1: The array contains the must_have
+       if (arr[start_index] == target) {
+    	   return groupSumWithNum(start_index + 1,arr,must_have,target- must_have);
+       } else {
+    	   //case2: Include the first element, check the remaining
+    	   if (groupSumWithNum(start_index + 1,arr,must_have,target- arr[start_index])) return true;
+    	   //case3: does not include the first element, check the remaining
+    	   if (groupSumWithNum(start_index + 1,arr,must_have,target- must_have)) return true;
+       }
+      return false;
+	}
+	
 	//merge algorithm 
 	public static int[] merge(int[] arrLeft, int[] arrRight){ //merge 2 sorted lists
 		int leftlength = arrLeft.length;
