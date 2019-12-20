@@ -313,8 +313,31 @@ public class TreeNode {
 		return inorder;
 	}
 
-	public ArrayList<Integer> levelorder(TreeNode root) {
-		ArrayList<Integer> list = new ArrayList<>();
+	public ArrayList<ArrayList<Integer>> levelorder(TreeNode root) {
+		ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+		ArrayList<Integer> level = new ArrayList<>();
+		if (root == null) return list;
+		Queue<TreeNode> currLvl = new LinkedList<>();
+		Queue<TreeNode> nextLvl = new LinkedList<>();
+		currLvl.add(root);
+		while (!currLvl.isEmpty()) {
+			TreeNode curr = currLvl.poll();
+			if (curr != null) {
+				level.add(curr.data); // initialize the next level
+				nextLvl.add(curr.left);
+				nextLvl.add(curr.right);
+			}
+
+			if (currLvl.isEmpty()) { //finish the current level 
+				if (!level.isEmpty()) {
+					list.add(level); // add all current data into result
+				}
+				level = new ArrayList<>(); //Move to next level
+				while (!nextLvl.isEmpty()) {
+					currLvl.add(nextLvl.poll());
+				}
+			}
+		}
 		return list;
 	}
 
@@ -338,10 +361,6 @@ public class TreeNode {
 			list.add(s.pop().data);
 		}
 		return list;
-	}
-
-	public ArrayList<ArrayList<Integer>> printLevelByLevel(TreeNode root) {
-		return null;
 	}
 
 	public int pathLengthFromRoot(TreeNode root, int val) {
@@ -432,6 +451,4 @@ public class TreeNode {
 		if(root1.data != root2.data) return false;
 		return (isMirror(root1.left, root2.right) && isMirror(root1.right, root2.left));
 	}
-
-
 }   
