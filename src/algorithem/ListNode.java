@@ -76,11 +76,16 @@ class ListNode {
 			if (count == pos) {
 				prev.next = curr.next;
 				curr.next = null;
+				//break
 			}
 			prev = curr;
 			curr = curr.next;
 			count++;
 		}
+		
+		//if (count < pos) //the pos is out of range 
+		//prev.next = curr.next;
+		//curr.next = null;
 		return head; 
 	}
 
