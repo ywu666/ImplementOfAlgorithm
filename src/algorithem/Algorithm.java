@@ -560,6 +560,21 @@ public class Algorithm {
 		return false;
 	}
 
+	/*
+	 * determine if it is possible to split the array into 
+	 * two parts such that the sum of all elements in each part is the same.
+	 */
+	public static boolean splitArray(int[] arr) {
+        if (arr.length ==0) return false;
+        int arr_sum = 0; // calculate the sun of array
+        for (int item: arr) 
+            arr_sum+= item;
+        
+        // If sum is an odd number, it is impossible to split the array of elements evenly. 
+        if (arr_sum%2 != 0)   return false;
+        // If sum is an even number, check if the summation to half is possible. 
+        return groupSum(0,arr,arr_sum/2);
+    }
 	
 	private static String open = "([{";
 	private static String close = ")]>}";
