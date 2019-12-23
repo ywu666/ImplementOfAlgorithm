@@ -83,7 +83,7 @@ class ListNode {
 			count++;
 		}
 		
-		//if (count < pos) //the pos is out of range 
+		//if (count < pos) return head;//the pos is out of range 
 		//prev.next = curr.next;
 		//curr.next = null;
 		return head; 
