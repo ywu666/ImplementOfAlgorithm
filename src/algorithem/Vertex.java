@@ -20,6 +20,7 @@ class Vertex implements Comparable<Vertex> {
 		return Double.compare(minDistance, other.minDistance);
 	}
 	
+	//Djikstra Shortest Path algorithm.
 	public static List<Vertex> getShortestPath(Vertex source, Vertex target) {
 		computePaths(source);	
 		return getShortestPathTo(target);
@@ -48,7 +49,7 @@ class Vertex implements Comparable<Vertex> {
 				if (distanceThroughU < v.minDistance) {
 					q.remove(v);
 					v.minDistance = distanceThroughU;
-					v.previous =u;
+					v.previous = u;
 					q.add(v);
 				}
 			}
