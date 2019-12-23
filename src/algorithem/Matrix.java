@@ -307,4 +307,31 @@ public class Matrix {
 		    }
 		   return max*max; 
 	}
+	//The direction of movement is limited to right and down.
+	public static int minWeightedPath(int[][] matrix) {
+		  if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return 0;
+		  
+		    int rows = matrix.length;
+		    int cols = matrix[0].length;
+		    int[][] t = new int[rows+1][cols+1];
+		    
+		    //Initialize the first column and row
+		    for (int i = 0; i<=rows; i++) {
+		        t[i][0] = Integer.MAX_VALUE/2;
+		    }
+		    
+		    for (int i = 0; i<=cols; i++) {
+		    	t[0][i] = Integer.MAX_VALUE/2;
+		    }
+		    t[1][0] = 0;
+		    t[0][1] = 0;
+		    
+		    for (int i = 1;i<=rows;i++) {
+		    	for (int j = 1;j<=cols;j++) {
+		    		//find if minimum of right and down direction
+		    		t[i][j] = Math.min(t[i-1][j]+ matrix[i-1][j-1], t[i][j-1]+ matrix[i-1][j-1]);
+		    	}
+		    }
+		    return t[rows][cols];
+	}
 }
