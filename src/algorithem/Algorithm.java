@@ -503,9 +503,20 @@ public class Algorithm {
 		return outBuffer[0];
 	}
 
-	//Find 2 numbers such that they sum up to a spedific Number.
-	public static int[] coupleSum(int[] numbers, int target) { // each input has exactly one solution
-	    return null;
+	//Find 2 numbers index in the array such that they sum up to a specific Number.
+	//Each input has exactly one solution
+	public static int[] coupleSum(int[] numbers, int target) { 
+		//Key is the target - arr[i], val is the the index start from one
+		Hashtable<Integer,Integer> table = new Hashtable<>();
+
+		for (int i =0;i< numbers.length;i++) {
+			if (table.containsKey(numbers[i])) {
+				return new int[] {table.get(numbers[i]),i+1};
+			}else {
+				table.put(target - numbers[i],i+1);
+			}
+		}	    
+		return null;
 	}
 	
 	public static boolean groupSum(int[] arr, int target) {  
