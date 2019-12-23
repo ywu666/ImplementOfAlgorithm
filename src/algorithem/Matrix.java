@@ -261,4 +261,50 @@ public class Matrix {
 
 		board[r][c] = ch; // unmark the board node
 	}
+	
+	/**
+	 * Find the largest square containing all 1's and return its 'area'. 
+	 * The 'area' is simply the sum of all integers enclosed in the square.
+	 * @param matrix : A two dimensional matrix made up of 0's and 1's.
+	 * @return
+	 */
+	public static int largestSquare(char[][] matrix) {
+		  if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return 0;
+		  
+		    int rows = matrix.length;
+		    int cols = matrix[0].length;
+		    int[][] t = new int[rows][cols];
+		    
+		    //top row
+		    for (int i = 0; i<rows; i++) {
+		        t[i][0] = Character.getNumericValue(matrix[i][0]);
+		    }
+		    
+		    //left column
+		    for (int i = 0; i<cols; i++) {
+		    	t[0][i] = Character.getNumericValue(matrix[0][i]);
+		    }
+		    
+		    //cells inside
+		    for (int i = 1;i<rows;i++) {
+		    	for (int j = 1;j<cols;j++) {
+		    		if (matrix[i][j] == '1') {
+		    			//find the minimum in the square
+		    			int min = Math.min(t[i][j-1], Math.min(t[i-1][j], t[i-1][j-1]));
+		    			t[i][j] = min + 1;
+		    		}else {
+		    			t[i][j] = 0;
+		    		}
+		    	}
+		    }
+		    
+		    int max = 0; // get maximum length
+		    for (int i = 0;i<rows;i++) {
+		    	for (int j = 0;j<cols;j++) {
+		    		//System.out.println("t["+i+"]" + "[" + j +"]:" + t[i][j]);
+		    		if (t[i][j] > max) max = t[i][j];
+		    	}
+		    }
+		   return max*max; 
+	}
 }
