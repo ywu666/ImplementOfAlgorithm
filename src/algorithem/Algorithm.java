@@ -199,9 +199,9 @@ public class Algorithm {
 	//Given a list of String, this method will remove the duplicate words in the list.
 	public static ArrayList<String> removeDuplicates(List<String> input) {
 		TreeSet<String> treeSet = new TreeSet<String>();
-		treeSet.addAll(input);
-		ArrayList<String> newList = new ArrayList<String>(treeSet); 
-
+		treeSet.addAll(input); 
+		//This will remove the duplicates, and the result will sort alphabetically.
+		ArrayList<String> newList = new ArrayList<String>(treeSet);
 		return newList;
 
 	}
