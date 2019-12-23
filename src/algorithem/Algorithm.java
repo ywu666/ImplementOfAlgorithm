@@ -136,6 +136,7 @@ public class Algorithm {
 		}
 		return permutations;
 	}
+	
 	//list all possible combinations and permutations of its characters
 	public static ArrayList<String> getCombPerms(String str) {
 		ArrayList<String> permutations = new ArrayList<String>();
@@ -451,6 +452,11 @@ public class Algorithm {
 		return outBuffer[0];
 	}
 
+	//Find 2 numbers such that they sum up to a spedific Number.
+	public static int[] coupleSum(int[] numbers, int target) { // each input has exactly one solution
+	    return null;
+	}
+	
 	public static boolean groupSum(int[] arr, int target) {  
 		return groupSum(0,arr,target);
 	}
@@ -481,13 +487,13 @@ public class Algorithm {
 	public static boolean groupSumWithNum(int start_index,int[] arr, int must_have, int target) { //recursion
 		if (start_index >= arr.length) return target == 0;
 		//case1: The array contains the must_have
-		if (arr[start_index] == target) {
+		if (arr[start_index] == must_have) {
 			return groupSumWithNum(start_index + 1,arr,must_have,target- must_have);
 		} else {
 			//case2: Include the first element, check the remaining
 			if (groupSumWithNum(start_index + 1,arr,must_have,target- arr[start_index])) return true;
 			//case3: does not include the first element, check the remaining
-			if (groupSumWithNum(start_index + 1,arr,must_have,target- must_have)) return true;
+			if (groupSumWithNum(start_index + 1,arr,must_have,target)) return true;
 		}
 		return false;
 	}
