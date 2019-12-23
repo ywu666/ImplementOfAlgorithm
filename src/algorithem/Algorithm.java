@@ -697,6 +697,28 @@ public class Algorithm {
 		}
 		return memo[lengthA][lengthB];
 	}
+	
+	public static ArrayList<ArrayList<Integer>> generatePascalTriangle(int numRows) {
+		ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+		if (numRows == 0) return result;
+		ArrayList<Integer> prev = new ArrayList<Integer>();
+		prev.add(1);
+		result.add(prev);
+
+		for (int i = 2; i <= numRows;i++) {
+			ArrayList<Integer> curr = new ArrayList<>();
+
+			curr.add(1); // add First 
+			for (int j = 0; j < prev.size() - 1;j++) { //add Middle which is the combination of prev level
+				curr.add(prev.get(j) + prev.get(j+1)); 
+			}
+			curr.add(1); //add last
+
+			result.add(curr);
+			prev = curr;
+		}
+		return result;
+	}
 
 	//merge algorithm 
 	public static int[] merge(int[] arrLeft, int[] arrRight){ //merge 2 sorted lists
