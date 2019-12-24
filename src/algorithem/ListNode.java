@@ -225,6 +225,44 @@ class ListNode {
 	 * @return Return true if the list is palindrome, otherwise return false.
 	 */
 	public Boolean isListPalindrome(ListNode head) {
+		if(head == null || head.next==null) return true;
+//	    // Go to the middle node
+//	    int mid = 0, count = 0, length = 0;
+//	    ListNode current = head, midNode = null;
+//	    while(current != null) {
+//	        current = current.next;
+//	        length++;
+//	    }
+//	    mid = length/2;            
+//	    current = head;
+//	    while(current != null) {
+//	        if(count == mid) break;
+//	        current = current.next;
+//	        count++;
+//	    }
+//	    midNode = current; 
+//
+//	    // Reverse
+//	    ListNode p1 = midNode;
+//	    ListNode p2 = p1.next;
+//	    while(p1!=null && p2!=null){
+//	        ListNode temp = p2.next;
+//	        p2.next = p1;
+//	        p1 = p2;
+//	        p2 = temp;
+//	    }
+//	    midNode.next = null;
+//
+//	    // Compare
+//	    ListNode cur = (p2==null?p1:p2);
+//	    ListNode com = head;
+//	    while(cur!=null){
+//	        if(cur.data != com.data) return false;
+//	        cur = cur.next;
+//	        com = com.next;
+//	    }
+//	    return true;
+		
 		ListNode reverse = reverseList(head);
 	    ListNode com = head;
 	    while (reverse != null && com != null) {
