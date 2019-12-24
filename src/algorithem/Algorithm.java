@@ -745,6 +745,39 @@ public class Algorithm {
 		}
 		return result;
 	}
+	
+	public static int[] maxContSequence(int[] arr) {
+		int curr_sart_index = 0,curr_end_index = 0, curr_sum = 0;
+		int max_start_index = 0, max_end_index = -1, max_sum = 0;
+
+		if (arr.length > 0) {
+			curr_sum = arr[0];
+			max_sum = arr[0];
+			max_end_index = 0;
+		}
+		for (int i =1; i<arr.length;i++) {
+			int sum = curr_sum + arr[i];
+		    // If the maximum sum plus the current item is less than the item
+            // Then we should set maximum sum to be the current item
+			if (arr[i] > sum) {  
+				curr_sart_index = i;
+				curr_end_index = i;
+				curr_sum = arr[i];
+			}else {    // Otherwise, include the current item into our subsequence
+				curr_end_index++;
+				curr_sum += arr[i];
+			}
+
+			if (curr_sum > max_sum) {   //Update the global max subsequence
+				max_sum = curr_sum;
+				max_start_index = curr_sart_index;
+				max_end_index = curr_end_index;
+			}
+		}
+		
+		int[] result = {max_sum,max_start_index,max_end_index};
+		return result;
+	}
 
 	//merge algorithm 
 	public static int[] merge(int[] arrLeft, int[] arrRight){ //merge 2 sorted lists
