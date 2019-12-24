@@ -225,7 +225,14 @@ class ListNode {
 	 * @return Return true if the list is palindrome, otherwise return false.
 	 */
 	public Boolean isListPalindrome(ListNode head) {
-		return false;
+		ListNode reverse = reverseList(head);
+	    ListNode com = head;
+	    while (reverse != null && com != null) {
+	        if (reverse.data != com.data) return false;
+	        reverse = reverse.next;
+	        com = com.next;
+	    }  
+	    return true;
 	}
 
 	/**
