@@ -746,6 +746,12 @@ public class Algorithm {
 		return result;
 	}
 	
+	/**
+	 * Find the contiguous subsequence that has the maximum sum among all
+	 * subsequences in the array (click the red text to learn more about subsequences). 
+	 * @param arr = An array of Integer
+	 * @return  res[0] = max sum, res[1] = start index of max subsequence, res[2] = end index of max subsequence.
+	 */
 	public static int[] maxContSequence(int[] arr) {
 		int curr_sart_index = 0,curr_end_index = 0, curr_sum = 0;
 		int max_start_index = 0, max_end_index = -1, max_sum = 0;
