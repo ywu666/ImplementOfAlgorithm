@@ -128,7 +128,7 @@ class ListNode {
 		return head;
 	}
 
-	public ListNode reverseList(ListNode head) {
+	public  ListNode reverseList(ListNode head) {
 		ListNode prev = null;
 		while (head != null) {
 			ListNode next = head.next;
@@ -153,7 +153,15 @@ class ListNode {
 
 	// this method allowed to use the exact memory
 	public ListNode findNthNodeFromEnd(ListNode head, int n) {
-		return head;
+		if (head == null) return null;
+		Hashtable<Integer,ListNode> table = new Hashtable<>();
+		int index = 1;
+		while (head != null) {
+			table.put(index++, head);
+			head = head.next;
+		}
+		return table.get(table.size() -n + 1);
+	
 	}
 
 	//this method will not use the exact memory
@@ -212,7 +220,7 @@ class ListNode {
 
 	/**
 	 * This method determine if the list is a palindrome. A palindrome is a sequence
-	 *  that reads the same backward as forward.
+	 * that reads the same backward as forward.
 	 * @param head
 	 * @return Return true if the list is palindrome, otherwise return false.
 	 */
