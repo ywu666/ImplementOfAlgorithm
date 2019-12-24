@@ -182,14 +182,14 @@ public class Matrix {
 
 		for (int i = 0; i< rows;i++) {
 			for (int j = 0;j<cols;j++) {
-				out = search2(i,j,board,word,"");
+				out = search(i,j,board,word,"");
 				if (out) return true;
 			}
 		}
 		return out;
 	}
 
-	public static boolean search2(int r, int c, char[][] board, String word, String predecessor) {
+	public static boolean search(int r, int c, char[][] board, String word, String predecessor) {
 		int rows = board.length;
 		int cols = board[0].length;
 		//out of bound // not match pattern // visited
@@ -206,60 +206,14 @@ public class Matrix {
 
 			board[r][c] = '@'; // Marked as visited
 
-			out = search2(r+1,c,board,word,s)        // check up
-					|| search2(r-1,c,board,word,s)   // check down
-					|| search2(r,c+1,board,word,s)   // check left
-					|| search2(r,c-1,board,word,s);  // check down
+			out = search(r+1,c,board,word,s)        // check up
+					|| search(r-1,c,board,word,s)   // check down
+					|| search(r,c+1,board,word,s)   // check left
+					|| search(r,c-1,board,word,s);  // check down
 
 			board[r][c] = ch; // unmark the board node
 		}
 		return out;
-	}
-
-	public ArrayList<String> boggleSearchWithDict(char[][] board, Trie dictionary){
-		TreeSet<String> output = new TreeSet<String>();
-		int rows = board.length;
-		int cols = board[0].length;
-
-		for (int i = 0; i<rows; i++) {
-			for (int j=0;j < cols; j++) {
-				search(i,j,board,dictionary,"",output);
-			}
-		}
-		return new ArrayList<>(output);
-	}
-
-	/**
-	 * This method is a help method for boggleSearchWithDict.
-	 * @param r = row of the board
-	 * @param c = column of the board
-	 * @param board = board you want to search
-	 * @param dictionary = the dictionary that is provided
-	 * @param prefix 
-	 * @param output
-	 */
-	public static void search(int r, int c, char[][] board, Trie dictionary, String prefix, TreeSet<String> output) {
-		int rows = board.length;
-		int cols = board[0].length;
-
-		if (r > (rows - 1) || r < 0 || c> (cols-1) || c < 0 || !dictionary.searchPrefix(prefix) || board[r][c] == '@') {
-			return ;
-		}
-
-		char ch = board[r][c];
-		String s = prefix + ch;
-		if (dictionary.searchWord(s)) {
-			output.add(s);
-		}
-
-		board[r][c] = '@'; // Marked as visited
-
-		search(r+1,c,board,dictionary,s,output); // check up
-		search(r-1,c,board,dictionary,s,output); // check down
-		search(r,c+1,board,dictionary,s,output); // check left
-		search(r,c-1,board,dictionary,s,output); // check down
-
-		board[r][c] = ch; // unmark the board node
 	}
 	
 	/**
