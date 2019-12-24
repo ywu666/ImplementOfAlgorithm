@@ -187,8 +187,6 @@ class ListNode {
 	public ListNode findNthNodeFromEnd2(ListNode head, int n) {
 		ListNode curr = head;
 		int length = (head == null) ? 0:head.length();
-		
-		curr = head;
 		int pos = length - n + 1;
 		int count = 0;
 		while (curr != null) { //find the Nth node.
