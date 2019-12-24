@@ -8,6 +8,16 @@ class ListNode {
 	ListNode(int data) { this.data = data; }
 
 	//singly linked list
+	public int length() {
+		ListNode curr = this;
+		int length = 0;
+		while (curr != null) {
+			length++;
+			curr = curr.next;	
+		}	
+		return length;
+	}
+	
 	public ListNode insertAtTail(ListNode head, int data) {
 		ListNode newNode = new ListNode(data);
 		if (head == null) return newNode;
@@ -148,7 +158,25 @@ class ListNode {
 
 	//this method will not use the exact memory
 	public ListNode findNthNodeFromEnd2(ListNode head, int n) {
-		return null;
+		ListNode curr = head;
+		int length = 0;
+		while (curr != null)  { //calculate the length
+			length++;
+			curr = curr.next;
+		}
+		
+		curr = head;
+		int pos = length - n + 1;
+		int count = 0;
+		while (curr != null) { //find the Nth node.
+			count++;
+			if (count == pos) {
+				break;
+			}
+			curr = curr.next;
+
+		}
+		return curr;
 	}
 
 	public ListNode removeNthFromEnd(ListNode head, int n) {
