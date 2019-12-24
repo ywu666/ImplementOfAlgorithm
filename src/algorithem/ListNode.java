@@ -124,7 +124,27 @@ class ListNode {
 		return head;
 	}
 
-	public ListNode removeDuplicates(ListNode head) { 
+	public ListNode removeDuplicates(ListNode head) { 	    
+		Hashtable<Integer,ListNode> table = new Hashtable<>();
+		ListNode curr = head;
+		ListNode prev = curr;
+		while (curr != null) {
+			if (table.containsKey(curr.data)) { //find and delete the duplicate nodes
+				prev.next = curr.next;
+				curr.next = null;
+				curr = prev.next;
+				if (curr == null) { //Reach the end of the list
+					break;
+				}else {
+					table.put(curr.data, curr);
+				}	
+			}else {
+				table.put(curr.data, curr);
+			}
+			
+			prev = curr;
+			curr = curr.next;
+		}		
 		return head;
 	}
 
@@ -161,7 +181,6 @@ class ListNode {
 			head = head.next;
 		}
 		return table.get(table.size() -n + 1);
-	
 	}
 
 	//this method will not use the exact memory
