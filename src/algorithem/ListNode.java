@@ -8,7 +8,7 @@ class ListNode {
 	ListNode(int data) { this.data = data; }
 
 	//singly linked list
-	public int length() {
+	public int length() { //start from 0
 		ListNode curr = this;
 		int length = 0;
 		while (curr != null) {
@@ -167,11 +167,7 @@ class ListNode {
 	//this method will not use the exact memory
 	public ListNode findNthNodeFromEnd2(ListNode head, int n) {
 		ListNode curr = head;
-		int length = 0;
-		while (curr != null)  { //calculate the length
-			length++;
-			curr = curr.next;
-		}
+		int length = (head == null) ? 0:head.length();
 		
 		curr = head;
 		int pos = length - n + 1;
