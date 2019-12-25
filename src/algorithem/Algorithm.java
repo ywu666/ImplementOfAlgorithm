@@ -276,6 +276,22 @@ public class Algorithm {
 		return 0;
 	}
 
+	//Calculate the sum of pow of all digits, it's a happy number if the final result is 1.
+	public static boolean isHappyNumber(int num) {
+		int[] digits = getDigits(num);
+		int result;
+		do {
+			result = 0;
+			for (int i =0;i<digits.length;i++) {
+				result += digits[i]*digits[i];
+			}
+			digits = getDigits(result);
+			
+		}while(result > 9);
+		
+		return (result == 1);
+	}
+	
 	public static int[] getDigits(int num) {
 		String str = String.valueOf(num);
 		int[] digits = new int[str.length()];
