@@ -260,9 +260,8 @@ class ListNode {
 
 	    // Compare
 	    ListNode cur = (p2==null?p1:p2);
-	
 	    ListNode com = head;
-	    while(com!=null){
+	    while(cur != null){
 	        if(cur.data != com.data) return false;
 	        cur = cur.next;
 	        com = com.next;
