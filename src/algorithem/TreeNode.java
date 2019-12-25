@@ -71,6 +71,32 @@ public class TreeNode {
 	    return heightDiameter;
 	}
 	
+	public static boolean validateBSTItr(TreeNode root) {
+		class TreeBoundaryNode { //Inner class
+			TreeNode root;
+			int leftBoundary;
+			int rightBoundary;
+			public TreeBoundaryNode (TreeNode root, int leftBoundary, int rightBoundary) {
+				this.root = root;
+				this.leftBoundary = leftBoundary;
+				this.rightBoundary = rightBoundary;
+			}
+		}
+
+		if (root == null || (root.left == null && root.right == null)) return true;
+		Queue<TreeBoundaryNode> q = new LinkedList<>();
+		q.add(new TreeBoundaryNode(root,Integer.MIN_VALUE,Integer.MAX_VALUE));
+
+		while (!q.isEmpty()) {
+			TreeBoundaryNode node = q.poll();
+			TreeNode tr = node.root;
+			if (tr.data <= node.leftBoundary || tr.data >= node.rightBoundary) return false;
+			if (tr.left != null) q.add(new TreeBoundaryNode(tr.left, node.leftBoundary, tr.data));
+			if (tr.right != null) q.add(new TreeBoundaryNode(tr.right, tr.data, node.rightBoundary));
+		}
+		return true;
+	}
+	
 	public static boolean validBST(TreeNode root) {
 		return validBST(root,Integer.MIN_VALUE,Integer.MAX_VALUE);
 	}
