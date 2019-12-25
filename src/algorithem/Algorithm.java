@@ -276,6 +276,15 @@ public class Algorithm {
 		return 0;
 	}
 
+	public static int[] getDigits(int num) {
+		String str = String.valueOf(num);
+		int[] digits = new int[str.length()];
+		for (int i = 0;i<digits.length;i++) {
+			digits[i] = num%10;
+			num = num/10;
+		}	
+		return digits;
+	}
 	public static boolean areAllCharactersUnique(String str){
 		if (str == null || str.equals("")) return true;
 		for ( int i = 0; i < str.length(); i++) {
