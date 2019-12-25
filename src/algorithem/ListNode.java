@@ -8,7 +8,7 @@ class ListNode {
 	ListNode(int data) { this.data = data; }
 
 	//singly linked list
-	public int length() { //start from 0
+	public int length() {
 		ListNode curr = this;
 		int length = 0;
 		while (curr != null) {
@@ -148,13 +148,14 @@ class ListNode {
 		return head;
 	}
 
-	public  ListNode reverseList(ListNode head) {
+	public  ListNode reverseList(ListNode head) { //Use this method, the original head will change, head.nexxt = null;
+	    ListNode curr = head;
 		ListNode prev = null;
-		while (head != null) {
-			ListNode next = head.next;
-			head.next = prev;
-			prev = head;
-			head = next;
+		while (curr != null) {
+			ListNode next = curr.next;
+			curr.next = prev;
+			prev = curr;
+			curr = next;
 		}    	
 		return prev;
 	}
@@ -232,51 +233,40 @@ class ListNode {
 	 * @return Return true if the list is palindrome, otherwise return false.
 	 */
 	public Boolean isListPalindrome(ListNode head) {
-		if(head == null || head.next==null) return true;
-//	    // Go to the middle node
-//	    int mid = 0, count = 0, length = 0;
-//	    ListNode current = head, midNode = null;
-//	    while(current != null) {
-//	        current = current.next;
-//	        length++;
-//	    }
-//	    mid = length/2;            
-//	    current = head;
-//	    while(current != null) {
-//	        if(count == mid) break;
-//	        current = current.next;
-//	        count++;
-//	    }
-//	    midNode = current; 
-//
-//	    // Reverse
-//	    ListNode p1 = midNode;
-//	    ListNode p2 = p1.next;
-//	    while(p1!=null && p2!=null){
-//	        ListNode temp = p2.next;
-//	        p2.next = p1;
-//	        p1 = p2;
-//	        p2 = temp;
-//	    }
-//	    midNode.next = null;
-//
-//	    // Compare
-//	    ListNode cur = (p2==null?p1:p2);
-//	    ListNode com = head;
-//	    while(cur!=null){
-//	        if(cur.data != com.data) return false;
-//	        cur = cur.next;
-//	        com = com.next;
-//	    }
-//	    return true;
-		
-		ListNode reverse = reverseList(head);
+		if(head == null || head.next == null) return true;
+	    // Go to the middle node
+	    int mid = 0, count = 0;
+	    ListNode current = head, midNode = null;
+        int length = head.length();
+	    mid = length/2;            
+	    current = head;
+	    while(current != null) {
+	        if(count == mid) break;
+	        current = current.next;
+	        count++;
+	    }
+	    midNode = current; 
+	   
+	    // Reverse
+	    ListNode p1 = midNode;
+	    ListNode p2 = p1.next;
+	    while(p1!=null && p2!=null){
+	        ListNode temp = p2.next;
+	        p2.next = p1;
+	        p1 = p2;
+	        p2 = temp;  
+	    }
+	    midNode.next = null;
+
+	    // Compare
+	    ListNode cur = (p2==null?p1:p2);
+	
 	    ListNode com = head;
-	    while (reverse != null && com != null) {
-	        if (reverse.data != com.data) return false;
-	        reverse = reverse.next;
+	    while(com!=null){
+	        if(cur.data != com.data) return false;
+	        cur = cur.next;
 	        com = com.next;
-	    }  
+	    }
 	    return true;
 	}
 
