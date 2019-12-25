@@ -284,6 +284,18 @@ public class TreeNode {
 		return 0;
 	}
 
+	//Populate the list of ancestors from bottom to top in the below list.
+	public ArrayList<Integer> ancestorsList = new ArrayList<Integer>();
+	public boolean printAncestors(TreeNode root, int nodeData) { //recursion
+	    if (root == null) return false;
+	    if (root.data == nodeData)  return true; 
+	    if (printAncestors(root.left,nodeData) ||printAncestors(root.right,nodeData)  ) {
+	        ancestorsList.add(root.data);
+	        return true;
+	    }
+	  return false;
+	}
+	
 	public static ArrayList<Integer> preorderList = new ArrayList<>();
 	public void preorder (TreeNode root) {
 		if (root != null) {
