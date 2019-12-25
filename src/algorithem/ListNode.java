@@ -203,13 +203,7 @@ class ListNode {
 	public ListNode removeNthFromEnd(ListNode head, int n) {
 		if (head == null || head.next == null) return null;
 		ListNode curr = head;
-		int length = 0;
-
-		while (curr != null) {
-			curr = curr.next;
-			length++;
-		}
-
+		int length = (head == null) ? 0:head.length();
 		int count = 0;
 		int pos = length - n + 1;
 		curr = head;
