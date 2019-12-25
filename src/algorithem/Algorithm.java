@@ -689,6 +689,8 @@ public class Algorithm {
 		return res;
 	}
 	
+	//The difference of all ascending pairs in the sequence.
+	//Only added the positive difference
 	public static int maxProfit(int[] prices){
 	    int profit = 0;
 	    for(int i=1; i < prices.length; i++){
