@@ -77,7 +77,6 @@ class DoublyLinkedNode {
 		}
 		return head;
 	}
-	
 }
 
 
