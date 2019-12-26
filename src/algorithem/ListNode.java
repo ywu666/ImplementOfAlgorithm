@@ -347,7 +347,7 @@ class ListNode {
 	//Circular linked list
 	public ListNode insertAtTailCircural (ListNode head, int data) {
 		ListNode newNode = new ListNode(data);
-		newNode.next = newNode;
+		newNode.next = newNode; //This is important, the newNode after creation need to point to itself
 		if (head == null) return newNode;
 		ListNode curr = head;
 		while (curr.next != head) { // find the tail
