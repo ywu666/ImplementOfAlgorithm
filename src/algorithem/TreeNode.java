@@ -19,8 +19,8 @@ public class TreeNode {
 
 	public TreeNode insert(TreeNode root, int data) {
 		if (root == null) return new TreeNode(data);
-		if (root.data > data) insert(root.left,data);
-		if (root.data < data) insert (root.right, data);
+		if (root.data > data) root.left = insert(root.left,data);
+		if (root.data < data) root.right = insert(root.right,data);
 		return root;
 	}
 
