@@ -317,7 +317,18 @@ public class TreeNode {
 	}
 
 	public int maxSumpath(TreeNode root) {
-		return 0;
+		int[] buffer = new int[1];
+		maxSumPathMain(root,buffer);
+		return buffer[0];
+	}
+	
+	public static int maxSumPathMain (TreeNode root, int[] buffer) {
+	    if (root == null) return 0;
+	    int leftSum = maxSumPathMain(root.left, buffer);
+	    int rightSum = maxSumPathMain(root.right, buffer);
+	    int nodeCumVal = Math.max(root.data + leftSum, root.data + rightSum);
+	    buffer[0] = Math.max(buffer[0], leftSum + root.data + rightSum);
+	    return nodeCumVal;
 	}
 
 	//Populate the list of ancestors from bottom to top in the below list.
