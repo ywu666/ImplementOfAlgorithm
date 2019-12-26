@@ -17,7 +17,7 @@ public class TreeNode {
 		this.right = right;
 	}
 
-	public TreeNode insert(TreeNode root, int data) {
+	public TreeNode insert(TreeNode root, int data) { //recursion
 		if (root == null) return new TreeNode(data);
 		if (root.data > data) root.left = insert(root.left,data);
 		if (root.data < data) root.right = insert(root.right,data);
@@ -321,6 +321,21 @@ public class TreeNode {
 	    }
 	  return false;
 	}
+	
+	public  ArrayList<Integer> rangeList = new ArrayList<Integer>();
+	public void printRange(TreeNode root, int a, int b) {                   
+	        if(root == null) return;
+	        if(root.data >= a) {
+	            printRange(root.left, a, b);
+	        }
+	        if (root.data >= a && root.data <= b) {
+	            rangeList.add(root.data);
+	            
+	        } 
+	        if(root.data <= b) {
+	            printRange(root.right, a, b);
+	        }
+	 }
 	
 	public static ArrayList<Integer> preorderList = new ArrayList<>();
 	public void preorder (TreeNode root) {
