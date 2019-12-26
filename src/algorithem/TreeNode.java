@@ -394,7 +394,7 @@ public class TreeNode {
 		return inorder;
 	}
 
-	public ArrayList<ArrayList<Integer>> levelorder(TreeNode root) {
+	public ArrayList<ArrayList<Integer>> printLevelByLevel(TreeNode root) {
 		ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
 		if (root == null) return list;
 		Queue<TreeNode> currLevel = new LinkedList<>();
@@ -406,7 +406,7 @@ public class TreeNode {
 			level.add(node.data);
 			if (node.left != null) nextLevel.add(node.left);
 			if (node.right != null) nextLevel.add(node.right);
-			//Move to the nextLevel
+			//Move to the nextLevel and add nodes of 
 			if (currLevel.isEmpty()) {
 				currLevel = nextLevel;
 				nextLevel = new LinkedList<>();
@@ -416,7 +416,26 @@ public class TreeNode {
 		}
 		return list;
 	}
-
+    
+	public ArrayList<Integer> levelorder(TreeNode root) {
+		ArrayList<Integer> nodes = new ArrayList<>();
+		if (root == null) return nodes;
+		Queue<TreeNode> currlevel = new LinkedList<>();
+		Queue<TreeNode> nextlevel = new LinkedList<>();
+		currlevel.add(root);
+		while(!currlevel.isEmpty()) {
+			TreeNode curr = currlevel.poll();
+			nodes.add(curr.data);
+			if (curr.left != null) nextlevel.add(curr.left);
+			if (curr.right != null) nextlevel.add(curr.right);
+			if(currlevel.isEmpty()) {
+				currlevel = nextlevel;
+				nextlevel = new LinkedList<>();
+			}
+		}
+		return nodes;
+	}
+	
 	public ArrayList<Integer> levelorderRev(TreeNode root) { 
 		ArrayList<Integer> list = new ArrayList<>();
 		if(root == null) return list; 
