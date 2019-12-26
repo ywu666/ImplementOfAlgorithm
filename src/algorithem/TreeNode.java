@@ -316,7 +316,7 @@ public class TreeNode {
 		return numberOfLeaves(root.left) + numberOfLeaves(root.right); 
 	}
 
-	public int maxSumpath(TreeNode root) {
+	public static int maxSumpath(TreeNode root) { //Calculate the maxSumpath between 2 nodes
 		int[] buffer = new int[1];
 		maxSumPathMain(root,buffer);
 		return buffer[0];
