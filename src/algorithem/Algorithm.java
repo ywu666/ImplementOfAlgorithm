@@ -276,6 +276,10 @@ public class Algorithm {
 		return 0;
 	}
 	
+	/*This method return the integer with the maximum number of repetitions.
+	 * Time complexity is O(n), the space complexity is O(1). 
+	 * The space Complexity for using Hashtable is O(n).
+	 */
 	public static int getMaxRepetition(int[] arr) {
 		int max = arr.length; 
 		// Iterate though input array, for every element a[i],
