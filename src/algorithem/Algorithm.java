@@ -275,6 +275,27 @@ public class Algorithm {
 		}
 		return 0;
 	}
+	
+	public static int getMaxRepetition(int[] arr) {
+		int max = arr.length; 
+		// Iterate though input array, for every element a[i],
+		// increment a[a[i]%k] by k
+		for (int i = 0; i< arr.length; i++)
+		{  
+			arr[arr[i]%max] += max;
+		}
+		// Find index of the maximum repeating element
+		int maxr = arr[0], result = 0;
+		for (int i = 1; i < arr.length; i++)
+		{
+			if (arr[i] > maxr)
+			{
+				maxr = arr[i];
+				result = i;
+			}
+		}
+		return result;
+	}
 
 	//Calculate the sum of pow of all digits, it's a happy number if the final result is 1.
 	public static boolean isHappyNumber(int num) {
