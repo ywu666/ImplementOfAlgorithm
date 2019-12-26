@@ -372,7 +372,18 @@ public class Algorithm {
 		}
 	}
 
-	public static int reverseInt(int x) {
+	public static void reverse(int[] arr, int left, int right){
+	    if (arr == null || arr.length == 1) return ;
+	    while(left<right){
+	        int temp = arr[left];
+	        arr[left] = arr[right];
+	        arr[right] = temp;
+	        left++;
+	        right--;
+	    }
+	}
+	
+	public static int reverse(int x) {
 		int reverse = 0;
 		while (x != 0) {
 			reverse = reverse*10 + x%10;
@@ -381,7 +392,7 @@ public class Algorithm {
 		return reverse;
 	}
 
-	public static String reverseStr(String str) {
+	public static String reverse(String str) {
 		if (str == null || str.isEmpty()) return str;
 		String inputStr = str;
 		String outputStr = "";
@@ -393,7 +404,7 @@ public class Algorithm {
 
 	public static Boolean isIntPalindrome(int x) { 
 		if (x < 0) return false;
-		int reverse = reverseInt(x);
+		int reverse = reverse(x);
 		return (reverse == x);   
 	}
 
@@ -625,6 +636,15 @@ public class Algorithm {
         // If sum is an even number, check if the summation to half is possible. 
         return groupSum(0,arr,arr_sum/2);
     }
+	
+	public static int[] rotateLeft(int[] arr, int k) {
+	    if (arr == null) return null;
+	    int actualPos = k%arr.length;
+	    reverse(arr,0,arr.length -1);
+	    reverse(arr,0,arr.length-actualPos-1);
+	    reverse(arr,arr.length -actualPos, arr.length -1);
+	    return arr;
+	}
 	
 	private static String open = "([{";
 	private static String close = ")]>}";
