@@ -207,16 +207,27 @@ public class TreeNode {
 	 */
 	public TreeNode findKthLargest(TreeNode root, int k) {
 		if (root == null) return null;
-		int rightSize = 1;
-
+		int rightSize = 0;
 		if (root.right != null) {
-			rightSize = size(root.right) + 1;
+			rightSize = size(root.right);
 		}
 		//3 conditions
-		if (k == rightSize) return root;
-		if (k < rightSize) return findKthLargest(root.right,k);
-		return findKthLargest(root.left, k - rightSize);
+		if (k == rightSize+1) return root;
+		if (k <= rightSize) return findKthLargest(root.right,k);
+		return findKthLargest(root.left, k - rightSize-1);
 
+	}
+	
+	public TreeNode findKthSmallest(TreeNode root, int k) {
+		if (root == null) return null;
+		int leftSize = 0;
+		if (root.left != null) {
+			leftSize = size(root.left);
+		}
+
+		if (leftSize+1== k) return root;
+		if (k <= leftSize) return findKthSmallest(root.left, k);
+		return findKthSmallest(root.right,k - leftSize - 1);
 	}
 
 	public int findMaxSumLevel(TreeNode root) { // the root i level 0
@@ -324,18 +335,18 @@ public class TreeNode {
 	
 	public  ArrayList<Integer> rangeList = new ArrayList<Integer>();
 	public void printRange(TreeNode root, int a, int b) {                   
-	        if(root == null) return;
-	        if(root.data >= a) {
-	            printRange(root.left, a, b);
-	        }
-	        if (root.data >= a && root.data <= b) {
-	            rangeList.add(root.data);
-	            
-	        } 
-	        if(root.data <= b) {
-	            printRange(root.right, a, b);
-	        }
-	 }
+		if(root == null) return;
+		if(root.data >= a) {
+			printRange(root.left, a, b);
+		}
+		if (root.data >= a && root.data <= b) {
+			rangeList.add(root.data);
+
+		} 
+		if(root.data <= b) {
+			printRange(root.right, a, b);
+		}
+	}
 	
 	public static ArrayList<Integer> preorderList = new ArrayList<>();
 	public void preorder (TreeNode root) {
