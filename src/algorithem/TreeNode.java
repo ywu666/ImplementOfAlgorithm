@@ -215,7 +215,6 @@ public class TreeNode {
 		if (k == rightSize+1) return root;
 		if (k <= rightSize) return findKthLargest(root.right,k);
 		return findKthLargest(root.left, k - rightSize-1);
-
 	}
 	
 	public TreeNode findKthSmallest(TreeNode root, int k) {
@@ -396,28 +395,23 @@ public class TreeNode {
 	}
 
 	public ArrayList<ArrayList<Integer>> levelorder(TreeNode root) {
-		ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-		ArrayList<Integer> level = new ArrayList<>();
+		ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
 		if (root == null) return list;
-		Queue<TreeNode> currLvl = new LinkedList<>();
-		Queue<TreeNode> nextLvl = new LinkedList<>();
-		currLvl.add(root);
-		while (!currLvl.isEmpty()) {
-			TreeNode curr = currLvl.poll();
-			if (curr != null) {
-				level.add(curr.data); // initialize the next level
-				nextLvl.add(curr.left);
-				nextLvl.add(curr.right);
-			}
-
-			if (currLvl.isEmpty()) { //finish the current level 
-				if (!level.isEmpty()) {
-					list.add(level); // add all current data into result
-				}
-				level = new ArrayList<>(); //Move to next level
-				while (!nextLvl.isEmpty()) {
-					currLvl.add(nextLvl.poll());
-				}
+		Queue<TreeNode> currLevel = new LinkedList<>();
+		Queue<TreeNode> nextLevel = new LinkedList<>();
+		currLevel.add(root);
+		ArrayList<Integer> level = new ArrayList<Integer>();
+		while(!currLevel.isEmpty()){
+			TreeNode node = currLevel.poll();
+			level.add(node.data);
+			if (node.left != null) nextLevel.add(node.left);
+			if (node.right != null) nextLevel.add(node.right);
+			//Move to the nextLevel
+			if (currLevel.isEmpty()) {
+				currLevel = nextLevel;
+				nextLevel = new LinkedList<>();
+				list.add(level);
+				level = new ArrayList<Integer>();
 			}
 		}
 		return list;
