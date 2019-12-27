@@ -100,28 +100,30 @@ class ListNode {
 	}
 
 	public ListNode insertAtPosition(ListNode head, int data, int pos) {
-		ListNode newNode = new ListNode(data);
-		if (head == null) return newNode;
-
-		int count = 0;
-		ListNode curr = head;
-		ListNode prev = curr;
-
-		while (curr != null) {
-			count++;
-			if (count == pos) {break;}
-			prev = curr;
-			curr = curr.next;
-		}
-
-		if (count == 1) { // insert at head
-			newNode.next = head;
-			head = newNode;
-		}else { // insert at the middle && tail
-			prev.next = newNode;
-			newNode.next = curr;
-		}
-		return head;
+	    ListNode newNode = new ListNode(data);
+	    if(head == null && pos == 1) return newNode;
+	    ListNode curr = head;
+	    ListNode prev = curr;
+	    int count = 1;
+	    while(curr != null){
+	        if(count == pos){
+	            break;
+	        }
+	        count++;
+	        prev = curr;
+	        curr = curr.next;
+	    }
+	    
+	    if(count < pos){ //Out of Range
+	        return head;
+	    }else if (count == 1){ //Insert at head
+	        newNode.next = head;
+	        return newNode;
+	    }else { //Insert at middle and tail
+	        prev.next = newNode;
+	        newNode.next = curr;
+	        return head;
+	    }
 	}
 
 	public ListNode removeDuplicates(ListNode head) { 	    
