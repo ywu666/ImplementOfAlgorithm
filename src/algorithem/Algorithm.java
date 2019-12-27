@@ -326,15 +326,24 @@ public class Algorithm {
 		}	
 		return digits;
 	}
+	
 	public static boolean areAllCharactersUnique(String str){
-		if (str == null || str.equals("")) return true;
-		for ( int i = 0; i < str.length(); i++) {
-			for (int j = i + 1; j < str.length(); j++) {
-				if ( str.charAt(i) == str.charAt(j)) {
-					return false;
-				}
+		if(str == null || str.length() <= 1) return true;
+
+		// 2^8 = 256. Covers all characters in ASCII. Make Checker array
+		boolean[] checker_array = new boolean[256];
+
+		// Loop across all characters in String. 
+		for(int i=0;i<str.length();i++){
+			// Check the position specified by the character's 8 bit value. Since this is cast as an int, it will be a numerical value!
+			int position = str.charAt(i);
+			if(checker_array[position]) {
+				return false;
+			}else {
+				checker_array[position] = true;
 			}
-		}	    
+		}
+		// Return true if no duplicates
 		return true;
 	}
 
