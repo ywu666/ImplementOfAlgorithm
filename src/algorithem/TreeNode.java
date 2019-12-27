@@ -207,22 +207,16 @@ public class TreeNode {
 	 */
 	public TreeNode findKthLargest(TreeNode root, int k) {
 		if (root == null) return null;
-		int rightSize = 0;
-		if (root.right != null) {
-			rightSize = size(root.right);
-		}
+		int rightSize = (root.right != null)? size(root.right):0;
 		//3 conditions
 		if (k == rightSize+1) return root;
 		if (k <= rightSize) return findKthLargest(root.right,k);
 		return findKthLargest(root.left, k - rightSize-1);
 	}
-	
+
 	public TreeNode findKthSmallest(TreeNode root, int k) {
 		if (root == null) return null;
-		int leftSize = 0;
-		if (root.left != null) {
-			leftSize = size(root.left);
-		}
+		int leftSize = (root.left != null)? size(root.left):0;
 
 		if (leftSize+1== k) return root;
 		if (k <= leftSize) return findKthSmallest(root.left, k);
