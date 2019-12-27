@@ -351,7 +351,6 @@ public class TreeNode {
 			preorderList.add(root.data);
 			preorder(root.left);
 			preorder(root.right);
-
 		}
 	}
 
@@ -552,7 +551,7 @@ public class TreeNode {
 			mirror(root.left);
 			mirror(root.right);
 			//swap the left and right
-			root = root.left;
+			temp = root.left;
 			root.left = root.right;
 			root.right  = temp;
 		}
