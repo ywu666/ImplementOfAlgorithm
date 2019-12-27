@@ -254,24 +254,17 @@ public class TreeNode {
 
 	//half nodes are the nodes with exactly one children.
 	public int numberOfHalfNodes(TreeNode root) {
-		if (root == null) return 0;
-
-		Queue<TreeNode> q = new LinkedList<TreeNode>();
-		q.add(root);
 		int count = 0;
-
+		if (root == null) return count;
+				
+		Queue<TreeNode> q = new LinkedList<TreeNode>();
+		q.add(root);	
 		while (!q.isEmpty()) { //iterate the tree and count the half nodes
 			TreeNode node = q.poll();
-			if (node.left == null && node.right != null) {
-				count++;
-			} else if (node.left != null && node.right == null) {
-				count++;
-			}
-
+			if ((node.left == null && node.right != null) || (node.left != null && node.right == null)) count++;
 			if (node.left != null) q.add(node.left);
 			if (node.right != null) q.add(node.right);
 		}
-
 		return count;
 	}
 
