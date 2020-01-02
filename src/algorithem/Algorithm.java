@@ -3,62 +3,6 @@ package algorithem;
 import java.util.*;
 
 public class Algorithm {	
-	
-	//this method will fail if integer is repeated more than 2 times.
-	public static String duplicate(int[] numbers){
-		TreeSet<Integer> set = new TreeSet<>();
-		Arrays.sort(numbers);
-
-		for (int i = 1; i < numbers.length; i++) {
-			if (numbers[i] == numbers[i - 1]) {
-				set.add(numbers[i]);
-			}
-		}
-		return set.toString();    
-	}
-
-	public static int singleNumber(int[] A) { // return the first number that appears once
-		Hashtable<Integer, Integer> table = new Hashtable<Integer, Integer>();
-		for (int i =0;i < A.length;i++) {
-			if(table.containsKey(A[i])) {
-				table.put(A[i], table.get(A[i])+1);
-			}else {
-				table.put(A[i], 1);
-			}
-		}
-
-		for (int i =0;i < A.length;i++) {
-			if (table.get(A[i]) == 1) {
-				return A[i];
-			}
-		}
-		return 0;
-	}
-	
-	/*This method return the integer with the maximum number of repetitions.
-	 * Time complexity is O(n), the space complexity is O(1). 
-	 * The space Complexity for using Hashtable is O(n).
-	 */
-	public static int getMaxRepetition(int[] arr) {
-		int max = arr.length; 
-		// Iterate though input array, for every element a[i],
-		// increment a[a[i]%k] by k
-		for (int i = 0; i< arr.length; i++)
-		{  
-			arr[arr[i]%max] += max;
-		}
-		// Find index of the maximum repeating element
-		int maxr = arr[0], result = 0;
-		for (int i = 1; i < arr.length; i++)
-		{
-			if (arr[i] > maxr)
-			{
-				maxr = arr[i];
-				result = i;
-			}
-		}
-		return result;
-	}
 
 	//Calculate the sum of pow of all digits, it's a happy number if the final result is 1.
 	public static boolean isHappyNumber(int num) {
@@ -86,20 +30,6 @@ public class Algorithm {
 		return digits;
 	}
 
-	/* Maximum Gain is defined as the maximum difference between 2 elements in a list 
-	 * such that the larger element appears after the smaller element. 
-	 * If no gain is possible, return 0.
-	 */
-	public static int maxGain(int[] arr) {
-		int maxGain = 0;
-		int min = arr[0];
-		for (int i=1;i<arr.length;i++) {
-			min = Math.min(min, arr[i]);
-			maxGain = Math.max(maxGain, arr[i] - min);
-		}	
-		return maxGain;
-	}
-
 	public static String computeBinary(int val) {
 		if (val == 0) return "0";
 		String binary = "";
@@ -119,17 +49,6 @@ public class Algorithm {
 			return computeBinary(val/2)+computeBinary(val%2);
 		}
 	}
-
-	public static void reverse(int[] arr, int left, int right){
-	    if (arr == null || arr.length == 1) return ;
-	    while(left<right){
-	        int temp = arr[left];
-	        arr[left] = arr[right];
-	        arr[right] = temp;
-	        left++;
-	        right--;
-	    }
-	}
 	
 	public static int reverse(int x) {
 		int reverse = 0;
@@ -140,18 +59,10 @@ public class Algorithm {
 		return reverse;
 	}
 
-	public static Boolean isIntPalindrome(int x) { 
+	public static Boolean isPalindrome(int x) { 
 		if (x < 0) return false;
 		int reverse = reverse(x);
 		return (reverse == x);   
-	}
-
-	public static int findMissingNumber(int[] arr) { // where are is 1 to 10
-		int sum = 0;
-		for (int i = 0; i<arr.length; i++) {
-			sum += arr[i];
-		}
-		return 55 - sum;
 	}
 
 	public static boolean isPowOfTwo(int num) {
@@ -220,6 +131,95 @@ public class Algorithm {
 		return odd | even;
 	}
 
+	public static void reverse(int[] arr, int left, int right){
+	    if (arr == null || arr.length == 1) return ;
+	    while(left<right){
+	        int temp = arr[left];
+	        arr[left] = arr[right];
+	        arr[right] = temp;
+	        left++;
+	        right--;
+	    }
+	}
+	
+	public static int findMissingNumber(int[] arr) { // where are is 1 to 10
+		int sum = 0;
+		for (int i = 0; i<arr.length; i++) {
+			sum += arr[i];
+		}
+		return 55 - sum;
+	}
+	
+	//this method will fail if integer is repeated more than 2 times.
+	public static String duplicate(int[] numbers){
+		TreeSet<Integer> set = new TreeSet<>();
+		Arrays.sort(numbers);
+
+		for (int i = 1; i < numbers.length; i++) {
+			if (numbers[i] == numbers[i - 1]) {
+				set.add(numbers[i]);
+			}
+		}
+		return set.toString();    
+	}
+
+	public static int singleNumber(int[] A) { // return the first number that appears once
+		Hashtable<Integer, Integer> table = new Hashtable<Integer, Integer>();
+		for (int i =0;i < A.length;i++) {
+			if(table.containsKey(A[i])) {
+				table.put(A[i], table.get(A[i])+1);
+			}else {
+				table.put(A[i], 1);
+			}
+		}
+
+		for (int i =0;i < A.length;i++) {
+			if (table.get(A[i]) == 1) {
+				return A[i];
+			}
+		}
+		return 0;
+	}
+	
+	/*This method return the integer with the maximum number of repetitions.
+	 * Time complexity is O(n), the space complexity is O(1). 
+	 * The space Complexity for using Hashtable is O(n).
+	 */
+	public static int getMaxRepetition(int[] arr) {
+		int max = arr.length; 
+		// Iterate though input array, for every element a[i],
+		// increment a[a[i]%k] by k
+		for (int i = 0; i< arr.length; i++)
+		{  
+			arr[arr[i]%max] += max;
+		}
+		// Find index of the maximum repeating element
+		int maxr = arr[0], result = 0;
+		for (int i = 1; i < arr.length; i++)
+		{
+			if (arr[i] > maxr)
+			{
+				maxr = arr[i];
+				result = i;
+			}
+		}
+		return result;
+	}
+	
+	/* Maximum Gain is defined as the maximum difference between 2 elements in a list 
+	 * such that the larger element appears after the smaller element. 
+	 * If no gain is possible, return 0.
+	 */
+	public static int maxGain(int[] arr) {
+		int maxGain = 0;
+		int min = arr[0];
+		for (int i=1;i<arr.length;i++) {
+			min = Math.min(min, arr[i]);
+			maxGain = Math.max(maxGain, arr[i] - min);
+		}	
+		return maxGain;
+	}
+	
 	public static int minTriangleDepth(ArrayList<ArrayList<Integer>> input) {
 		int height = input.size();
 		int outsize = input.get(height -1).size();
@@ -334,9 +334,9 @@ public class Algorithm {
 		}
 		return maxSum;
 	}
-		
+	
 	//search algorithm
-	public static Boolean binarySearch(int[] arr, int n){
+	public static Boolean binarySearch(int[] arr, int n){ // Time complexity = O(log(n)).
 		int low = 0;
 		int high = arr.length;
 		while (low < high) {
