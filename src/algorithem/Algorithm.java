@@ -276,6 +276,23 @@ public class Algorithm {
 		return 0;
 	}
 	
+	public static Character firstNonRepeatedCharacter(String str) {
+		if(str == null || str.isEmpty() == true) return null;
+		Hashtable<Character,Integer> table = new Hashtable<>();
+		for(char ch:str.toCharArray()){
+			if(table.containsKey(ch)){
+				table.put(ch,table.get(ch)+1);
+			}else{
+				table.put(ch,1);
+			}
+		}
+
+		for(char ch:str.toCharArray()){
+			if(table.get(ch) == 1) return ch;
+		}
+		return null;
+	}
+	
 	/*This method return the integer with the maximum number of repetitions.
 	 * Time complexity is O(n), the space complexity is O(1). 
 	 * The space Complexity for using Hashtable is O(n).
@@ -452,7 +469,7 @@ public class Algorithm {
 		return powRecursive(x*x, n/2);
 	}
 
-	public static int fib(int n) { //recursion
+	public static int fib(int n) { //recursion Time complexity = O(2^n) Space complexity = O(1).
 		if ( n == 0 ) return 0;
 		if (n == 1) return 1;
 		return fib(n-1) + fib(n-2);
