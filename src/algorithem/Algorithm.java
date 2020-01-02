@@ -4,6 +4,20 @@ import java.util.*;
 
 public class Algorithm {	
 
+	public static int gcd(int a, int b) {
+		int n = a, m = b; //n always be the larger number.
+		if (a < b) {
+			n = b;
+			m = a;
+		}
+		
+		while(m != 0) {
+			int rem = n%m;
+			n = m;
+			m = rem;
+		}
+		return n;
+	}
 	//Calculate the sum of pow of all digits, it's a happy number if the final result is 1.
 	public static boolean isHappyNumber(int num) {
 		int[] digits = getDigits(num);
