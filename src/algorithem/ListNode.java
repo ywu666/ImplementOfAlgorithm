@@ -277,11 +277,7 @@ class ListNode {
 	 * @return true if the length of the list is even.
 	 */
 	public Boolean isListEven(ListNode head) {
-		int length = 0;
-		while (head != null) {
-			head = head.next;
-			length++;
-		}
+		int length = (head == null) ? 0:head.length();
 		return (length%2 == 0);
 		/*boolean even = true;
         while(head != null) {

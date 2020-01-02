@@ -112,11 +112,7 @@ public class TreeNode {
 		if (root == null) return 0;
 		int left = findHeight(root.left);
 		int right = findHeight(root.right);
-		if (left > right) {
-			return left+1;
-		}else {
-			return right+1;
-		}
+		return left > right ? left+1: right+1;
 }
 
 	public TreeNode findMin(TreeNode root) {
