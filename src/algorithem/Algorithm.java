@@ -323,40 +323,16 @@ public class Algorithm {
 	}
 
 	/**
-	 * Driver for driver-and-conquer maximum contiguous subsequence sum algorithm.
-	 * Time complexity = O(n*log(n)).
+	 * Linear-time algorithm.
 	 */
 	public static int maxSubSum(int[] arr) {
-		return maxSumRec(arr,0,arr.length -1);
-	}
-	
-	/**
-	 * Finds maximum sum in subsequence spanning arr[left,right]. 
-	 * Does not attempt to maintain actual best sequence
-	 */
-	private static int maxSumRec(int[] arr, int left, int right) {
-		if(left == right) {
-			return arr[left] > 0 ? arr[left]:0;
-		}else {
-			int center = (left+right)/2;
-			int maxLeftSum = maxSumRec(arr,left,center);
-			int maxRightSum = maxSumRec(arr,center+1,right);
-			
-			int maxLeftBorderSum = 0,leftBorderSum = 0;
-			for(int i=center;i>=left;i--) {
-				leftBorderSum +=arr[i];
-				if(leftBorderSum > maxLeftBorderSum)
-				maxLeftBorderSum = leftBorderSum;
-			}
-			
-			int maxRightBorderSum = 0,rightBorderSum = 0;
-			for(int i=center+1;i<=right;i++) {
-				rightBorderSum +=arr[i];
-				if(rightBorderSum > maxRightBorderSum)
-				maxRightBorderSum = rightBorderSum;
-			}
-			return Math.max(Math.max(maxLeftSum,maxRightSum),maxLeftBorderSum+maxRightBorderSum);
-		}	
+		int maxSum = 0, thisSum = 0;
+		for (int i =0;i<arr.length;i++) {
+			thisSum +=arr[i];
+			if(thisSum > maxSum) maxSum = thisSum;
+			if(thisSum < 0) thisSum = 0;
+		}
+		return maxSum;
 	}
 		
 	//search algorithm
