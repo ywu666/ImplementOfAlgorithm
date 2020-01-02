@@ -47,7 +47,6 @@ class ListNode {
 
 	public ListNode insertAthead(ListNode head, int data) {
 		ListNode newNode = new ListNode(data);
-		//if (head == null) return newNode;
 		newNode.next = head;
 		return newNode;
 	}

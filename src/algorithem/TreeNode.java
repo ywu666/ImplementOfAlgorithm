@@ -55,7 +55,7 @@ public class TreeNode {
 	    return diameter[0];
 	}
 
-	public int[] diameterAndHeight(TreeNode root) {
+	private int[] diameterAndHeight(TreeNode root) {
 	    int[] heightDiameter = {0, 0}; // The first index store the diameter, the second store the height.
 	    if (root != null) {
 	         int[] left = diameterAndHeight(root.left);
@@ -102,7 +102,7 @@ public class TreeNode {
 	}
 	
 	// This is a help method for validBST() method above
-	public static boolean validBST(TreeNode root, int min , int max) { //recursion
+	private static boolean validBST(TreeNode root, int min , int max) { //recursion
 		if (root == null) return true;
 		if (root.data <=min || root.data >= max) return false;
 		return validBST(root.left,min,root.data) && validBST(root.right,root.data,max);
@@ -309,7 +309,7 @@ public class TreeNode {
 		return buffer[0];
 	}
 	
-	public static int maxSumPathMain (TreeNode root, int[] buffer) {
+	private static int maxSumPathMain (TreeNode root, int[] buffer) {
 	    if (root == null) return 0;
 	    int leftSum = maxSumPathMain(root.left, buffer);
 	    int rightSum = maxSumPathMain(root.right, buffer);

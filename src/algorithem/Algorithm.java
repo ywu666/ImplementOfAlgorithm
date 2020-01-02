@@ -524,7 +524,7 @@ public class Algorithm {
 				continue;
 			}
 			int i =1;
-			while (i <=3) {
+			while (i <= 3) {
 				if (remaining.length() < i) break;
 				String IpToAppend= remaining.substring(0,i);
 				String successor = remaining.substring(i);
@@ -599,7 +599,7 @@ public class Algorithm {
 	 * @param  target        target sum
 	 * @return boolean       whether target sum can be reached using a subset of arr
 	 */
-	public static boolean groupSum(int start, int[] arr, int target) {
+	private static boolean groupSum(int start, int[] arr, int target) {
 		if (start >= arr.length) { //base case: There is no number left
 			return (target == 0);
 		}else {
@@ -616,7 +616,7 @@ public class Algorithm {
 	}
 
 	//this is a help method 
-	public static boolean groupSumWithNum(int start_index,int[] arr, int must_have, int target) { //recursion
+	private static boolean groupSumWithNum(int start_index,int[] arr, int must_have, int target) { //recursion
 		if (start_index >= arr.length) return target == 0;
 		//case1: The array contains the must_have
 		if (arr[start_index] == must_have) {
@@ -662,7 +662,7 @@ public class Algorithm {
 	}
 
 	//These methods are all help methods for isBalances()method above
-	public static boolean isBalanced(String input, String stack) {
+	private static boolean isBalanced(String input, String stack) {
 		if (input.isEmpty()) { // base case : input string is empty
 			return stack.isEmpty();
 		}else if (isOpen(input.charAt(0))) { //base case 2: is open case
@@ -672,13 +672,13 @@ public class Algorithm {
 		}
 		return isBalanced(input.substring(1),stack);
 	}
-	public static boolean isOpen (char ch) {
+	private static boolean isOpen (char ch) {
 		return open.indexOf(ch) != -1;
 	}
-	public static boolean isClose(char ch) {
+	private static boolean isClose(char ch) {
 		return close.indexOf(ch) != -1;
 	}	
-	public static boolean isMatching(char charopen, char charclose) {
+	private static boolean isMatching(char charopen, char charclose) {
 		return open.indexOf(charopen) == close.indexOf(charclose);
 	}
 
@@ -754,7 +754,7 @@ public class Algorithm {
 		}
 	}
 
-	public static int makeChange(int[] coins, int amount, int curr_coin_index) {
+	private static int makeChange(int[] coins, int amount, int curr_coin_index) {
 		int next_coin_index;
 		if (curr_coin_index < coins.length -1) {
 			next_coin_index = curr_coin_index +1;
