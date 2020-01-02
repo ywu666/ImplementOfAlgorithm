@@ -2,239 +2,8 @@ package algorithem;
 
 import java.util.*;
 
-public class Algorithm {
-
-	public static String compressString(String text) {
-		int length = text.length();
-		if (length >= 2) {
-			StringBuilder compress = new StringBuilder();
-			char lastChar = text.charAt(0);
-			int count = 1;
-			for (int i = 1; i<length; i++) {
-				if (text.charAt(i) == lastChar) {		        	  
-					count++;
-				}else {
-					compress.append(lastChar);
-					if(count > 1) {
-						compress.append(count);
-					}
-					lastChar = text.charAt(i);
-					count = 1;
-				}
-			}
-			compress.append(lastChar);
-			if(count > 1) compress.append(count);
-			if (compress.length() < length) return compress.toString();
-		}
-		return text;
-	}
-
-	public static boolean isAnagram(String input1, String input2) { // the inputs are also lower case
-		if (input1 == null && input2 == null) return false;
-		if (input1.equals(input2)) return true;
-		if (input1.length() != input2.length()) return false;
-
-		int[] buffer = new int[26]; 
-		for (int i = 0; i < input1.length(); i++) {
-			buffer[input1.charAt(i) - 'a']++;
-			buffer[input2.charAt(i) - 'a']--;
-		}
-
-		for (int i = 0; i < buffer.length; i++) {
-			if (buffer[i] != 0) {
-				return false;
-			}
-		}    
-		return true;
-	}
-
-	public static boolean isStrPalindrom(String str) {
-		if (str == null || str.equals("")) return true;
-
-		for (int i = 0; i < str.length()/2; i++) {
-			if (str.charAt(i) != str.charAt(str.length() - 1 - i)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	public static boolean isPermutation(String str1, String str2) {
-		/*if (str1.length() != str2.length()) return false;
-				List<Character> list = new ArrayList<Character>();
-
-				for (char ch: str1.toCharArray()) { //store all the char in list
-					list.add(ch);
-				}
-
-				for (char ch:str2.toCharArray()) {
-					if (!list.contains(ch)) {
-						return false;
-					}
-				}
-				return true;*/
-
-		// improve the method
-		if (str1.length() != str2.length()) {
-			return false;
-		}
-
-		int[] letters = new int[256];
-		char[] str1_arr = str1.toCharArray();
-		for (char c : str1_arr) {
-			letters[c]++;
-		}
-
-		for (char c:str2.toCharArray()) {
-			if (--letters[c] < 0) {
-				return false;
-			}
-		}
-		return true;
-
-	}
-
-	/**
-	 * Two strings are isomorphic if the letters in one string can be remapped 
-	 * to get the second string. Remapping a letter means replacing all 
-	 * occurrences of it with another letter.
-	 * @param str
-	 * @return True if the 2 string are isomorphic
-	 */
-	public static boolean isIsomorphic(String str1, String str2) {
-		if (str1.length() != str2.length()) return false;
-		Hashtable<Character, Integer> table1 = new Hashtable<Character,Integer>();
-		Hashtable<Character, Integer> table2 = new Hashtable<Character,Integer>();
-		for (int  i=0;i<str1.length();i++) {
-			Character ch1 = str1.charAt(i);
-			Integer val1 = table1.containsKey(ch1)? table1.get(ch1) +1 :1; 
-			table1.put(ch1,val1);
-
-			Character ch2 = str2.charAt(i);
-			Integer val2 = table2.containsKey(ch2) ? table2.get(ch2) +1 :1; 
-			table2.put(ch2,val2);
-			if (table1.get(ch1) != table2.get(ch2)) return false;
-		}
-		return true;	
-	}
-
-	public static ArrayList<String> getPermutations(String str) {
-		ArrayList<String> permutations = new ArrayList<String>();
-		if (str == null) return null;
-		if (str.equals("")) {
-			permutations.add("");
-			return permutations;
-		}
-
-		char first = str.charAt(0);
-		ArrayList<String> list = getPermutations(str.substring(1));
-
-		for (String word: list) {
-			for (int i =0;i<= word.length();i++) {
-				permutations.add(insert(word,first,i));
-			}
-		}
-		return permutations;
-	}
+public class Algorithm {	
 	
-	
-	public String longestPalSubstr(String str){ 
-		if(str == null || str.length() < 2) return str;
-		int len = str.length();
-
-		// memo[start][finish] is true if the String is a palindrome
-		// between .charAt(start) and .charAt(finish)
-		boolean[][] memo = new boolean[len][len];
-		int maxSubstrLen = 1;
-		int maxSubstrStartIndex = 0;
-
-		// Mark all length 1 substrings as palindromes.
-		for(int i = 0; i < len; i++){
-			memo[i][i] = true;
-		}
-
-		// Selectively mark all length 2 substrings as palindromes
-		// in a single pass.
-		for(int i = 0; i < len-1; i++){
-			if(str.charAt(i) == str.charAt(i+1)){
-				memo[i][i+1] = true;
-				maxSubstrLen = 2;
-				maxSubstrStartIndex = i;
-			}
-		}
-
-		// Scan for substrings of length > 2 and length < len. Remember that 
-		// memo[l][] represents the starting
-		// character str.charAt(l) and memo[][l] represents the ending character
-		// in our check.
-		for(int l = 3; l <= len; l++){
-			// Run the check until you reach the end of the String. i is the 
-			// start index.
-			for(int i = 0; i + l-1 < len; i++ ){
-				// j is the end index.
-				int j = i + l-1;
-
-				// In a String "abba", if we're at the second "b" -> "abb",
-				// "abba" is a palindrome only if "bb" were a palindrome and "a" == "a"
-				// at the opposite ends of the String. Can be translated to the following
-				// condition using the memo pad:
-				if(memo[i+1][j-1] && str.charAt(i) == str.charAt(j)){
-					memo[i][j] = true;
-					maxSubstrLen = l;
-					maxSubstrStartIndex = i;
-				}
-			}
-		}
-		return str.substring(maxSubstrStartIndex, maxSubstrStartIndex + maxSubstrLen);
-	}
-	
-	//list all possible combinations and permutations of its characters
-	public static ArrayList<String> getCombPerms(String str) {
-		ArrayList<String> permutations = new ArrayList<String>();
-		if (str == null) return null;
-		if (str.equals("") || str.length() ==1) {
-			permutations.add(str);
-			return permutations;
-		}
-
-		char first = str.charAt(0);
-		permutations.add(first+""); //convert to string type
-		ArrayList<String> list = getCombPerms(str.substring(1));
-		for (String word: list) {
-			for (int i =0;i<= word.length();i++) {
-				permutations.add(insert(word,first,i));
-			}
-		}
-		permutations.addAll(list); // add all the combination 
-		return permutations;
-	}
-
-	//This is a help method for getPermutations to insert char at specific location
-	public static String insert(String word, char insert, int i) {
-		return word.substring(0,i) + insert + word.substring(i);
-	}
-
-	public static String insertPairStar(String s) { //recursion
-		if(s == null || s.length() <= 1) return s;
-		return s.charAt(0) + 
-				(s.charAt(0)==s.charAt(1) ? "*" : "") +
-				insertPairStar(s.substring(1));
-	}
-
-	//This method will replace the ' ' in String a with the specific pattern b.
-	public static String replace(String a, String b) {
-		StringBuffer str = new StringBuffer();
-
-		for (int i=0;i<a.length();i++) {
-			if (a.charAt(i) == ' ') {
-				str.append(b);
-			} else {
-				str.append(a.charAt(i));
-			}
-		}
-		return str.toString();
-	}
-
 	//this method will fail if integer is repeated more than 2 times.
 	public static String duplicate(int[] numbers){
 		TreeSet<Integer> set = new TreeSet<>();
@@ -246,16 +15,6 @@ public class Algorithm {
 			}
 		}
 		return set.toString();    
-	}
-
-	//Given a list of String, this method will remove the duplicate words in the list.
-	public static ArrayList<String> removeDuplicates(List<String> input) {
-		TreeSet<String> treeSet = new TreeSet<String>();
-		treeSet.addAll(input); 
-		//This will remove the duplicates, and the result will sort alphabetically.
-		ArrayList<String> newList = new ArrayList<String>(treeSet);
-		return newList;
-
 	}
 
 	public static int singleNumber(int[] A) { // return the first number that appears once
@@ -274,23 +33,6 @@ public class Algorithm {
 			}
 		}
 		return 0;
-	}
-	
-	public static Character firstNonRepeatedCharacter(String str) {
-		if(str == null || str.isEmpty() == true) return null;
-		Hashtable<Character,Integer> table = new Hashtable<>();
-		for(char ch:str.toCharArray()){
-			if(table.containsKey(ch)){
-				table.put(ch,table.get(ch)+1);
-			}else{
-				table.put(ch,1);
-			}
-		}
-
-		for(char ch:str.toCharArray()){
-			if(table.get(ch) == 1) return ch;
-		}
-		return null;
 	}
 	
 	/*This method return the integer with the maximum number of repetitions.
@@ -342,26 +84,6 @@ public class Algorithm {
 			num = num/10;
 		}	
 		return digits;
-	}
-	
-	public static boolean areAllCharactersUnique(String str){
-		if(str == null || str.length() <= 1) return true;
-
-		// 2^8 = 256. Covers all characters in ASCII. Make Checker array
-		boolean[] checker_array = new boolean[256];
-
-		// Loop across all characters in String. 
-		for(int i=0;i<str.length();i++){
-			// Check the position specified by the character's 8 bit value. Since this is cast as an int, it will be a numerical value!
-			int position = str.charAt(i);
-			if(checker_array[position]) {
-				return false;
-			}else {
-				checker_array[position] = true;
-			}
-		}
-		// Return true if no duplicates
-		return true;
 	}
 
 	/* Maximum Gain is defined as the maximum difference between 2 elements in a list 
@@ -418,16 +140,6 @@ public class Algorithm {
 		return reverse;
 	}
 
-	public static String reverse(String str) {
-		if (str == null || str.isEmpty()) return str;
-		String inputStr = str;
-		String outputStr = "";
-		for (int i = inputStr.length() -1; i>=0;i--) {
-			outputStr +=inputStr.charAt(i);
-		}
-		return outputStr;
-	}
-
 	public static Boolean isIntPalindrome(int x) { 
 		if (x < 0) return false;
 		int reverse = reverse(x);
@@ -469,7 +181,7 @@ public class Algorithm {
 		return powRecursive(x*x, n/2);
 	}
 
-	public static int fib(int n) { //recursion Time complexity = O(2^n) Space complexity = O(1).
+	public static int fib(int n) { //recursion Time complexity = O(2^n), Space complexity = O(1).
 		if ( n == 0 ) return 0;
 		if (n == 1) return 1;
 		return fib(n-1) + fib(n-2);
@@ -481,7 +193,7 @@ public class Algorithm {
 		if (n == 0) return n_2;
 		if (n == 1) return n_1;
 		int output = 0;
-		for (int i=2;i<=n;i++) {
+		for (int i=2;i <= n;i++) {
 			output = n_1 + n_2;
 			n_2 = n_1;
 			n_1 = output;
@@ -495,8 +207,8 @@ public class Algorithm {
 	 * @param a, b
 	 */
 	public static int bitSwapRequired(int a, int b) {
-		int count =0;
-		for (int c = a^b;c !=0;c = c&(c-1)) { // ^ = XOR gate 
+		int count = 0;
+		for (int c = a^b;c != 0;c = c&(c-1)) { // ^ = XOR gate 
 			count++;
 		}
 		return count;
@@ -508,70 +220,6 @@ public class Algorithm {
 		return odd | even;
 	}
 
-	public static ArrayList<String> generateIPAddrs(String input) {
-
-		class IpLevelNode{//local class
-			int level = 0;
-			String predecessor;
-			String successor;
-			public IpLevelNode(int level, String ipToAppend, String predecessor, String successor) {
-				this.level = level;
-				this.successor = successor;
-				if (level == 0) {
-					this.predecessor = ipToAppend;
-				}else {
-					this.predecessor = predecessor+ "." + ipToAppend;
-				}
-			}
-		}
-
-		ArrayList<String> out = new ArrayList<>();
-		Deque<IpLevelNode> stack = new LinkedList<>();
-		//push 3 possibilities onto the stack
-		stack.addFirst(new IpLevelNode(0, input.substring(0,1),"",input.substring(1)));
-		stack.addFirst(new IpLevelNode(0, input.substring(0,2),"",input.substring(2)));
-		stack.addFirst(new IpLevelNode(0, input.substring(0,3),"",input.substring(3)));
-		while(!stack.isEmpty()) {
-			IpLevelNode node = stack.removeFirst();
-			int currlevel = node.level;
-			String predecessor = node.predecessor;
-			String remaining = node.successor;
-			if (currlevel == 3 && remaining.length() == 0) {
-				out.add(node.predecessor);
-				continue;
-			}
-			int i =1;
-			while (i <= 3) {
-				if (remaining.length() < i) break;
-				String IpToAppend= remaining.substring(0,i);
-				String successor = remaining.substring(i);
-				if (IpToAppend.length() > 0) {
-					int num = Integer.parseInt(IpToAppend);
-					if (num <=255) stack.addFirst(new IpLevelNode(currlevel+1,IpToAppend ,predecessor,successor));
-				}
-				i++;
-			}
-		}
-		return out;
-	}
-
-	public static int longestNRSubstringLen(String input) {
-		if (input == null || input.equals("")) return 0;
-		Hashtable<Character, Integer> charTable = new Hashtable<>();
-		int i = 0, prev =0;
-
-		for (char ch:input.toCharArray()) {
-			if (!charTable.containsKey(ch)) {
-				charTable.put(ch, i++);
-			}else {
-				prev = Math.max(prev,charTable.size());
-				//i = charTable.get(ch);
-				charTable.clear();
-			}
-		}
-		return Math.max(prev,charTable.size());		
-	}
-
 	public static int minTriangleDepth(ArrayList<ArrayList<Integer>> input) {
 		int height = input.size();
 		int outsize = input.get(height -1).size();
@@ -581,7 +229,7 @@ public class Algorithm {
 			outBuffer[i] = input.get(height-1).get(i);
 		}
 
-		for (int r= height-2;r >=0; r--) {
+		for (int r=height-2;r >= 0; r--) {
 			ArrayList<Integer> row = input.get(r);
 			for (int i =0;i<row.size();i++) {
 				outBuffer[i] = row.get(i) + Math.min(outBuffer[i], outBuffer[i+1]);
@@ -590,8 +238,10 @@ public class Algorithm {
 		return outBuffer[0];
 	}
 
-	//Find 2 numbers index in the array such that they sum up to a specific Number.
-	//Each input has exactly one solution
+	/*
+	 * Find 2 numbers index in the array such that they sum up to a specific Number.
+	 * Each input has exactly one solution
+	 */
 	public static int[] coupleSum(int[] numbers, int target) { 
 		//Key is the target - arr[i], val is the the index start from one
 		Hashtable<Integer,Integer> table = new Hashtable<>();
@@ -652,7 +302,7 @@ public class Algorithm {
 	 * two parts such that the sum of all elements in each part is the same.
 	 */
 	public static boolean splitArray(int[] arr) {
-        if (arr.length ==0) return false;
+        if (arr.length == 0) return false;
         int arr_sum = 0; // calculate the sun of array
         for (int item: arr) 
             arr_sum+= item;
@@ -671,37 +321,10 @@ public class Algorithm {
 	    reverse(arr,arr.length -actualPos, arr.length -1);
 	    return arr;
 	}
-	
-	private static String open = "([{";
-	private static String close = ")]>}";
-	public static boolean isBalanced(String input) {
-		return isBalanced(input,"");
-	}
-
-	//These methods are all help methods for isBalances()method above
-	private static boolean isBalanced(String input, String stack) {
-		if (input.isEmpty()) { // base case : input string is empty
-			return stack.isEmpty();
-		}else if (isOpen(input.charAt(0))) { //base case 2: is open case
-			return isBalanced(input.substring(1),input.charAt(0) + stack);
-		}else if (isClose(input.charAt(0))) {
-			return (!stack.isEmpty() && isMatching(stack.charAt(0), input.charAt(0)) && isBalanced(input.substring(1), stack.substring(1)));
-		}
-		return isBalanced(input.substring(1),stack);
-	}
-	private static boolean isOpen (char ch) {
-		return open.indexOf(ch) != -1;
-	}
-	private static boolean isClose(char ch) {
-		return close.indexOf(ch) != -1;
-	}	
-	private static boolean isMatching(char charopen, char charclose) {
-		return open.indexOf(charopen) == close.indexOf(charclose);
-	}
 
 	//search algorithm
 	public static Boolean binarySearch(int[] arr, int n){
-		int low =0;
+		int low = 0;
 		int high = arr.length;
 		while (low < high) {
 			int mid = low + (high-low)/2;
@@ -710,50 +333,6 @@ public class Algorithm {
 			return true; // if arr[mid] == n;
 		}
 		return false;
-	}
-
-	public static  ArrayList<String> getStringsFromNums(String digits) {
-		//Create the phone key mapping 
-		HashMap<Character,String> mapping = new HashMap<>();
-		mapping.put('2',"abc");
-		mapping.put('3',"def");
-		mapping.put('4',"ghi");
-		mapping.put('5',"jkl");
-		mapping.put('6',"mno");
-		mapping.put('7',"pqrs");
-		mapping.put('8',"tuv");
-		mapping.put('9',"wxyz");
-
-		class PhoneNode { //local class
-			String word;
-			int digitCount;
-
-			PhoneNode(String word,int digitCount) {
-				this.word = word;
-				this.digitCount = digitCount;
-			}
-		}
-
-		//declare the Stack
-		ArrayList<String> out = new ArrayList<>();
-		Deque<PhoneNode> stack = new LinkedList<>();
-		int len = digits.length();
-		for (Character ch: mapping.get(digits.charAt(0)).toCharArray()) { // push the first node on the stack
-			stack.addFirst(new PhoneNode(String.valueOf(ch),1));
-		}
-
-		//classic DFS
-		while (!stack.isEmpty()) {
-			PhoneNode node = stack.removeFirst();
-			if (node.digitCount == len) {
-				out.add(node.word);
-			} else {
-				for (Character ch: mapping.get(digits.charAt(node.digitCount)).toCharArray()) {
-					stack.addFirst(new PhoneNode(node.word+ch,node.digitCount+1));
-				}
-			}
-		}
-		return out;
 	}
 
 	/*
@@ -793,41 +372,6 @@ public class Algorithm {
 	        }
 	    }
 	    return profit;
-	}
-
-	/**
-	 * Given two Strings, a and b, write a method - editDistance that 
-	 * returns the minimum number of operations needed to transform a into b. 
-	 * The following character operations are allowed :
-	 *a) Replace character
-	 *b) Insert character
-	 *c) Delete character
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	public int editDistance(String a, String b) {
-		int lengthA = a.length();
-		int lengthB = b.length();
-		int[][] memo = new int [lengthA+1][lengthB+1];
-		for (int i=0;i<=lengthA;i++) memo[i][0] = i;
-		for (int i=0;i<=lengthB;i++) memo[0][i] = i;
-		for (int i = 1;i<=lengthA;i++) {
-			char cha = a.charAt(i);
-			for (int j=0;j<=lengthB;j++) {
-				char chb = b.charAt(j);
-				if (cha == chb) {
-					memo[i][j] = memo[i-1][j-1];
-				}else {
-					int replaceDist = memo[i][j];
-					int insertDist = memo[i][j-1] + 1;
-					int delateDist = memo[i-1][j] + 1;
-					int minDist = Math.min(replaceDist, Math.min(insertDist, delateDist));
-					memo[i][j] = minDist;
-				}
-			}
-		}
-		return memo[lengthA][lengthB];
 	}
 	
 	public static ArrayList<ArrayList<Integer>> generatePascalTriangle(int numRows) {
@@ -895,10 +439,10 @@ public class Algorithm {
 	public static int[] merge(int[] arrLeft, int[] arrRight){ //merge 2 sorted lists
 		int leftlength = arrLeft.length;
 		int rightlength = arrRight.length;
-		int left = 0, right =0, merge =0;
+		int left = 0, right = 0, merge = 0;
 		int[] arrResult = new int[leftlength+rightlength];
 
-		while (left<leftlength && right<rightlength) {
+		while (left < leftlength && right < rightlength) {
 			if (arrLeft[left] < arrRight[right] ) {
 				arrResult[merge++] = arrLeft[left++];
 			}else {
@@ -909,7 +453,7 @@ public class Algorithm {
 		while (left < leftlength) {
 			arrResult[merge++] = arrLeft[left++];
 		}
-		//merge teh elements that was left in the arrRight
+		//merge the elements that was left in the arrRight
 		while (right < rightlength) {
 			arrResult[merge++] = arrRight[right++];
 		}
@@ -918,9 +462,9 @@ public class Algorithm {
 
 	//sort Algorithm
 	public static int[] selectionSort(int[] arr) {//improved performance over bubble sort
-		for (int i = 0; i<arr.length - 1; i++) {
+		for (int i=0; i < arr.length - 1; i++) {
 			int min_index = i;
-			for (int j = i+1;j<arr.length;j++) {
+			for (int j = i+1;j < arr.length;j++) {
 				if (arr[j] < arr[min_index]) {
 					min_index = j;
 				}
@@ -934,8 +478,8 @@ public class Algorithm {
 	}
 
 	public static int[] bubbleSort(int[] arr) {
-		for (int i= 0;i<arr.length;i++) {
-			for (int j = i;j<arr.length;j++) {
+		for (int i=0;i < arr.length;i++) {
+			for (int j = i;j < arr.length;j++) {
 				if (arr[i] > arr[j]) { //swap one find a greater number
 					int temp = arr[i];
 					arr[i] = arr[j];
