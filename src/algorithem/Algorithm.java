@@ -694,8 +694,6 @@ public class Algorithm {
 		}
 		return false;
 	}
-	// java.util.* and java.util.streams.* have been imported for this problem.
-	// You don't need any other imports.
 
 	public static  ArrayList<String> getStringsFromNums(String digits) {
 		//Create the phone key mapping 
