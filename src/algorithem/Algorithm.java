@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Algorithm {	
 
-	public static int gcd(int a, int b) {
+	public static int gcd(int a, int b) { //time complexity = O(log(n)).
 		int n = a, m = b; //n always be the larger number.
 		if (a < b) {
 			n = b;
@@ -87,23 +87,11 @@ public class Algorithm {
 		}
 	}
 
-	public static double pow(double x, int n) {
-		double result  = 1;	     
-		for (int i = 0; i < Math.abs(n); i++) {
-			result = result*x;
-		}       
-		if (n > 0) {
-			return result;
-		}else {
-			return 1/result;
-		} 
-	}
-
-	public static double powRecursive(double x, int n) {
-		if (n < 0) return powRecursive(1/x, -n);
+	public static double pow(double x, int n) { //Time Complexity = O(log(n))
+		if (n < 0) return pow(1/x, -n);
 		if (n == 0) return 1.0;
-		if (n%2 == 1) return x * powRecursive(x, n-1);
-		return powRecursive(x*x, n/2);
+		if (n%2 == 1) return x * pow(x, n-1); //Or x * pow(x*x, n/2);
+		return pow(x*x, n/2); //Cann't be replace, will influence the complexity.
 	}
 
 	public static int fib(int n) { //recursion Time complexity = O(2^n), Space complexity = O(1).
