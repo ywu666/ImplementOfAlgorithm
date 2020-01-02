@@ -261,7 +261,7 @@ public class Algorithm {
 	public static int singleNumber(int[] A) { // return the first number that appears once
 		Hashtable<Integer, Integer> table = new Hashtable<Integer, Integer>();
 		for (int i =0;i < A.length;i++) {
-			if(table.contains(A[i])) {
+			if(table.containsKey(A[i])) {
 				table.put(A[i], table.get(A[i])+1);
 			}else {
 				table.put(A[i], 1);
