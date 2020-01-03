@@ -102,18 +102,17 @@ public class Algorithm {
 		return fib(n-1) + fib(n-2);
 	}
 
-	public static int betterFibonacci(int n) {
+	public static int betterFibonacci(int n) { //Time complexity = O(n).
 		int n_2 = 0;
 		int n_1 = 1;
 		if (n == 0) return n_2;
 		if (n == 1) return n_1;
-		int output = 0;
 		for (int i=2;i <= n;i++) {
-			output = n_1 + n_2;
-			n_2 = n_1;
-			n_1 = output;
+	        int temp = n_1;
+	        n_1 = n_1+n_2;
+	        n_2 = temp;
 		}
-		return output;
+		return n_1;
 	}
 
 	/**
