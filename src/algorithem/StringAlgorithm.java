@@ -116,8 +116,7 @@ public class StringAlgorithm {
 		}
 
 		int[] letters = new int[256];
-		char[] str1_arr = str1.toCharArray();
-		for (char c : str1_arr) {
+		for (char c : str1.toCharArray()) {
 			letters[c]++;
 		}
 
@@ -127,7 +126,6 @@ public class StringAlgorithm {
 			}
 		}
 		return true;
-
 	}
 	
 	public static ArrayList<String> getPermutations(String str) {
