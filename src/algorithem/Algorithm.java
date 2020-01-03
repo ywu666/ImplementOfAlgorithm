@@ -18,6 +18,7 @@ public class Algorithm {
 		}
 		return n;
 	}
+	
 	//Calculate the sum of pow of all digits, it's a happy number if the final result is 1.
 	public static boolean isHappyNumber(int num) {
 		int[] digits = getDigits(num);
@@ -54,7 +55,7 @@ public class Algorithm {
 		return binary;
 	}
 
-	public static String computeBinaryRecursion(int val) {
+	public static String computeBinaryRecursion(int val) { //Time complexity O(n).
 		// Base case: value is less than 2
 		if (val < 2)
 			return Integer.toString(val);
@@ -88,8 +89,9 @@ public class Algorithm {
 	}
 
 	public static double pow(double x, int n) { //Time Complexity = O(log(n))
-		if (n < 0) return pow(1/x, -n);
 		if (n == 0) return 1.0;
+		if(n == 1) return x;
+		if (n < 0) return pow(1/x, -n);
 		if (n%2 == 1) return x * pow(x, n-1); //Or x * pow(x*x, n/2);
 		return pow(x*x, n/2); //Cann't be replace, will influence the complexity.
 	}
