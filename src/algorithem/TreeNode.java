@@ -341,8 +341,9 @@ public class TreeNode {
 		}
 	}
 	
+	// 1. Visit root 2. Visit root.left 3. Visit root.right.
 	public static ArrayList<Integer> preorderList = new ArrayList<>();
-	public void preorder (TreeNode root) {
+	public void preorder (TreeNode root) { //Time complexity O(n).
 		if (root != null) {
 			preorderList.add(root.data);
 			preorder(root.left);
@@ -352,25 +353,53 @@ public class TreeNode {
 
 	public ArrayList<Integer> preorderItr(TreeNode root) {                   
 		ArrayList<Integer> preorderedList =  new ArrayList<Integer>();
-		Stack<TreeNode> s = new Stack<TreeNode>(); // use stack rather than queue
-
 		if (root == null){return preorderedList;}
-
+		Stack<TreeNode> s = new Stack<TreeNode>(); // use stack rather than queue
 		s.push(root);
 		while(!s.isEmpty()) {
 			root = s.pop();
 			preorderedList.add(root.data);
-			if (root.right != null) {s.push(root.right);}
-			if (root.left  != null) {s.push(root.left);}
+			if (root.right != null) s.push(root.right);
+			if (root.left  != null) s.push(root.left);
 		}
 		return preorderedList;
 	}
-
+    
+	// 1. Visit root.left 2. Visit root.right 3. Visit root.	
 	public static ArrayList<Integer> postorderList = new ArrayList<>();
-	public void postorder (TreeNode root) {
-
+	public void postorder(TreeNode root) {
+		if(root != null) {
+			postorder(root.left);
+			postorder(root.right);
+			postorderList.add(root.data);
+		}
+	}
+	
+	public ArrayList<Integer> postorderItr(TreeNode root) {
+		ArrayList<Integer> postorderedList = new ArrayList<>();
+		if (root == null)return postorderedList;
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		stack.push(root);
+		while(!stack.isEmpty()) {
+			root = stack.pop();
+			if (root.left  != null) stack.push(root.left);
+			if (root.right != null) stack.push(root.right);
+			postorderedList.add(root.data);
+		}
+		Collections.reverse(postorderedList);
+		return postorderedList;
 	}
 
+	// 1. Visit root.left 2. Visit root 3. Visit root.right.
+	public static ArrayList<Integer> inorderList = new ArrayList<>();
+	public void inorder(TreeNode root) {
+		if(root != null) {
+			inorder(root.left);
+			inorderList.add(root.data);
+			inorder(root.right);		
+		}
+	}
+	
 	public ArrayList<Integer> inorderItr(TreeNode root) {
 		ArrayList<Integer> inorder = new ArrayList<>();
 		Stack<TreeNode> stack = new Stack<TreeNode>();
