@@ -17,7 +17,7 @@ public class TreeNode {
 		this.right = right;
 	}
 
-	public TreeNode insert(TreeNode root, int data) { //recursion, insert for BST.
+	public TreeNode insert(TreeNode root, int data) { //recursion, insert for BST. Time  = O(log(n).
 		if (root == null) return new TreeNode(data);
 		if (root.data > data) root.left = insert(root.left,data); //case1: The node insert to left
 		if (root.data < data) root.right = insert(root.right,data); //case2: The node insert to right
@@ -27,12 +27,12 @@ public class TreeNode {
 
 	/**
 	 * Tail recursion instead iterator in findNode()
-	 * Time  = O(n).
+	 * Time  = O(log(n).
 	 */
-    public boolean contains(TreeNode root, int data) {  //check if the node is contains for BST
+    public boolean containsBST(TreeNode root, int data) {  //check if the node is contains for BST
     	if(root == null) return false;
-    	if(data < root.data) return contains(root.left,data);
-    	if(data > root.data) return contains(root.right,data);
+    	if(data < root.data) return containsBST(root.left,data);
+    	if(data > root.data) return containsBST(root.right,data);
     	else return true;  //match
     }
     
@@ -49,7 +49,7 @@ public class TreeNode {
 		q.add(root);
 		while (!q.isEmpty()) {
 			TreeNode node = q.poll();
-			sum +=node.data;
+			sum += node.data;
 			if (node.left != null) q.add(node.left);
 			if (node.right != null) q.add(node.right);
 		}
@@ -61,7 +61,7 @@ public class TreeNode {
 		return size(root.left) + size(root.right) + 1;
 	}
 	
-	//The diameter of a Binary Tree  = The "Number of nodes on the longest path between two leaf nodes".
+	//The diameter of a BST = The "Number of nodes on the longest path between two leaf nodes".
 	public int diameter(TreeNode root) {
 	    int[] diameter = diameterAndHeight(root);
 	    return diameter[0];
@@ -127,6 +127,7 @@ public class TreeNode {
 		return left > right ? left+1: right+1;
 }
 
+	//Time complexity is O(log(n)).
 	public TreeNode findMinBST(TreeNode root) { //findMin for BST
 		if(root == null) return null;
 		if(root.left == null) return root;
@@ -141,14 +142,14 @@ public class TreeNode {
 		return root;
 	}
 	
-	public int findMax(TreeNode root) { //Recursion for normal Tree
+	public int findMax(TreeNode root) { //Recursion for binary Tree. Time complexity = O(n)
 		if (root != null) {
 			return Math.max(root.data, Math.max(findMax(root.left), findMax(root.right)));
 		}
 		return Integer.MIN_VALUE;    
 	}
 
-	public int findMaxItr(TreeNode root) {
+	public int findMaxItr(TreeNode root) { //Time complexity = O(n)
 		if (root == null) return Integer.MIN_VALUE;
 		Queue<TreeNode> q = new LinkedList<>();
 		q.add(root);
@@ -164,7 +165,7 @@ public class TreeNode {
 		return max;
 	}
 
-	public TreeNode findNode(TreeNode root, int val) {
+	public TreeNode findNode(TreeNode root, int val) { //Time complexity = O(n)
 		if (root != null) {
 			Queue<TreeNode> q = new LinkedList<TreeNode>();
 			q.add(root);
@@ -180,7 +181,7 @@ public class TreeNode {
 		return null;
 	}
 
-	public TreeNode findDeepest(TreeNode root) {
+	public TreeNode findDeepest(TreeNode root) { //Time complexity = O(n)
 		TreeNode deepest = null;
 		if (root != null) {
 			Queue<TreeNode> q = new LinkedList<TreeNode>();
@@ -219,13 +220,13 @@ public class TreeNode {
 
 	/**
 	 * @param root of the binary Tree.
-	 * @return The kth largest for a given binary tree.
+	 * @return The kth largest/Smallest for a given BST.
 	 */
 	public TreeNode findKthLargest(TreeNode root, int k) {
 		if (root == null) return null;
 		int rightSize = (root.right != null)? size(root.right):0;
 		//3 conditions
-		if (k == rightSize+1) return root;
+		if (k == rightSize + 1) return root;
 		if (k <= rightSize) return findKthLargest(root.right,k);
 		return findKthLargest(root.left, k - rightSize-1);
 	}
@@ -347,22 +348,22 @@ public class TreeNode {
 	}
 	
 	public  ArrayList<Integer> rangeList = new ArrayList<Integer>();
-	public void printRange(TreeNode root, int a, int b) {                   
+	public void printRangeBST(TreeNode root, int a, int b) {                   
 		if(root == null) return;
 		if(root.data >= a) {
-			printRange(root.left, a, b);
+			printRangeBST(root.left, a, b);
 		}
 		if (root.data >= a && root.data <= b) {
 			rangeList.add(root.data);
 
 		} 
 		if(root.data <= b) {
-			printRange(root.right, a, b);
+			printRangeBST(root.right, a, b);
 		}
 	}
 	
 	/**
-	 * Time complexity O(n) for all three traversal algorithms for BST.
+	 * Time complexity O(n) for all three traversal algorithms for binary Tree.
 	 */
 	// 1. Visit root 2. Visit root.left 3. Visit root.right.
 	public static ArrayList<Integer> preorderList = new ArrayList<>();
@@ -503,7 +504,7 @@ public class TreeNode {
 		return list;
 	}
 	
-	public static int minTreeDepth(TreeNode root) { //Use level order 
+	public static int minTreeDepth(TreeNode root) { //Use level order. 
 	    if(root == null) return 0;
 	    
 	    int depth = 1;
