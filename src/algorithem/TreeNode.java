@@ -341,9 +341,12 @@ public class TreeNode {
 		}
 	}
 	
+	/**
+	 * Time complexity O(n) for all three traversal algorithms for BST.
+	 */
 	// 1. Visit root 2. Visit root.left 3. Visit root.right.
 	public static ArrayList<Integer> preorderList = new ArrayList<>();
-	public void preorder (TreeNode root) { //Time complexity O(n).
+	public void preorder (TreeNode root) { 
 		if (root != null) {
 			preorderList.add(root.data);
 			preorder(root.left);
