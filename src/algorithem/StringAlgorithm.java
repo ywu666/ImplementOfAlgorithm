@@ -9,11 +9,11 @@ public class StringAlgorithm {
 		return word.substring(0,i) + insert + word.substring(i);
 	}
 
-	public static String insertPairStar(String s) { //recursion
-		if(s == null || s.length() <= 1) return s;
-		return s.charAt(0) + 
-				(s.charAt(0)==s.charAt(1) ? "*" : "") +
-				insertPairStar(s.substring(1));
+	public static String insertPairStar(String str) { //recursion
+		if(str == null || str.length() <= 1) return str;
+		return str.charAt(0) + 
+				(str.charAt(0) == str.charAt(1) ? "*" : "") +
+				insertPairStar(str.substring(1));
 	}
 
 	//This method will replace the ' ' in String a with the specific pattern b.
@@ -35,7 +35,7 @@ public class StringAlgorithm {
 		String inputStr = str;
 		String outputStr = "";
 		for (int i = inputStr.length() -1; i>=0;i--) {
-			outputStr +=inputStr.charAt(i);
+			outputStr += inputStr.charAt(i);
 		}
 		return outputStr;
 	}
@@ -439,7 +439,7 @@ public class StringAlgorithm {
 	}
 
 	//These methods are all help methods for isBalances()method above
-	private static boolean isBalanced(String input, String stack) {
+	private static boolean isBalanced(String input, String stack) { //Time complexity = O(n).
 		if (input.isEmpty()) { // base case : input string is empty
 			return stack.isEmpty();
 		}else if (isOpen(input.charAt(0))) { //base case 2: is open case
@@ -459,4 +459,85 @@ public class StringAlgorithm {
 		return open.indexOf(charopen) == close.indexOf(charclose);
 	}
 
+	//Time complexity is O(n) by using stack. 
+	//Transfer expression from infix to suffix.
+	public static List<String> parseToSuffixExpression(String expression) {
+		return parseToSuffixExpression(expressionToList(expression));
+	}
+
+	private static List<String> parseToSuffixExpression(List<String> expressionList) {
+		Stack<String> opStack = new Stack<>(); //Create a stack to save the operators
+		List<String> suffixList = new ArrayList<>(); 
+		for(String item : expressionList){
+			if(isOperator(item)){ //push the item if the stack is empty or top is "(", or the priority is higher than top.
+				if(opStack.isEmpty() || "(".equals(opStack.peek()) || priority(item) > priority(opStack.peek())){
+					opStack.push(item);
+				}else { //pop operators from the stack until meets the end of stack or "(" or priority is larger.
+					while (!opStack.isEmpty() && !"(".equals(opStack.peek())){
+						if(priority(item) <= priority(opStack.peek())){
+							suffixList.add(opStack.pop());
+						}
+					}
+					opStack.push(item); //Otherwise, push the new operator into the stack
+				}
+			}else if(isNumber(item)){
+				suffixList.add(item);
+			}else if("(".equals(item)){
+				opStack.push(item);
+			}else if(")".equals(item)){ //pop the operators between ()
+				while (!opStack.isEmpty()){
+					if("(".equals(opStack.peek())){
+						opStack.pop();
+						break;
+					}else {
+						suffixList.add(opStack.pop());
+					}
+				}
+			}else {
+				throw new RuntimeException("Illegal operator!");
+			}
+		}
+		while (!opStack.isEmpty()){ // pop all remaining operators into the suffix
+			suffixList.add(opStack.pop());
+		}
+		return suffixList;
+	}
+
+	private static boolean isOperator(String op){
+		return op.equals("+") || op.equals("-") || op.equals("*") || op.equals("/");
+	}
+
+	private static boolean isNumber(String num){
+		return num.matches("\\d+");
+	}
+
+	// Get the priority of the operator.
+	private static int priority(String op){
+		if(op.equals("*") || op.equals("/")){
+			return 1;
+		}else if(op.equals("+") || op.equals("-")){
+			return 0;
+		}
+		return -1;
+	}
+
+	private static List<String> expressionToList(String expression) {
+		int index = 0;
+		List<String> list = new ArrayList<>();
+		do{
+			char ch = expression.charAt(index);
+			if(ch < 47 || ch > 58){ //isOperator, push to list directly
+				index ++ ;
+				list.add(ch+"");
+			}else if(ch >= 47 && ch <= 58){ //isNumber, check if the number is more than one digit
+				String str = "";
+				while (index < expression.length() && expression.charAt(index) >=47 && expression.charAt(index) <= 58){
+					str += expression.charAt(index);
+					index ++;
+				}
+				list.add(str);
+			}
+		}while (index < expression.length());
+		return list;
+	}
 }
