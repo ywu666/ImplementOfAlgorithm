@@ -17,13 +17,25 @@ public class TreeNode {
 		this.right = right;
 	}
 
-	public TreeNode insert(TreeNode root, int data) { //recursion
+	public TreeNode insert(TreeNode root, int data) { //recursion, insert for BST.
 		if (root == null) return new TreeNode(data);
-		if (root.data > data) root.left = insert(root.left,data);
-		if (root.data < data) root.right = insert(root.right,data);
+		if (root.data > data) root.left = insert(root.left,data); //case1: The node insert to left
+		if (root.data < data) root.right = insert(root.right,data); //case2: The node insert to right
+		// case3: duplicate node.data, do nothing
 		return root;
 	}
 
+	/**
+	 * Tail recursion instead iterator in findNode()
+	 * Time  = O(n).
+	 */
+    public boolean contains(TreeNode root, int data) {  //check if the node is contains for BST
+    	if(root == null) return false;
+    	if(data < root.data) return contains(root.left,data);
+    	if(data > root.data) return contains(root.right,data);
+    	else return true;  //match
+    }
+    
 	public int sum(TreeNode root) {
 		if (root == null) return 0;
 		return sum(root.left) + sum(root.right) + root.data;
@@ -115,13 +127,21 @@ public class TreeNode {
 		return left > right ? left+1: right+1;
 }
 
-	public TreeNode findMin(TreeNode root) {
+	public TreeNode findMinBST(TreeNode root) { //findMin for BST
 		if(root == null) return null;
 		if(root.left == null) return root;
-		return findMin(root.left);
+		return findMinBST(root.left);
 	}
 
-	public int findMax(TreeNode root) { //recursion
+	public TreeNode findMaxBST(TreeNode root) { //findMax for BST using iterator rather than tail recursion in findMin
+		if(root == null) return null;
+		while(root.right != null) {
+			root = root.right;
+		}
+		return root;
+	}
+	
+	public int findMax(TreeNode root) { //Recursion for normal Tree
 		if (root != null) {
 			return Math.max(root.data, Math.max(findMax(root.left), findMax(root.right)));
 		}
