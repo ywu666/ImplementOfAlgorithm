@@ -29,7 +29,7 @@ public class Matrix {
 			for(int j = 0; j < cols/2; j++){
 				int temp = matrix[i][j];
 				matrix[i][j] = matrix[i][cols - 1 - j];
-				matrix[i][cols - 1 -j] = temp;
+				matrix[i][cols - 1 - j] = temp;
 			}
 		}	
 	}
@@ -41,7 +41,7 @@ public class Matrix {
 		for(int i = 0; i < rows/2; i++){
 			for(int j = 0; j < cols; j++){
 				int temp = matrix[i][j];
-				matrix[i][j] = matrix[rows - 1 - i][ j];
+				matrix[i][j] = matrix[rows - 1 - i][j];
 				matrix[rows - 1 - i][j] = temp;
 			}
 		}	
@@ -49,13 +49,13 @@ public class Matrix {
 
 	public static int[][] rotate(int[][] matrix) { //rotate CW 90 degree
 		int n = matrix.length;
-		for (int i = 0; i < n / 2; i++) {
-			for (int j = 0; j < Math.ceil(((double) n) / 2.); j++) {
+		for (int i = 0; i < n/2; i++) {
+			for (int j = 0; j < Math.ceil(((double) n)/2.);j++) {
 				int temp = matrix[i][j];
 				matrix[i][j] = matrix[n-1-j][i];
-				matrix[n-1-j][i] = matrix[n-1-i][n-1-j];
-				matrix[n-1-i][n-1-j] = matrix[j][n-1-i];
-				matrix[j][n-1-i] = temp;
+				matrix[n - 1 - j][i] = matrix[n-1-i][n - 1 - j];
+				matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i];
+				matrix[j][n - 1 - i] = temp;
 			}
 		}
 		return matrix;
@@ -77,11 +77,11 @@ public class Matrix {
 
 		int rows = matrix.length;
 		int cols = matrix[0].length;
-		int x = 0, y =0;
+		int x = 0, y = 0;
 
 		while (rows > 0 && cols > 0) {
 			if (rows == 1) { // when only one row
-				for (int i =0; i <cols; i++) {
+				for (int i = 0; i < cols; i++) {
 					spiralOrder.add(matrix[x][y++]);
 				}
 				break;
@@ -91,23 +91,23 @@ public class Matrix {
 				}
 				break;
 			}			
-			for (int i = 0;i< cols - 1;i++) {
+			for (int i = 0;i < cols - 1;i++) {
 				spiralOrder.add(matrix[x][y++]);
 			}
-			for (int j = 0;j< rows - 1;j++) {
+			for (int j = 0;j < rows - 1;j++) {
 				spiralOrder.add(matrix[x++][y]);
 			}
 
-			for (int i = 0;i< cols - 1;i++) {
+			for (int i = 0;i < cols - 1;i++) {
 				spiralOrder.add(matrix[x][y--]);
 			}
-			for (int j = 0;j< rows - 1;j++) {
+			for (int j = 0;j < rows - 1;j++) {
 				spiralOrder.add(matrix[x--][y]);
 			}	
 			x++;
 			y++;
-			rows = rows-2;
-			cols = cols-2;
+			rows = rows - 2;
+			cols = cols - 2;
 		}
 		return spiralOrder;
 	}
@@ -136,7 +136,7 @@ public class Matrix {
 			stack.addFirst(new TravelNode(0,0,0,grid));
 			while(!stack.isEmpty()) {
 				TravelNode node= stack.removeFirst();
-				if (node.row == rows -1 && node.col == cols - 1) {//update the maxSum whne the last node is reached
+				if (node.row == rows - 1 && node.col == cols - 1) {//update the maxSum whne the last node is reached
 					if (node.nodeSum > maxSum) maxSum = node.nodeSum;
 				}else {
 					//go right 
@@ -230,18 +230,18 @@ public class Matrix {
 		    int[][] t = new int[rows][cols];
 		    
 		    //top row
-		    for (int i = 0; i< rows; i++) {
+		    for (int i = 0; i < rows; i++) {
 		        t[i][0] = Character.getNumericValue(matrix[i][0]);
 		    }
 		    
 		    //left column
-		    for (int i = 0; i< cols; i++) {
+		    for (int i = 0; i < cols; i++) {
 		    	t[0][i] = Character.getNumericValue(matrix[0][i]);
 		    }
 		    
 		    //cells inside
-		    for (int i = 1;i< rows;i++) {
-		    	for (int j = 1;j< cols;j++) {
+		    for (int i = 1;i < rows;i++) {
+		    	for (int j = 1;j < cols;j++) {
 		    		if (matrix[i][j] == '1') {
 		    			//find the minimum in the square
 		    			int min = Math.min(t[i][j-1], Math.min(t[i-1][j], t[i-1][j-1]));

@@ -67,7 +67,7 @@ class ListNode {
 		}
 		return slow;
 	}
-
+	
 	/**
 	 * This method will delete the node at a given position (starting from 1 as the
 	 * head position) and return the head of the list. Do nothing if the input position
@@ -182,7 +182,7 @@ class ListNode {
 			table.put(index++, head);
 			head = head.next;
 		}
-		return table.get(table.size() -n + 1);
+		return table.get(table.size() - n + 1);
 	}
 
 	//this method will not use the exact memory

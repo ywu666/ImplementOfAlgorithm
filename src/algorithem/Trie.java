@@ -21,7 +21,7 @@ class Trie {
 				curr = childrens.get(ch);
 			} else {
 				TrieNode newNode = new TrieNode(ch);
-				childrens.put(ch, newNode);
+				childrens.put(ch,newNode);
 				curr = newNode;
 			}        
 			childrens = curr.children;

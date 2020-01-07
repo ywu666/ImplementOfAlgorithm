@@ -103,8 +103,8 @@ public class TreeNode {
 			TreeBoundaryNode node = q.poll();
 			TreeNode tr = node.root;
 			if (tr.data <= node.leftBoundary || tr.data >= node.rightBoundary) return false;
-			if (tr.left != null) q.add(new TreeBoundaryNode(tr.left, node.leftBoundary, tr.data));
-			if (tr.right != null) q.add(new TreeBoundaryNode(tr.right, tr.data, node.rightBoundary));
+			if (tr.left != null) q.add(new TreeBoundaryNode(tr.left,node.leftBoundary,tr.data));
+			if (tr.right != null) q.add(new TreeBoundaryNode(tr.right,tr.data,node.rightBoundary));
 		}
 		return true;
 	}
@@ -116,7 +116,7 @@ public class TreeNode {
 	// This is a help method for validBST() method above
 	private static boolean validBST(TreeNode root, int min , int max) { //recursion
 		if (root == null) return true;
-		if (root.data <=min || root.data >= max) return false;
+		if (root.data <= min || root.data >= max) return false;
 		return validBST(root.left,min,root.data) && validBST(root.right,root.data,max);
 	}
 
@@ -124,7 +124,7 @@ public class TreeNode {
 		if (root == null) return 0;
 		int left = findHeight(root.left);
 		int right = findHeight(root.right);
-		return left > right ? left+1: right+1;
+		return left > right ? left + 1: right + 1;
 }
 
 	//Time complexity is O(log(n)).
@@ -228,15 +228,15 @@ public class TreeNode {
 		//3 conditions
 		if (k == rightSize + 1) return root;
 		if (k <= rightSize) return findKthLargest(root.right,k);
-		return findKthLargest(root.left, k - rightSize-1);
+		return findKthLargest(root.left, k - rightSize - 1);
 	}
 
 	public TreeNode findKthSmallest(TreeNode root, int k) {
 		if (root == null) return null;
-		int leftSize = (root.left != null)? size(root.left):0;
+		int leftSize = (root.left != null) ? size(root.left):0;
 
 		if (leftSize + 1 == k) return root;
-		if (k <= leftSize) return findKthSmallest(root.left, k);
+		if (k <= leftSize) return findKthSmallest(root.left,k);
 		return findKthSmallest(root.right,k - leftSize - 1);
 	}
 
@@ -261,7 +261,7 @@ public class TreeNode {
 				}
 				currlvl++; // begin a new level
 			}else {
-				currSum +=node.data;
+				currSum += node.data;
 				if (node.left != null) q.add(node.left);
 				if (node.right != null) q.add(node.right);
 			}
@@ -328,16 +328,16 @@ public class TreeNode {
 	
 	private static int maxSumPathMain (TreeNode root, int[] buffer) {
 	    if (root == null) return 0;
-	    int leftSum = maxSumPathMain(root.left, buffer);
-	    int rightSum = maxSumPathMain(root.right, buffer);
-	    int nodeCumVal = Math.max(root.data + leftSum, root.data + rightSum);
-	    buffer[0] = Math.max(buffer[0], leftSum + root.data + rightSum);
+	    int leftSum = maxSumPathMain(root.left,buffer);
+	    int rightSum = maxSumPathMain(root.right,buffer);
+	    int nodeCumVal = Math.max(root.data + leftSum,root.data + rightSum);
+	    buffer[0] = Math.max(buffer[0],leftSum + root.data + rightSum);
 	    return nodeCumVal;
 	}
 
 	//Populate the list of ancestors from bottom to top in the below list.
 	public ArrayList<Integer> ancestorsList = new ArrayList<Integer>();
-	public boolean printAncestors(TreeNode root, int nodeData) { //recursion
+	public boolean printAncestors(TreeNode root, int nodeData) { //recursion. Time complexity = O(n).
 	    if (root == null) return false;
 	    if (root.data == nodeData)  return true; 
 	    if (printAncestors(root.left,nodeData) ||printAncestors(root.right,nodeData)  ) {
@@ -348,17 +348,17 @@ public class TreeNode {
 	}
 	
 	public  ArrayList<Integer> rangeList = new ArrayList<Integer>();
-	public void printRangeBST(TreeNode root, int a, int b) {                   
+	public void printRangeBST(TreeNode root,int a,int b) {                   
 		if(root == null) return;
 		if(root.data >= a) {
-			printRangeBST(root.left, a, b);
+			printRangeBST(root.left,a,b);
 		}
 		if (root.data >= a && root.data <= b) {
 			rangeList.add(root.data);
 
 		} 
 		if(root.data <= b) {
-			printRangeBST(root.right, a, b);
+			printRangeBST(root.right,a,b);
 		}
 	}
 	
@@ -538,7 +538,7 @@ public class TreeNode {
 
 	public int getNodeDistance(TreeNode root, int n1, int n2) { //ignore the given keys are all exist.
 		int lca = findLCA(root,n1,n2).data;
-		return (pathLengthFromRoot(root,n1) + pathLengthFromRoot(root,n2) - 2) - 2*(pathLengthFromRoot(root,lca) - 1);
+		return (pathLengthFromRoot(root,n1) + pathLengthFromRoot(root,n2) - 2) - 2 * (pathLengthFromRoot(root,lca) - 1);
 	}
 
 	public boolean isIdentical(TreeNode root1, TreeNode root2) { //recursion
@@ -565,16 +565,16 @@ public class TreeNode {
 			list.add(value);
 		}
 
-		TreeNode root = list.get(0) == null ? null :new TreeNode(list.get(0));
+		TreeNode root = list.get(0) == null ? null:new TreeNode(list.get(0));
 		Queue<TreeNode> q = new LinkedList<>();
 		q.add(root);
-		int i =0, size = list.size();	
+		int i = 0, size = list.size();	
 
 		while (i < size) { //iterate the tree
 			TreeNode node = q.poll();
 			if (node != null) { // Contract the tree
-				Integer leftVal = i+1 < size ? list.get(i+1):null;
-				Integer rightVal = i+2 < size ? list.get(i+2):null;
+				Integer leftVal = i + 1 < size ? list.get(i + 1):null;
+				Integer rightVal = i + 2 < size ? list.get(i + 2):null;
 				TreeNode leftNode = leftVal == null ? null:new TreeNode(leftVal);
 				TreeNode rightNode = rightVal == null ? null:new TreeNode(rightVal);
 				node.left = leftNode;
@@ -613,6 +613,6 @@ public class TreeNode {
 		if(root1 == null || root2 == null) return false;
 		//if both trees are not null
 		if(root1.data != root2.data) return false;
-		return (isMirror(root1.left, root2.right) && isMirror(root1.right, root2.left));
+		return (isMirror(root1.left,root2.right) && isMirror(root1.right,root2.left));
 	}
 }   

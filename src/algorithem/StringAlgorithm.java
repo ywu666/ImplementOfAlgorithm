@@ -34,7 +34,7 @@ public class StringAlgorithm {
 		if (str == null || str.isEmpty()) return str;
 		String inputStr = str;
 		String outputStr = "";
-		for (int i = inputStr.length() -1; i>=0;i--) {
+		for (int i = inputStr.length() - 1; i >= 0;i--) {
 			outputStr += inputStr.charAt(i);
 		}
 		return outputStr;
@@ -116,7 +116,7 @@ public class StringAlgorithm {
 		}
 
 		int[] letters = new int[256];
-		for (char c : str1.toCharArray()) {
+		for (char c:str1.toCharArray()) {
 			letters[c]++;
 		}
 
@@ -160,12 +160,13 @@ public class StringAlgorithm {
 		Hashtable<Character, Integer> table2 = new Hashtable<Character,Integer>();
 		for (int  i = 0;i < str1.length();i++) {
 			Character ch1 = str1.charAt(i);
-			Integer val1 = table1.containsKey(ch1)? table1.get(ch1) +1 :1; 
+			Integer val1 = table1.containsKey(ch1) ? table1.get(ch1) + 1:1; 
 			table1.put(ch1,val1);
 
 			Character ch2 = str2.charAt(i);
-			Integer val2 = table2.containsKey(ch2) ? table2.get(ch2) +1 :1; 
+			Integer val2 = table2.containsKey(ch2) ? table2.get(ch2) + 1:1; 
 			table2.put(ch2,val2);
+			
 			if (table1.get(ch1) != table2.get(ch2)) return false;
 		}
 		return true;	
@@ -176,7 +177,7 @@ public class StringAlgorithm {
 		Hashtable<Character,Integer> table = new Hashtable<>();
 		for(char ch:str.toCharArray()){
 			if(table.containsKey(ch)){
-				table.put(ch,table.get(ch)+1);
+				table.put(ch,table.get(ch) + 1);
 			}else{
 				table.put(ch,1);
 			}
@@ -228,12 +229,12 @@ public class StringAlgorithm {
 		int maxSubstrLen = 1;
 		int maxSubstrStartIndex = 0;
 
-		// Mark all length 1 substrings as palindromes.
+		// Mark all length 1 substrings as palindrome.
 		for(int i = 0; i < len; i++){
 			memo[i][i] = true;
 		}
 
-		// Selectively mark all length 2 substrings as palindromes
+		// Selectively mark all length 2 substrings as palindrome
 		// in a single pass.
 		for(int i = 0; i < len - 1; i++){
 			if(str.charAt(i) == str.charAt(i+1)){
@@ -272,7 +273,7 @@ public class StringAlgorithm {
 	public static ArrayList<String> getCombPerms(String str) {
 		ArrayList<String> permutations = new ArrayList<String>();
 		if (str == null) return null;
-		if (str.equals("") || str.length() ==1) {
+		if (str.equals("") || str.length() == 1) {
 			permutations.add(str);
 			return permutations;
 		}
@@ -301,7 +302,7 @@ public class StringAlgorithm {
 				if (level == 0) {
 					this.predecessor = ipToAppend;
 				}else {
-					this.predecessor = predecessor+ "." + ipToAppend;
+					this.predecessor = predecessor + "." + ipToAppend;
 				}
 			}
 		}
@@ -328,7 +329,7 @@ public class StringAlgorithm {
 				String successor = remaining.substring(i);
 				if (IpToAppend.length() > 0) {
 					int num = Integer.parseInt(IpToAppend);
-					if (num <= 255) stack.addFirst(new IpLevelNode(currlevel+1,IpToAppend ,predecessor,successor));
+					if (num <= 255) stack.addFirst(new IpLevelNode(currlevel + 1,IpToAppend ,predecessor,successor));
 				}
 				i++;
 			}
@@ -390,7 +391,7 @@ public class StringAlgorithm {
 				out.add(node.word);
 			} else {
 				for (Character ch: mapping.get(digits.charAt(node.digitCount)).toCharArray()) {
-					stack.addFirst(new PhoneNode(node.word+ch,node.digitCount+1));
+					stack.addFirst(new PhoneNode(node.word + ch,node.digitCount + 1));
 				}
 			}
 		}
@@ -528,7 +529,7 @@ public class StringAlgorithm {
 			char ch = expression.charAt(index);
 			if(ch < 47 || ch > 58){ //isOperator, push to list directly
 				index++ ;
-				list.add(ch+"");
+				list.add(ch + "");
 			}else if(ch >= 47 && ch <= 58){ //isNumber, check if the number is more than one digit
 				String str = "";
 				while (index < expression.length() && expression.charAt(index) >= 47 && expression.charAt(index) <= 58){
