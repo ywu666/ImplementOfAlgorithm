@@ -89,26 +89,22 @@ public class Algorithm {
 		return (reverse == x);   
 	}
 
-	public static boolean isPowOfTwo(int num) {
-		if ((num & (num-1)) == 0) {
-			return true;
-		}else {
-			return false;
-		}
+	public static boolean isPowOfTwo(int num) { //Time/Space complexity = O(1)
+		return (num & (num-1)) == 0;		
 	}
 
 	public static double pow(double x, int n) { //Time Complexity = O(log(n))
 		if (n == 0) return 1.0;
 		if(n == 1) return x;
 		if (n < 0) return pow(1/x, -n);
-		if (n%2 == 1) return x * pow(x, n-1); //Or x * pow(x*x, n/2);
-		return pow(x*x, n/2); //Cann't be replace, will influence the complexity.
+		if (n % 2 == 1) return x * pow(x, n-1); //Or x * pow(x*x, n/2);
+		return pow(x * x, n/2); //Cann't be replace, will influence the complexity.
 	}
 
 	public static int fib(int n) { //recursion Time complexity = O(2^n), Space complexity = O(1).
 		if ( n == 0 ) return 0;
 		if (n == 1) return 1;
-		return fib(n-1) + fib(n-2);
+		return fib(n - 1) + fib(n - 2);
 	}
 
 	public static int betterFibonacci(int n) { //Time complexity = O(n).
@@ -238,13 +234,13 @@ public class Algorithm {
 		int[] outBuffer = new int[outsize];
 
 		for (int i = 0; i < outsize;i++) { //initialize the out buffer 
-			outBuffer[i] = input.get(height-1).get(i);
+			outBuffer[i] = input.get(height - 1).get(i);
 		}
 
 		for (int r = height-2;r >= 0; r--) {
 			ArrayList<Integer> row = input.get(r);
 			for (int i = 0;i < row.size();i++) {
-				outBuffer[i] = row.get(i) + Math.min(outBuffer[i], outBuffer[i+1]);
+				outBuffer[i] = row.get(i) + Math.min(outBuffer[i], outBuffer[i + 1]);
 			}
 		}
 		return outBuffer[0];
@@ -260,9 +256,9 @@ public class Algorithm {
 
 		for (int i = 0;i < numbers.length;i++) {
 			if (table.containsKey(numbers[i])) {
-				return new int[] {table.get(numbers[i]),i+1};
+				return new int[] {table.get(numbers[i]),i + 1};
 			}else {
-				table.put(target - numbers[i],i+1);
+				table.put(target - numbers[i],i + 1);
 			}
 		}	    
 		return null;
@@ -366,7 +362,7 @@ public class Algorithm {
 		int high = arr.length;
 		while (low < high) {
 			int mid = low + (high - low)/2;
-			if (arr[mid] > n) high = mid -1;
+			if (arr[mid] > n) high = mid - 1;
 			if (arr[mid] < n) low = mid + 1;
 			return true; // if arr[mid] == n;
 		}
@@ -388,14 +384,14 @@ public class Algorithm {
 
 	private static int makeChange(int[] coins, int amount, int curr_coin_index) {
 		int next_coin_index;
-		if (curr_coin_index < coins.length -1) {
-			next_coin_index = curr_coin_index +1;
+		if (curr_coin_index < coins.length - 1) {
+			next_coin_index = curr_coin_index + 1;
 		}else { // The curr_index == the last index of the array
 			return coins[curr_coin_index];
 		}
 		int res = 0; // Calculate the number of combinations way
-		for (int i = 0;i*coins[curr_coin_index] <= amount;i++) {
-			res += makeChange(coins, amount - i*coins[curr_coin_index],next_coin_index);
+		for (int i = 0;i * coins[curr_coin_index] <= amount;i++) {
+			res += makeChange(coins, amount - i * coins[curr_coin_index],next_coin_index);
 		}
 		return res;
 	}
@@ -424,7 +420,7 @@ public class Algorithm {
 
 			curr.add(1); // add First 
 			for (int j = 0; j < prev.size() - 1;j++) { //add Middle which is the combination of prev level
-				curr.add(prev.get(j) + prev.get(j+1)); 
+				curr.add(prev.get(j) + prev.get(j + 1)); 
 			}
 			curr.add(1); //add last
 
