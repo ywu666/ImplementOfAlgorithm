@@ -20,7 +20,7 @@ public class StringAlgorithm {
 	public static String replace(String a, String b) {
 		StringBuffer str = new StringBuffer();
 
-		for (int i=0;i<a.length();i++) {
+		for (int i= 0;i < a.length();i++) {
 			if (a.charAt(i) == ' ') {
 				str.append(b);
 			} else {
@@ -46,7 +46,7 @@ public class StringAlgorithm {
 			StringBuilder compress = new StringBuilder();
 			char lastChar = text.charAt(0);
 			int count = 1;
-			for (int i = 1; i<length; i++) {
+			for (int i = 1; i < length; i++) {
 				if (text.charAt(i) == lastChar) {		        	  
 					count++;
 				}else {
@@ -140,7 +140,7 @@ public class StringAlgorithm {
 		ArrayList<String> list = getPermutations(str.substring(1));
 
 		for (String word: list) {
-			for (int i =0;i<= word.length();i++) {
+			for (int i = 0;i <= word.length();i++) {
 				permutations.add(insert(word,first,i));
 			}
 		}
@@ -158,7 +158,7 @@ public class StringAlgorithm {
 		if (str1.length() != str2.length()) return false;
 		Hashtable<Character, Integer> table1 = new Hashtable<Character,Integer>();
 		Hashtable<Character, Integer> table2 = new Hashtable<Character,Integer>();
-		for (int  i=0;i<str1.length();i++) {
+		for (int  i = 0;i < str1.length();i++) {
 			Character ch1 = str1.charAt(i);
 			Integer val1 = table1.containsKey(ch1)? table1.get(ch1) +1 :1; 
 			table1.put(ch1,val1);
@@ -205,7 +205,7 @@ public class StringAlgorithm {
 		boolean[] checker_array = new boolean[256];
 
 		// Loop across all characters in String. 
-		for(int i=0;i<str.length();i++){
+		for(int i = 0;i < str.length();i++){
 			// Check the position specified by the character's 8 bit value. Since this is cast as an int, it will be a numerical value!
 			int position = str.charAt(i);
 			if(checker_array[position]) {
@@ -235,7 +235,7 @@ public class StringAlgorithm {
 
 		// Selectively mark all length 2 substrings as palindromes
 		// in a single pass.
-		for(int i = 0; i < len-1; i++){
+		for(int i = 0; i < len - 1; i++){
 			if(str.charAt(i) == str.charAt(i+1)){
 				memo[i][i+1] = true;
 				maxSubstrLen = 2;
@@ -252,7 +252,7 @@ public class StringAlgorithm {
 			// start index.
 			for(int i = 0; i + l-1 < len; i++ ){
 				// j is the end index.
-				int j = i + l-1;
+				int j = i + l - 1;
 
 				// In a String "abba", if we're at the second "b" -> "abb",
 				// "abba" is a palindrome only if "bb" were a palindrome and "a" == "a"
@@ -281,7 +281,7 @@ public class StringAlgorithm {
 		permutations.add(first+""); //convert to string type
 		ArrayList<String> list = getCombPerms(str.substring(1));
 		for (String word: list) {
-			for (int i =0;i<= word.length();i++) {
+			for (int i = 0;i <= word.length();i++) {
 				permutations.add(insert(word,first,i));
 			}
 		}
@@ -379,7 +379,7 @@ public class StringAlgorithm {
 		ArrayList<String> out = new ArrayList<>();
 		Deque<PhoneNode> stack = new LinkedList<>();
 		int len = digits.length();
-		for (Character ch: mapping.get(digits.charAt(0)).toCharArray()) { // push the first node on the stack
+		for (Character ch:mapping.get(digits.charAt(0)).toCharArray()) { // push the first node on the stack
 			stack.addFirst(new PhoneNode(String.valueOf(ch),1));
 		}
 
@@ -412,11 +412,11 @@ public class StringAlgorithm {
 		int lengthA = a.length();
 		int lengthB = b.length();
 		int[][] memo = new int [lengthA+1][lengthB+1];
-		for (int i=0;i<=lengthA;i++) memo[i][0] = i;
-		for (int i=0;i<=lengthB;i++) memo[0][i] = i;
-		for (int i = 1;i<=lengthA;i++) {
+		for (int i = 0;i <= lengthA;i++) memo[i][0] = i;
+		for (int i = 0;i <= lengthB;i++) memo[0][i] = i;
+		for (int i = 1;i <= lengthA;i++) {
 			char cha = a.charAt(i);
-			for (int j=0;j<=lengthB;j++) {
+			for (int j= 0;j <= lengthB;j++) {
 				char chb = b.charAt(j);
 				if (cha == chb) {
 					memo[i][j] = memo[i-1][j-1];
@@ -468,7 +468,7 @@ public class StringAlgorithm {
 	private static List<String> parseToSuffixExpression(List<String> expressionList) {
 		Stack<String> opStack = new Stack<>(); //Create a stack to save the operators
 		List<String> suffixList = new ArrayList<>(); 
-		for(String item : expressionList){
+		for(String item:expressionList){
 			if(isOperator(item)){ //push the item if the stack is empty or top is "(", or the priority is higher than top.
 				if(opStack.isEmpty() || "(".equals(opStack.peek()) || priority(item) > priority(opStack.peek())){
 					opStack.push(item);
@@ -527,13 +527,13 @@ public class StringAlgorithm {
 		do{
 			char ch = expression.charAt(index);
 			if(ch < 47 || ch > 58){ //isOperator, push to list directly
-				index ++ ;
+				index++ ;
 				list.add(ch+"");
 			}else if(ch >= 47 && ch <= 58){ //isNumber, check if the number is more than one digit
 				String str = "";
-				while (index < expression.length() && expression.charAt(index) >=47 && expression.charAt(index) <= 58){
+				while (index < expression.length() && expression.charAt(index) >= 47 && expression.charAt(index) <= 58){
 					str += expression.charAt(index);
-					index ++;
+					index++;
 				}
 				list.add(str);
 			}

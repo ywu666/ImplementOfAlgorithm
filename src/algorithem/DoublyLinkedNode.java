@@ -11,7 +11,7 @@ class DoublyLinkedNode {
 		if (head.next == null)  return  (pos == 1) ? null:head;
 		DoublyLinkedNode curr = head;
 		DoublyLinkedNode prev = curr;
-		int count =1;
+		int count = 1;
 		while(curr != null) {
 			if (pos == count) {
 				break;	

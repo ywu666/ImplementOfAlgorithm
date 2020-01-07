@@ -5,7 +5,7 @@ import java.util.*;
 
 class Node {
 	public String data; // data element
-	public boolean visited=false; // flag to track the already visited node
+	public boolean visited = false; // flag to track the already visited node
 	public List<Node> adjacentNodes = new LinkedList<Node>(); // adjacency list
 
 	public Node(String data){
@@ -51,7 +51,7 @@ class Node {
 			if(n.data != null && n.data.equals(data)) {
 				return true;
 			}
-			for(Node adj : n.adjacentNodes){
+			for(Node adj:n.adjacentNodes){
 				if(!adj.visited){
 					adj.visited = true;
 					s.push(adj);

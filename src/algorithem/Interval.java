@@ -55,5 +55,4 @@ class Interval {
 	        out.add(insert);
 	        return out;
 	}
-
 }

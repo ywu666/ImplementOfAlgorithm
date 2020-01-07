@@ -77,8 +77,8 @@ class Trie {
 		int rows = board.length;
 		int cols = board[0].length;
 
-		for (int i = 0; i<rows; i++) {
-			for (int j=0;j < cols; j++) {
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0;j < cols; j++) {
 				search(i,j,board,dictionary,"",output);
 			}
 		}
@@ -127,8 +127,6 @@ class TrieNode { //inner class
 	    Boolean isLeaf = false;
 	    HashMap<Character, TrieNode> children = new HashMap<>();
 	    public TrieNode() {}
-	    public TrieNode(Character c) {
-	        this.c = c;
-	    }   
+	    public TrieNode(Character c) { this.c = c;}   
 	}
 }

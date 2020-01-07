@@ -13,7 +13,7 @@ public class Matrix {
 	public static void transportMatrix(int[][] matrix) {
 		int rows = matrix.length;		
 		for(int i = 0; i < rows; i++){
-			for(int j = i+1; j < rows; j++){
+			for(int j = i + 1; j < rows; j++){
 				int temp = matrix[i][j];
 				matrix[i][j] = matrix[j][i];
 				matrix[j][i] = temp;
@@ -91,23 +91,23 @@ public class Matrix {
 				}
 				break;
 			}			
-			for (int i=0;i<cols-1;i++) {
+			for (int i = 0;i< cols - 1;i++) {
 				spiralOrder.add(matrix[x][y++]);
 			}
-			for (int j=0;j<rows-1;j++) {
+			for (int j = 0;j< rows - 1;j++) {
 				spiralOrder.add(matrix[x++][y]);
 			}
 
-			for (int i=0;i<cols-1;i++) {
+			for (int i = 0;i< cols - 1;i++) {
 				spiralOrder.add(matrix[x][y--]);
 			}
-			for (int j=0;j<rows-1;j++) {
+			for (int j = 0;j< rows - 1;j++) {
 				spiralOrder.add(matrix[x--][y]);
 			}	
 			x++;
 			y++;
-			rows=rows-2;
-			cols=cols-2;
+			rows = rows-2;
+			cols = cols-2;
 		}
 		return spiralOrder;
 	}
@@ -121,7 +121,7 @@ public class Matrix {
 			TravelNode(int row, int col, int sum, int[][]matrix) {
 				this.row = row;
 				this.col = col;
-				sum +=matrix[row][col];
+				sum += matrix[row][col];
 				this.nodeSum = sum;
 			}
 		}
@@ -129,14 +129,14 @@ public class Matrix {
 		int maxSum = Integer.MIN_VALUE;
 		int rows = grid.length;
 		int cols = grid[0].length;
-		if (rows <2 && cols<2) {
+		if (rows < 2 && cols < 2) {
 			return grid[0][0];
 		}else {
 			Deque<TravelNode> stack = new LinkedList<>();
 			stack.addFirst(new TravelNode(0,0,0,grid));
 			while(!stack.isEmpty()) {
 				TravelNode node= stack.removeFirst();
-				if (node.row == rows -1 && node.col == cols -1) {//update the maxSum whne the last node is reached
+				if (node.row == rows -1 && node.col == cols - 1) {//update the maxSum whne the last node is reached
 					if (node.nodeSum > maxSum) maxSum = node.nodeSum;
 				}else {
 					//go right 
@@ -144,7 +144,7 @@ public class Matrix {
 						stack.addFirst(new TravelNode(node.row, node.col + 1, node.nodeSum,grid));
 					}
 					//go down
-					if (node.row < rows -1) {
+					if (node.row < rows - 1) {
 						stack.addFirst(new TravelNode(node.row +1, node.col, node.nodeSum,grid));
 					}
 				}
@@ -181,7 +181,7 @@ public class Matrix {
 		boolean out = false;
 
 		for (int i = 0; i< rows;i++) {
-			for (int j = 0;j<cols;j++) {
+			for (int j = 0;j< cols;j++) {
 				out = search(i,j,board,word,"");
 				if (out) return true;
 			}
@@ -193,7 +193,7 @@ public class Matrix {
 		int rows = board.length;
 		int cols = board[0].length;
 		//out of bound // not match pattern // visited
-		if (r > (rows - 1) || r < 0 || c> (cols-1) || c < 0 || !word.contains(predecessor) || board[r][c] == '@') {
+		if (r > (rows - 1) || r < 0 || c > (cols - 1) || c < 0 || !word.contains(predecessor) || board[r][c] == '@') {
 			return false;
 		}
 
@@ -230,18 +230,18 @@ public class Matrix {
 		    int[][] t = new int[rows][cols];
 		    
 		    //top row
-		    for (int i = 0; i<rows; i++) {
+		    for (int i = 0; i< rows; i++) {
 		        t[i][0] = Character.getNumericValue(matrix[i][0]);
 		    }
 		    
 		    //left column
-		    for (int i = 0; i<cols; i++) {
+		    for (int i = 0; i< cols; i++) {
 		    	t[0][i] = Character.getNumericValue(matrix[0][i]);
 		    }
 		    
 		    //cells inside
-		    for (int i = 1;i<rows;i++) {
-		    	for (int j = 1;j<cols;j++) {
+		    for (int i = 1;i< rows;i++) {
+		    	for (int j = 1;j< cols;j++) {
 		    		if (matrix[i][j] == '1') {
 		    			//find the minimum in the square
 		    			int min = Math.min(t[i][j-1], Math.min(t[i-1][j], t[i-1][j-1]));
@@ -253,8 +253,8 @@ public class Matrix {
 		    }
 		    
 		    int max = 0; // get maximum length
-		    for (int i = 0;i<rows;i++) {
-		    	for (int j = 0;j<cols;j++) {
+		    for (int i = 0;i < rows;i++) {
+		    	for (int j = 0;j < cols;j++) {
 		    		//System.out.println("t["+i+"]" + "[" + j +"]:" + t[i][j]);
 		    		if (t[i][j] > max) max = t[i][j];
 		    	}
@@ -267,21 +267,21 @@ public class Matrix {
 		  
 		    int rows = matrix.length;
 		    int cols = matrix[0].length;
-		    int[][] t = new int[rows+1][cols+1];
+		    int[][] t = new int[rows + 1][cols + 1];
 		    
 		    //Initialize the first column and row
-		    for (int i = 0; i<=rows; i++) {
+		    for (int i = 0; i<= rows; i++) {
 		        t[i][0] = Integer.MAX_VALUE/2;
 		    }
 		    
-		    for (int i = 0; i<=cols; i++) {
+		    for (int i = 0; i<= cols; i++) {
 		    	t[0][i] = Integer.MAX_VALUE/2;
 		    }
 		    t[1][0] = 0;
 		    t[0][1] = 0;
 		    
-		    for (int i = 1;i<=rows;i++) {
-		    	for (int j = 1;j<=cols;j++) {
+		    for (int i = 1;i <= rows;i++) {
+		    	for (int j = 1;j <= cols;j++) {
 		    		//find if minimum of right and down direction
 		    		t[i][j] = Math.min(t[i-1][j]+ matrix[i-1][j-1], t[i][j-1]+ matrix[i-1][j-1]);
 		    	}

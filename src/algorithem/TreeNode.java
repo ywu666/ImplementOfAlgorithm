@@ -235,7 +235,7 @@ public class TreeNode {
 		if (root == null) return null;
 		int leftSize = (root.left != null)? size(root.left):0;
 
-		if (leftSize+1== k) return root;
+		if (leftSize + 1 == k) return root;
 		if (k <= leftSize) return findKthSmallest(root.left, k);
 		return findKthSmallest(root.right,k - leftSize - 1);
 	}
@@ -505,26 +505,26 @@ public class TreeNode {
 	}
 	
 	public static int minTreeDepth(TreeNode root) { //Use level order. 
-	    if(root == null) return 0;
-	    
-	    int depth = 1;
-	    Queue<TreeNode> curLevel = new LinkedList<>();
-	    Queue<TreeNode> nextLevel = new LinkedList<>();
-	    curLevel.add(root);
-	    while(!curLevel.isEmpty()){
-	        TreeNode t = curLevel.poll();
-	        if(t.left == null && t.right == null) return depth; 
-	        else {
-	            if(t.left != null) nextLevel.add(t.left);
-	            if(t.right != null) nextLevel.add(t.right);
-	            if(curLevel.isEmpty()){ // check again the currLevel is empty
-	                depth++;  
-	                curLevel = nextLevel;  //move to nextLevel
-	                nextLevel = new LinkedList<>();
-	            }
-	        }
-	    }
-	    return depth;
+		if(root == null) return 0;    
+		int depth = 1;
+		Queue<TreeNode> curLevel = new LinkedList<>();
+		Queue<TreeNode> nextLevel = new LinkedList<>();
+		curLevel.add(root);
+		while(!curLevel.isEmpty()){
+			TreeNode curr = curLevel.poll();
+			if(curr.left == null && curr.right == null) {
+				return depth; 
+			}else {
+				if(curr.left != null) nextLevel.add(curr.left);
+				if(curr.right != null) nextLevel.add(curr.right);
+				if(curLevel.isEmpty()){ // check again the currLevel is empty
+					depth++;  
+					curLevel = nextLevel;  //move to nextLevel
+					nextLevel = new LinkedList<>();
+				}
+			}
+		}
+		return depth;
 	}
 
 	public int pathLengthFromRoot(TreeNode root, int val) {

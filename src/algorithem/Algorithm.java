@@ -61,7 +61,7 @@ public class Algorithm {
 			return Integer.toString(val);
 		// Recursive case: binary rep = binary of the header + last digit (odd/even)
 		else {
-			return computeBinary(val/2)+computeBinary(val%2);
+			return computeBinary(val/2) + computeBinary(val%2);
 		}
 	}
 	
@@ -69,8 +69,8 @@ public class Algorithm {
 	    if (arr == null) return null;
 	    int actualPos = k % arr.length;
 	    reverse(arr,0,arr.length - 1);
-	    reverse(arr,0,arr.length- actualPos - 1);
-	    reverse(arr,arr.length -actualPos, arr.length - 1);
+	    reverse(arr,0,arr.length - actualPos - 1);
+	    reverse(arr,arr.length - actualPos, arr.length - 1);
 	    return arr;
 	}
 	
@@ -156,7 +156,7 @@ public class Algorithm {
 	
 	public static int findMissingNumber(int[] arr) { // where are is 1 to 10
 		int sum = 0;
-		for (int i = 0; i<arr.length; i++) {
+		for (int i = 0; i < arr.length; i++) {
 			sum += arr[i];
 		}
 		return 55 - sum;
@@ -237,7 +237,7 @@ public class Algorithm {
 		int outsize = input.get(height - 1).size();
 		int[] outBuffer = new int[outsize];
 
-		for (int i= 0; i< outsize;i++) { //initialize the out buffer 
+		for (int i = 0; i < outsize;i++) { //initialize the out buffer 
 			outBuffer[i] = input.get(height-1).get(i);
 		}
 
@@ -283,9 +283,9 @@ public class Algorithm {
 			return (target == 0);
 		}else {
 			//case1: The target including the 1st element. check the remaining
-			if (groupSum(start+1, arr, target- arr[start])) return true;
+			if (groupSum(start + 1, arr, target - arr[start])) return true;
 			//case2: Does not include the first element,check the remaining
-			if (groupSum(start+1,arr,target)) return true;
+			if (groupSum(start + 1,arr,target)) return true;
 		}
 		return false;
 	}
@@ -299,10 +299,10 @@ public class Algorithm {
 		if (start_index >= arr.length) return target == 0;
 		//case1: The array contains the must_have
 		if (arr[start_index] == must_have) {
-			return groupSumWithNum(start_index + 1,arr,must_have,target- must_have);
-		} else {
+			return groupSumWithNum(start_index + 1,arr,must_have,target - must_have);
+		}else{
 			//case2: Include the first element, check the remaining
-			if (groupSumWithNum(start_index + 1,arr,must_have,target- arr[start_index])) return true;
+			if (groupSumWithNum(start_index + 1,arr,must_have,target - arr[start_index])) return true;
 			//case3: does not include the first element, check the remaining
 			if (groupSumWithNum(start_index + 1,arr,must_have,target)) return true;
 		}
@@ -320,7 +320,7 @@ public class Algorithm {
             arr_sum += item;
         
         // If sum is an odd number, it is impossible to split the array of elements evenly. 
-        if (arr_sum%2 != 0)   return false;
+        if (arr_sum % 2 != 0)   return false;
         // If sum is an even number, check if the summation to half is possible. 
         return groupSum(0,arr,arr_sum/2);
     }
@@ -395,7 +395,7 @@ public class Algorithm {
 		}
 		int res = 0; // Calculate the number of combinations way
 		for (int i = 0;i*coins[curr_coin_index] <= amount;i++) {
-			res += makeChange(coins, amount -i*coins[curr_coin_index],next_coin_index);
+			res += makeChange(coins, amount - i*coins[curr_coin_index],next_coin_index);
 		}
 		return res;
 	}
@@ -404,7 +404,7 @@ public class Algorithm {
 	//Only added the positive difference
 	public static int maxProfit(int[] prices){
 	    int profit = 0;
-	    for(int i=1; i < prices.length; i++){
+	    for(int i = 1; i < prices.length; i++){
 	        if((prices[i] - prices[i-1]) > 0){
 	            profit += (prices[i] - prices[i-1]);
 	        }
