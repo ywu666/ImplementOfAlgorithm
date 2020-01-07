@@ -230,45 +230,28 @@ class ListNode {
 	/**
 	 * This method determine if the list is a palindrome. A palindrome is a sequence
 	 * that reads the same backward as forward.
+	 * Time complexity = O(n).
 	 * @param head
 	 * @return Return true if the list is palindrome, otherwise return false.
 	 */
-	public Boolean isPalindrome(ListNode head) {
+	public Boolean isPalindrome(ListNode head) { 
 		if(head == null || head.next == null) return true;
-//     // Another way to get the middle node.
-//	    int mid = 0, count = 0;
-//	    ListNode current = head, midNode = null;
-//        int length = head.length();
-//	    mid = length/2;            
-//	    current = head;
-//	    while(current != null) {
-//	        if(count == mid) break;
-//	        current = current.next;
-//	        count++;
-//	    }
-//	    midNode = current; 		
-		
-		ListNode midNode = findMiddleNode(head); // Go to the middle node
-	   
-	    ListNode p1 = midNode;
-	    ListNode p2 = p1.next;
-	    while(p1 != null && p2 != null){ //Reverse
-	        ListNode temp = p2.next;
-	        p2.next = p1;
-	        p1 = p2;
-	        p2 = temp;  
-	    }
-	    midNode.next = null;
+		Stack<ListNode> nodes = new Stack<ListNode>();
+		ListNode temp = head;
 
-	    //Compare
-	    ListNode cur = (p2 == null ? p1:p2);
-	    ListNode com = head;
-	    while(cur != null && com != null){
-	        if(cur.data != com.data) return false;
-	        cur = cur.next;
-	        com = com.next;
-	    }
-	    return true;
+		while(temp != null){
+			nodes.push(new ListNode(temp.data));
+			temp = temp.next;
+		}
+
+		while(nodes.size() > 0){
+			if(head.data  == nodes.pop().data){
+				head = head.next;
+			}else{
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
