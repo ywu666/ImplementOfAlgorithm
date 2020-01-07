@@ -149,7 +149,7 @@ class ListNode {
 		return head;
 	}
 
-	public  ListNode reverseList(ListNode head) { //Use this method, the original head will change, head.nexxt = null;
+	public  ListNode reverse(ListNode head) { //Use this method, the original head will change, head.nexxt = null;
 	    ListNode curr = head;
 		ListNode prev = null;
 		while (curr != null) {
@@ -233,25 +233,26 @@ class ListNode {
 	 * @param head
 	 * @return Return true if the list is palindrome, otherwise return false.
 	 */
-	public Boolean isListPalindrome(ListNode head) {
+	public Boolean isPalindrome(ListNode head) {
 		if(head == null || head.next == null) return true;
-	    // Go to the middle node
-	    int mid = 0, count = 0;
-	    ListNode current = head, midNode = null;
-        int length = head.length();
-	    mid = length/2;            
-	    current = head;
-	    while(current != null) {
-	        if(count == mid) break;
-	        current = current.next;
-	        count++;
-	    }
-	    midNode = current; 
+//     // Another way to get the middle node.
+//	    int mid = 0, count = 0;
+//	    ListNode current = head, midNode = null;
+//        int length = head.length();
+//	    mid = length/2;            
+//	    current = head;
+//	    while(current != null) {
+//	        if(count == mid) break;
+//	        current = current.next;
+//	        count++;
+//	    }
+//	    midNode = current; 		
+		
+		ListNode midNode = findMiddleNode(head); // Go to the middle node
 	   
-	    // Reverse
 	    ListNode p1 = midNode;
 	    ListNode p2 = p1.next;
-	    while(p1!=null && p2!=null){
+	    while(p1 != null && p2 != null){ //Reverse
 	        ListNode temp = p2.next;
 	        p2.next = p1;
 	        p1 = p2;
@@ -259,10 +260,10 @@ class ListNode {
 	    }
 	    midNode.next = null;
 
-	    // Compare
-	    ListNode cur = (p2==null?p1:p2);
+	    //Compare
+	    ListNode cur = (p2 == null ? p1:p2);
 	    ListNode com = head;
-	    while(cur != null){
+	    while(cur != null && com != null){
 	        if(cur.data != com.data) return false;
 	        cur = cur.next;
 	        com = com.next;
@@ -278,7 +279,7 @@ class ListNode {
 	 */
 	public Boolean isListEven(ListNode head) {
 		int length = (head == null) ? 0:head.length();
-		return (length%2 == 0);
+		return (length % 2 == 0);
 		/*boolean even = true;
         while(head != null) {
             even = !even;
@@ -329,7 +330,7 @@ class ListNode {
 				input2 = input2.next;
 			}
 
-			n.next = new ListNode(carryComponent%10);
+			n.next = new ListNode(carryComponent % 10);
 			n = n.next;
 			carryComponent /= 10;
 		}
@@ -383,14 +384,14 @@ class ListNode {
     //merge
 	public ListNode mergeTwoSortedList(ListNode l1, ListNode l2) { //recursion  
 		ListNode newHead = null;
-		if(l1==null) return l2;
-		if(l2==null) return l1;
+		if(l1 == null) return l2;
+		if(l2 == null) return l1;
 		if(l1.data <= l2.data) {
 			newHead = l1;
-			newHead.next = mergeTwoSortedList(l1.next, l2);
+			newHead.next = mergeTwoSortedList(l1.next,l2);
 		} else {
 			newHead = l2;
-			newHead.next = mergeTwoSortedList(l2.next, l1);
+			newHead.next = mergeTwoSortedList(l2.next,l1);
 		}
 		return newHead;
 	}
@@ -411,7 +412,7 @@ class ListNode {
 		}
 		
 		ListNode head = new ListNode(0), curr = head;
-		while (queue.size()>0) {
+		while (queue.size() > 0) {
 			ListNode temp = queue.poll();
 			curr.next = temp;
 			if (temp.next != null) queue.add(temp.next);
