@@ -12,7 +12,7 @@ public class Algorithm {
 		}
 		
 		while(m != 0) {
-			int rem = n%m;
+			int rem = n % m;
 			n = m;
 			m = rem;
 		}
@@ -25,8 +25,8 @@ public class Algorithm {
 		int result;
 		do {
 			result = 0;
-			for (int i =0;i<digits.length;i++) {
-				result += digits[i]*digits[i];
+			for (int i = 0;i < digits.length;i++) {
+				result += digits[i] * digits[i];
 			}
 			digits = getDigits(result);
 			
@@ -38,9 +38,9 @@ public class Algorithm {
 	public static int[] getDigits(int num) {
 		String str = String.valueOf(num);
 		int[] digits = new int[str.length()];
-		for (int i = 0;i<digits.length;i++) {
-			digits[i] = num%10;
-			num = num/10;
+		for (int i = 0;i < digits.length;i++) {
+			digits[i] = num % 10;
+			num = num / 10;
 		}	
 		return digits;
 	}
@@ -65,10 +65,19 @@ public class Algorithm {
 		}
 	}
 	
+	public static int[] rotateLeft(int[] arr, int k) {
+	    if (arr == null) return null;
+	    int actualPos = k % arr.length;
+	    reverse(arr,0,arr.length - 1);
+	    reverse(arr,0,arr.length- actualPos - 1);
+	    reverse(arr,arr.length -actualPos, arr.length - 1);
+	    return arr;
+	}
+	
 	public static int reverse(int x) {
 		int reverse = 0;
 		while (x != 0) {
-			reverse = reverse*10 + x%10;
+			reverse = reverse * 10 + x % 10;
 			x = x/10;
 		}
 		return reverse;
@@ -107,9 +116,9 @@ public class Algorithm {
 		int n_1 = 1;
 		if (n == 0) return n_2;
 		if (n == 1) return n_1;
-		for (int i=2;i <= n;i++) {
+		for (int i = 2;i <= n;i++) {
 	        int temp = n_1;
-	        n_1 = n_1+n_2;
+	        n_1 = n_1 + n_2;
 	        n_2 = temp;
 		}
 		return n_1;
@@ -129,14 +138,14 @@ public class Algorithm {
 	}
 
 	public static int swapOddEvenBit(int x) {
-		int odd = (x & 0xaaaaaaaa)>>1; // bitMask odd and shift right
-		int even = (x & 0x5555555)<<1; //bisMask even and shift left
+		int odd = (x & 0xaaaaaaaa) >> 1; // bitMask odd and shift right
+		int even = (x & 0x5555555) << 1; //bisMask even and shift left
 		return odd | even;
 	}
 
 	public static void reverse(int[] arr, int left, int right){
 	    if (arr == null || arr.length == 1) return ;
-	    while(left<right){
+	    while(left < right){
 	        int temp = arr[left];
 	        arr[left] = arr[right];
 	        arr[right] = temp;
@@ -166,19 +175,19 @@ public class Algorithm {
 		return set.toString();    
 	}
 
-	public static int singleNumber(int[] A) { // return the first number that appears once
+	public static int singleNumber(int[] arr) { // return the first number that appears once
 		Hashtable<Integer, Integer> table = new Hashtable<Integer, Integer>();
-		for (int i =0;i < A.length;i++) {
-			if(table.containsKey(A[i])) {
-				table.put(A[i], table.get(A[i])+1);
+		for (int i = 0;i < arr.length;i++) {
+			if(table.containsKey(arr[i])) {
+				table.put(arr[i], table.get(arr[i])+1);
 			}else {
-				table.put(A[i], 1);
+				table.put(arr[i], 1);
 			}
 		}
 
-		for (int i =0;i < A.length;i++) {
-			if (table.get(A[i]) == 1) {
-				return A[i];
+		for (int i = 0;i < arr.length;i++) {
+			if (table.get(arr[i]) == 1) {
+				return arr[i];
 			}
 		}
 		return 0;
@@ -194,7 +203,7 @@ public class Algorithm {
 		// increment a[a[i]%k] by k
 		for (int i = 0; i< arr.length; i++)
 		{  
-			arr[arr[i]%max] += max;
+			arr[arr[i] % max] += max;
 		}
 		// Find index of the maximum repeating element
 		int maxr = arr[0], result = 0;
@@ -216,7 +225,7 @@ public class Algorithm {
 	public static int maxGain(int[] arr) {
 		int maxGain = 0;
 		int min = arr[0];
-		for (int i=1;i<arr.length;i++) {
+		for (int i = 1;i < arr.length;i++) {
 			min = Math.min(min, arr[i]);
 			maxGain = Math.max(maxGain, arr[i] - min);
 		}	
@@ -225,16 +234,16 @@ public class Algorithm {
 	
 	public static int minTriangleDepth(ArrayList<ArrayList<Integer>> input) {
 		int height = input.size();
-		int outsize = input.get(height -1).size();
+		int outsize = input.get(height - 1).size();
 		int[] outBuffer = new int[outsize];
 
-		for (int i=0; i<outsize;i++) { //initialize the out buffer 
+		for (int i= 0; i< outsize;i++) { //initialize the out buffer 
 			outBuffer[i] = input.get(height-1).get(i);
 		}
 
-		for (int r=height-2;r >= 0; r--) {
+		for (int r = height-2;r >= 0; r--) {
 			ArrayList<Integer> row = input.get(r);
-			for (int i =0;i<row.size();i++) {
+			for (int i = 0;i < row.size();i++) {
 				outBuffer[i] = row.get(i) + Math.min(outBuffer[i], outBuffer[i+1]);
 			}
 		}
@@ -249,7 +258,7 @@ public class Algorithm {
 		//Key is the target - arr[i], val is the the index start from one
 		Hashtable<Integer,Integer> table = new Hashtable<>();
 
-		for (int i =0;i< numbers.length;i++) {
+		for (int i = 0;i < numbers.length;i++) {
 			if (table.containsKey(numbers[i])) {
 				return new int[] {table.get(numbers[i]),i+1};
 			}else {
@@ -308,34 +317,47 @@ public class Algorithm {
         if (arr.length == 0) return false;
         int arr_sum = 0; // calculate the sun of array
         for (int item: arr) 
-            arr_sum+= item;
+            arr_sum += item;
         
         // If sum is an odd number, it is impossible to split the array of elements evenly. 
         if (arr_sum%2 != 0)   return false;
         // If sum is an even number, check if the summation to half is possible. 
         return groupSum(0,arr,arr_sum/2);
     }
-	
-	public static int[] rotateLeft(int[] arr, int k) {
-	    if (arr == null) return null;
-	    int actualPos = k%arr.length;
-	    reverse(arr,0,arr.length -1);
-	    reverse(arr,0,arr.length-actualPos-1);
-	    reverse(arr,arr.length -actualPos, arr.length -1);
-	    return arr;
-	}
 
 	/**
 	 * Linear-time algorithm.
 	 */
 	public static int maxSubSum(int[] arr) {
 		int maxSum = 0, thisSum = 0;
-		for (int i =0;i<arr.length;i++) {
-			thisSum +=arr[i];
+		for (int i = 0;i < arr.length;i++) {
+			thisSum += arr[i];
 			if(thisSum > maxSum) maxSum = thisSum;
 			if(thisSum < 0) thisSum = 0;
 		}
 		return maxSum;
+	}
+	
+	/**
+	 * Valid combination means not left open.
+	 * @param pairs The number of pairs of parenthesis.
+	 * @return Return all valid combinations of n-pairs of parentheses.
+	 */
+	public static ArrayList<String> combParenthesis(int pairs){
+		ArrayList<String> list = new ArrayList<>();
+		if(pairs > 0) createParenthesis(pairs,pairs,"",list);
+		return list;
+	}
+	
+	private static void createParenthesis(int left,int right, String temp, ArrayList<String> list) {
+		if(left == 0 && right == 0) {
+			list.add(temp);
+		}else {
+			//insert left parenthesis until we have not used up all left parenthesis
+			if(left > 0) createParenthesis(left - 1,right,temp + "(",list);
+			//insert right parenthesis as long as it won't lead syntax error(more right than left)
+			if(right > left) createParenthesis(left,right - 1,temp + ")",list);
+		}
 	}
 	
 	//search algorithm
@@ -343,7 +365,7 @@ public class Algorithm {
 		int low = 0;
 		int high = arr.length;
 		while (low < high) {
-			int mid = low + (high-low)/2;
+			int mid = low + (high - low)/2;
 			if (arr[mid] > n) high = mid -1;
 			if (arr[mid] < n) low = mid + 1;
 			return true; // if arr[mid] == n;
@@ -357,7 +379,7 @@ public class Algorithm {
 	 * of representing a monetary amount in cents.
 	 */
 	public static int makeChange(int[] coins, int amount) {
-		if (coins != null && coins.length >0 && amount >=0) {
+		if (coins != null && coins.length > 0 && amount >= 0) {
 			return makeChange(coins,amount,0);
 		}else {
 			return 0;
@@ -372,8 +394,8 @@ public class Algorithm {
 			return coins[curr_coin_index];
 		}
 		int res = 0; // Calculate the number of combinations way
-		for (int i = 0;i*coins[curr_coin_index] <=amount;i++) {
-			res += makeChange(coins,amount -i*coins[curr_coin_index],next_coin_index);
+		for (int i = 0;i*coins[curr_coin_index] <= amount;i++) {
+			res += makeChange(coins, amount -i*coins[curr_coin_index],next_coin_index);
 		}
 		return res;
 	}
@@ -384,7 +406,7 @@ public class Algorithm {
 	    int profit = 0;
 	    for(int i=1; i < prices.length; i++){
 	        if((prices[i] - prices[i-1]) > 0){
-	            profit+=(prices[i] - prices[i-1]);
+	            profit += (prices[i] - prices[i-1]);
 	        }
 	    }
 	    return profit;
@@ -427,7 +449,7 @@ public class Algorithm {
 			max_sum = arr[0];
 			max_end_index = 0;
 		}
-		for (int i =1; i<arr.length;i++) {
+		for (int i = 1; i< arr.length;i++) {
 			int sum = curr_sum + arr[i];
 		    // If the maximum sum plus the current item is less than the item
             // Then we should set maximum sum to be the current item
@@ -456,7 +478,7 @@ public class Algorithm {
 		int leftlength = arrLeft.length;
 		int rightlength = arrRight.length;
 		int left = 0, right = 0, merge = 0;
-		int[] arrResult = new int[leftlength+rightlength];
+		int[] arrResult = new int[leftlength + rightlength];
 
 		while (left < leftlength && right < rightlength) {
 			if (arrLeft[left] < arrRight[right] ) {
@@ -478,7 +500,7 @@ public class Algorithm {
 
 	//sort Algorithm
 	public static int[] selectionSort(int[] arr) {//improved performance over bubble sort
-		for (int i=0; i < arr.length - 1; i++) {
+		for (int i = 0; i < arr.length - 1; i++) {
 			int min_index = i;
 			for (int j = i+1;j < arr.length;j++) {
 				if (arr[j] < arr[min_index]) {
@@ -494,7 +516,7 @@ public class Algorithm {
 	}
 
 	public static int[] bubbleSort(int[] arr) {
-		for (int i=0;i < arr.length;i++) {
+		for (int i = 0;i < arr.length;i++) {
 			for (int j = i;j < arr.length;j++) {
 				if (arr[i] > arr[j]) { //swap one find a greater number
 					int temp = arr[i];
