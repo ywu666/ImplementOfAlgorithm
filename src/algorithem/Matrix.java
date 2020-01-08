@@ -12,8 +12,8 @@ public class Matrix {
 
 	public static void transportMatrix(int[][] matrix) {
 		int rows = matrix.length;		
-		for(int i = 0; i < rows; i++){
-			for(int j = i + 1; j < rows; j++){
+		for(int i = 0;i < rows;i++){
+			for(int j = i + 1;j < rows;j++){
 				int temp = matrix[i][j];
 				matrix[i][j] = matrix[j][i];
 				matrix[j][i] = temp;
@@ -25,8 +25,8 @@ public class Matrix {
 		int rows = matrix.length;
 		int cols = matrix[0].length;
 		//flip in place
-		for(int i = 0; i < rows; i++){
-			for(int j = 0; j < cols/2; j++){
+		for(int i = 0;i < rows;i++){
+			for(int j = 0;j < cols/2;j++){
 				int temp = matrix[i][j];
 				matrix[i][j] = matrix[i][cols - 1 - j];
 				matrix[i][cols - 1 - j] = temp;
@@ -38,8 +38,8 @@ public class Matrix {
 		int rows = matrix.length;
 		int cols = matrix[0].length;
 		//flip in place
-		for(int i = 0; i < rows/2; i++){
-			for(int j = 0; j < cols; j++){
+		for(int i = 0;i < rows/2;i++){
+			for(int j = 0; j < cols;j++){
 				int temp = matrix[i][j];
 				matrix[i][j] = matrix[rows - 1 - i][j];
 				matrix[rows - 1 - i][j] = temp;
@@ -49,11 +49,11 @@ public class Matrix {
 
 	public static int[][] rotate(int[][] matrix) { //rotate CW 90 degree
 		int n = matrix.length;
-		for (int i = 0; i < n/2; i++) {
-			for (int j = 0; j < Math.ceil(((double) n)/2.);j++) {
+		for (int i = 0;i < n/2;i++) {
+			for (int j = 0;j < Math.ceil(((double) n)/2.);j++) {
 				int temp = matrix[i][j];
-				matrix[i][j] = matrix[n-1-j][i];
-				matrix[n - 1 - j][i] = matrix[n-1-i][n - 1 - j];
+				matrix[i][j] = matrix[n - 1 - j][i];
+				matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j];
 				matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i];
 				matrix[j][n - 1 - i] = temp;
 			}
@@ -81,12 +81,12 @@ public class Matrix {
 
 		while (rows > 0 && cols > 0) {
 			if (rows == 1) { // when only one row
-				for (int i = 0; i < cols; i++) {
+				for (int i = 0;i < cols;i++) {
 					spiralOrder.add(matrix[x][y++]);
 				}
 				break;
 			} else if (cols == 1) { // when only one column
-				for(int i = 0; i < rows; i++) {
+				for(int i = 0;i < rows;i++) {
 					spiralOrder.add(matrix[x++][y]);
 				}
 				break;
@@ -112,6 +112,14 @@ public class Matrix {
 		return spiralOrder;
 	}
 
+	/**
+	 * Use DFS to find the maximum sum along a path from the top-left of the grid to the bottom-right. 
+	 * The direction of movement is limited to right and down.
+	 * Time complexity = )= O(b^(m * n)), where b = branching factor. 
+	 * Space complexity = O(b * n * m).
+	 * @param grid A m x n matrix filled with non-negative integers.
+	 * @return Return this maximum sum. 
+	 */
 	public static int matrixMaxSumDfs(int[][] grid) { // recursion
 		class TravelNode { //Inner Class
 			int row;
@@ -135,17 +143,17 @@ public class Matrix {
 			Deque<TravelNode> stack = new LinkedList<>();
 			stack.addFirst(new TravelNode(0,0,0,grid));
 			while(!stack.isEmpty()) {
-				TravelNode node= stack.removeFirst();
+				TravelNode node = stack.removeFirst();
 				if (node.row == rows - 1 && node.col == cols - 1) {//update the maxSum whne the last node is reached
 					if (node.nodeSum > maxSum) maxSum = node.nodeSum;
 				}else {
 					//go right 
 					if (node.col < cols - 1) {
-						stack.addFirst(new TravelNode(node.row, node.col + 1, node.nodeSum,grid));
+						stack.addFirst(new TravelNode(node.row,node.col + 1,node.nodeSum,grid));
 					}
 					//go down
 					if (node.row < rows - 1) {
-						stack.addFirst(new TravelNode(node.row +1, node.col, node.nodeSum,grid));
+						stack.addFirst(new TravelNode(node.row + 1,node.col,node.nodeSum,grid));
 					}
 				}
 			}
@@ -159,16 +167,16 @@ public class Matrix {
 		int[][] memo = new int[m][n];
 		memo[0][0] = grid[0][0];
 		// Pre-Fill first Column
-		for(int i = 1; i < m; i++){
+		for(int i = 1;i < m;i++){
 			memo[i][0] = memo[i-1][0] + grid[i][0]; 
 		}
 		// Pre-Fill first Row
-		for(int j = 1; j < n; j++){
+		for(int j = 1;j < n;j++){
 			memo[0][j] = memo[0][j-1] + grid[0][j]; 
 		}
 		// Fill remaining cells
-		for(int i = 1; i < m; i++){
-			for(int j = 1; j < n; j++){
+		for(int i = 1;i < m;i++){
+			for(int j = 1;j < n;j++){
 				memo[i][j] = grid[i][j] + Math.max(memo[i-1][j], memo[i][j-1]);
 			}
 		}
@@ -180,7 +188,7 @@ public class Matrix {
 		int cols = board[0].length;
 		boolean out = false;
 
-		for (int i = 0; i< rows;i++) {
+		for (int i = 0;i< rows;i++) {
 			for (int j = 0;j< cols;j++) {
 				out = search(i,j,board,word,"");
 				if (out) return true;
@@ -230,12 +238,12 @@ public class Matrix {
 		    int[][] t = new int[rows][cols];
 		    
 		    //top row
-		    for (int i = 0; i < rows; i++) {
+		    for (int i = 0;i < rows;i++) {
 		        t[i][0] = Character.getNumericValue(matrix[i][0]);
 		    }
 		    
 		    //left column
-		    for (int i = 0; i < cols; i++) {
+		    for (int i = 0;i < cols;i++) {
 		    	t[0][i] = Character.getNumericValue(matrix[0][i]);
 		    }
 		    
@@ -270,11 +278,11 @@ public class Matrix {
 		    int[][] t = new int[rows + 1][cols + 1];
 		    
 		    //Initialize the first column and row
-		    for (int i = 0; i<= rows; i++) {
+		    for (int i = 0;i <= rows;i++) {
 		        t[i][0] = Integer.MAX_VALUE/2;
 		    }
 		    
-		    for (int i = 0; i<= cols; i++) {
+		    for (int i = 0;i <= cols;i++) {
 		    	t[0][i] = Integer.MAX_VALUE/2;
 		    }
 		    t[1][0] = 0;
@@ -283,7 +291,7 @@ public class Matrix {
 		    for (int i = 1;i <= rows;i++) {
 		    	for (int j = 1;j <= cols;j++) {
 		    		//find if minimum of right and down direction
-		    		t[i][j] = Math.min(t[i-1][j]+ matrix[i-1][j-1], t[i][j-1]+ matrix[i-1][j-1]);
+		    		t[i][j] = Math.min(t[i-1][j] + matrix[i-1][j-1], t[i][j-1] + matrix[i-1][j-1]);
 		    	}
 		    }
 		    return t[rows][cols];
