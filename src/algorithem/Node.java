@@ -17,7 +17,7 @@ class Node {
 		node.adjacentNodes.add(this);
 	}
 
-	public boolean breathFirstSearch(Node root,String data) {
+	public boolean breathFirstSearch(Node root, String data) {
 		if (data == null || root == null) return false;
 		Queue<Node> queue = new LinkedList<>();
 		queue.add(root);
@@ -28,10 +28,10 @@ class Node {
 			if (node.data != null && data.equals(node.data)) {
 				return true;
 			}else {
-				for (Node n:node.adjacentNodes) {
-					if (!n.visited) {
-						queue.add(n);
-						n.visited = true;
+				for (Node adj:node.adjacentNodes) {
+					if (!adj.visited) {
+						queue.add(adj);
+						adj.visited = true;
 					}
 				}
 			}
@@ -40,21 +40,20 @@ class Node {
 	} 
 	
 	public boolean depthFirstSearch(Node rootNode, String data){
-		if (data == null || rootNode == null) return false;
-		
-		Stack<Node> s = new Stack<Node>();
-		s.add(rootNode);
+		if (data == null || rootNode == null) return false;		
+		Stack<Node> stack = new Stack<Node>();
+		stack.add(rootNode);
 		rootNode.visited = true;
 		
-		while(!s.isEmpty()){
-			Node n = s.pop();
-			if(n.data != null && n.data.equals(data)) {
+		while(!stack.isEmpty()){
+			Node node = stack.pop();
+			if(node.data != null && node.data.equals(data)) {
 				return true;
 			}
-			for(Node adj:n.adjacentNodes){
+			for(Node adj:node.adjacentNodes){
 				if(!adj.visited){
+					stack.push(adj);
 					adj.visited = true;
-					s.push(adj);
 				}
 			}
 		}              
