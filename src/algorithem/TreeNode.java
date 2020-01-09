@@ -76,7 +76,7 @@ public class TreeNode {
 	         int leftDiameter = left[0];
 	         int rightDiameter = right[0];
 	         int rootDiameter = right[1] + left[1] + 1;
-	         int finalDiameter = Math.max(rootDiameter, Math.max(leftDiameter, rightDiameter));
+	         int finalDiameter = Math.max(rootDiameter, Math.max(leftDiameter,rightDiameter));
 	         heightDiameter[0] = finalDiameter;
 	         heightDiameter[1] = height;
 	    }
@@ -114,7 +114,7 @@ public class TreeNode {
 	}
 	
 	// This is a help method for validBST() method above
-	private static boolean validBST(TreeNode root, int min , int max) { //recursion
+	private static boolean validBST(TreeNode root, int min, int max) { //recursion
 		if (root == null) return true;
 		if (root.data <= min || root.data >= max) return false;
 		return validBST(root.left,min,root.data) && validBST(root.right,root.data,max);
@@ -124,7 +124,7 @@ public class TreeNode {
 		if (root == null) return 0;
 		int left = findHeight(root.left);
 		int right = findHeight(root.right);
-		return left > right ? left + 1: right + 1;
+		return left > right ? left + 1:right + 1;
 }
 
 	//Time complexity is O(log(n)).
@@ -228,7 +228,7 @@ public class TreeNode {
 		//3 conditions
 		if (k == rightSize + 1) return root;
 		if (k <= rightSize) return findKthLargest(root.right,k);
-		return findKthLargest(root.left, k - rightSize - 1);
+		return findKthLargest(root.left,k - rightSize - 1);
 	}
 
 	public TreeNode findKthSmallest(TreeNode root, int k) {
@@ -340,7 +340,7 @@ public class TreeNode {
 	public boolean printAncestors(TreeNode root, int nodeData) { //recursion. Time complexity = O(n).
 	    if (root == null) return false;
 	    if (root.data == nodeData)  return true; 
-	    if (printAncestors(root.left,nodeData) ||printAncestors(root.right,nodeData)  ) {
+	    if (printAncestors(root.left,nodeData) || printAncestors(root.right,nodeData)  ) {
 	        ancestorsList.add(root.data);
 	        return true;
 	    }
@@ -348,14 +348,13 @@ public class TreeNode {
 	}
 	
 	public  ArrayList<Integer> rangeList = new ArrayList<Integer>();
-	public void printRangeBST(TreeNode root,int a,int b) {                   
+	public void printRangeBST(TreeNode root,int a,int b) {     //Time complexity = O(n)              
 		if(root == null) return;
-		if(root.data >= a) {
+		if(root.data >= a) { //Make sure the result is in ascending order
 			printRangeBST(root.left,a,b);
 		}
 		if (root.data >= a && root.data <= b) {
 			rangeList.add(root.data);
-
 		} 
 		if(root.data <= b) {
 			printRangeBST(root.right,a,b);
@@ -376,8 +375,8 @@ public class TreeNode {
 	}
 
 	public ArrayList<Integer> preorderItr(TreeNode root) {                   
-		ArrayList<Integer> preorderedList =  new ArrayList<Integer>();
-		if (root == null){return preorderedList;}
+		ArrayList<Integer> preorderedList = new ArrayList<Integer>();
+		if (root == null) return preorderedList;
 		Stack<TreeNode> s = new Stack<TreeNode>(); // use stack rather than queue
 		s.push(root);
 		while(!s.isEmpty()) {
@@ -495,7 +494,6 @@ public class TreeNode {
 			s.push(node);
 			if (node.right != null) q.add(node.right);
 			if (node.left != null) q.add(node.left);
-
 		}
 
 		while (!s.isEmpty()) {
@@ -530,7 +528,7 @@ public class TreeNode {
 	public int pathLengthFromRoot(TreeNode root, int val) {
 		if(root == null) return 0;
 		int out = 0;
-		if ((root.data == val) || (out = pathLengthFromRoot(root.left,val))> 0 || (out = pathLengthFromRoot(root.right,val)) > 0) {
+		if ((root.data == val) || (out = pathLengthFromRoot(root.left,val)) > 0 || (out = pathLengthFromRoot(root.right,val)) > 0) {
 			return out + 1;
 		}		
 		return 0;
@@ -560,7 +558,7 @@ public class TreeNode {
 		String[] nodesSplit = str.split(",");
 		List<Integer> list = new ArrayList<Integer>();
 		//initialize the list with the tree data
-		for (int i = 0; i < nodesSplit.length; i++) {
+		for (int i = 0;i < nodesSplit.length;i++) {
 			Integer value = nodesSplit[i].equals("*") ? null:Integer.valueOf(nodesSplit[i]);		
 			list.add(value);
 		}
