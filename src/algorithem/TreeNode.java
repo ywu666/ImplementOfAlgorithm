@@ -613,4 +613,38 @@ public class TreeNode {
 		if(root1.data != root2.data) return false;
 		return (isMirror(root1.left,root2.right) && isMirror(root1.right,root2.left));
 	}
+	
+	//Both serialize and restore binary tree use Time complexity O(n).
+	public String serialize(TreeNode root) {
+		StringBuilder str = new StringBuilder();
+		str = serialize(root,str);
+		if(str.length() > 0) str.deleteCharAt(0); //Delete the first ","
+		return str.toString();	
+	}
+	
+	private StringBuilder serialize(TreeNode root, StringBuilder str) {
+		if(root == null) {
+			str.append(",null");
+		}else {
+			str.append("," + root.data);
+			serialize(root.left,str);
+			serialize(root.right,str);
+		}
+		return str;
+	}
+
+	public TreeNode restoreTree(String str) {
+        String[] arr = str.split(",");
+        LinkedList<String> nodes = new LinkedList<>(Arrays.asList(arr));
+        return restoreTree(nodes);
+	}
+	
+	private TreeNode restoreTree(LinkedList<String> nodes) {
+		String nodeData = nodes.remove();
+		if(nodeData.equals(null)) return null; //Root is null
+		TreeNode root = new TreeNode(Integer.valueOf(nodeData));
+		root.left = restoreTree(nodes);
+		root.right = restoreTree(nodes);
+		return root;
+	}
 }   
