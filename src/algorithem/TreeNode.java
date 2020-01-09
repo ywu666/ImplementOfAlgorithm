@@ -68,7 +68,7 @@ public class TreeNode {
 	}
 
 	private int[] diameterAndHeight(TreeNode root) {
-	    int[] heightDiameter = {0, 0}; // The first index store the diameter, the second store the height.
+	    int[] heightDiameter = {0,0}; // The first index store the diameter, the second store the height.
 	    if (root != null) {
 	         int[] left = diameterAndHeight(root.left);
 	         int[] right = diameterAndHeight(root.right);
@@ -287,7 +287,7 @@ public class TreeNode {
 
 	public int numberOfFullNodes(TreeNode root) { 
 		int count = 0;
-		if (root == null )return count;
+		if (root == null) return count;
 
 		Queue<TreeNode> q = new LinkedList<TreeNode>();
 		q.add(root);
@@ -326,7 +326,7 @@ public class TreeNode {
 		return buffer[0];
 	}
 	
-	private static int maxSumPathMain (TreeNode root, int[] buffer) {
+	private static int maxSumPathMain(TreeNode root, int[] buffer) {
 	    if (root == null) return 0;
 	    int leftSum = maxSumPathMain(root.left,buffer);
 	    int rightSum = maxSumPathMain(root.right,buffer);
@@ -339,8 +339,8 @@ public class TreeNode {
 	public ArrayList<Integer> ancestorsList = new ArrayList<Integer>();
 	public boolean printAncestors(TreeNode root, int nodeData) { //recursion. Time complexity = O(n).
 	    if (root == null) return false;
-	    if (root.data == nodeData)  return true; 
-	    if (printAncestors(root.left,nodeData) || printAncestors(root.right,nodeData)  ) {
+	    if (root.data == nodeData) return true; 
+	    if (printAncestors(root.left,nodeData) || printAncestors(root.right,nodeData)) {
 	        ancestorsList.add(root.data);
 	        return true;
 	    }
@@ -617,7 +617,7 @@ public class TreeNode {
 	//Both serialize and restore binary tree use Time complexity O(n).
 	public String serialize(TreeNode root) {
 		StringBuilder str = new StringBuilder();
-		str = serialize(root,str);
+		serialize(root,str);
 		if(str.length() > 0) str.deleteCharAt(0); //Delete the first ","
 		return str.toString();	
 	}
@@ -641,7 +641,7 @@ public class TreeNode {
 	
 	private TreeNode restoreTree(LinkedList<String> nodes) {
 		String nodeData = nodes.remove();
-		if(nodeData.equals(null)) return null; //Root is null
+		if(nodeData.equals("null")) return null; //Root is null
 		TreeNode root = new TreeNode(Integer.valueOf(nodeData));
 		root.left = restoreTree(nodes);
 		root.right = restoreTree(nodes);
