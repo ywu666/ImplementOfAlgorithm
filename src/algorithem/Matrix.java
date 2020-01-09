@@ -120,7 +120,7 @@ public class Matrix {
 	 * @param grid A m x n matrix filled with non-negative integers.
 	 * @return Return this maximum sum. 
 	 */
-	public static int matrixMaxSumDfs(int[][] grid) { // recursion
+	public static int matrixMaxSumDfS(int[][] grid) { // recursion
 		class TravelNode { //Inner Class
 			int row;
 			int col;
@@ -168,19 +168,19 @@ public class Matrix {
 		memo[0][0] = grid[0][0];
 		// Pre-Fill first Column
 		for(int i = 1;i < m;i++){
-			memo[i][0] = memo[i-1][0] + grid[i][0]; 
+			memo[i][0] = memo[i - 1][0] + grid[i][0]; 
 		}
 		// Pre-Fill first Row
 		for(int j = 1;j < n;j++){
-			memo[0][j] = memo[0][j-1] + grid[0][j]; 
+			memo[0][j] = memo[0][j - 1] + grid[0][j]; 
 		}
 		// Fill remaining cells
 		for(int i = 1;i < m;i++){
 			for(int j = 1;j < n;j++){
-				memo[i][j] = grid[i][j] + Math.max(memo[i-1][j], memo[i][j-1]);
+				memo[i][j] = grid[i][j] + Math.max(memo[i - 1][j], memo[i][j - 1]);
 			}
 		}
-		return memo[m-1][n-1];
+		return memo[m - 1][n - 1];
 	}
 	
 	public static boolean boggleSearch(char[][] board, String word){
@@ -188,8 +188,8 @@ public class Matrix {
 		int cols = board[0].length;
 		boolean out = false;
 
-		for (int i = 0;i< rows;i++) {
-			for (int j = 0;j< cols;j++) {
+		for (int i = 0;i < rows;i++) {
+			for (int j = 0;j < cols;j++) {
 				out = search(i,j,board,word,"");
 				if (out) return true;
 			}
@@ -214,12 +214,12 @@ public class Matrix {
 
 			board[r][c] = '@'; // Marked as visited
 
-			out = search(r+1,c,board,word,s)        // check up
-					|| search(r-1,c,board,word,s)   // check down
-					|| search(r,c+1,board,word,s)   // check left
-					|| search(r,c-1,board,word,s);  // check down
+			out = search(r + 1,c,board,word,s)        // check up
+					|| search(r - 1,c,board,word,s)   // check down
+					|| search(r,c + 1,board,word,s)   // check left
+					|| search(r,c - 1,board,word,s);  // check down
 
-			board[r][c] = ch; // unmark the board node
+			board[r][c] = ch; //Un -Mark the board node
 		}
 		return out;
 	}
@@ -252,7 +252,7 @@ public class Matrix {
 		    	for (int j = 1;j < cols;j++) {
 		    		if (matrix[i][j] == '1') {
 		    			//find the minimum in the square
-		    			int min = Math.min(t[i][j-1], Math.min(t[i-1][j], t[i-1][j-1]));
+		    			int min = Math.min(t[i][j - 1], Math.min(t[i - 1][j],t[i - 1][j - 1]));
 		    			t[i][j] = min + 1;
 		    		}else {
 		    			t[i][j] = 0;
@@ -267,8 +267,9 @@ public class Matrix {
 		    		if (t[i][j] > max) max = t[i][j];
 		    	}
 		    }
-		   return max*max; 
+		   return max * max; 
 	}
+	
 	//The direction of movement is limited to right and down.
 	public static int minWeightedPath(int[][] matrix) {
 		  if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return 0;
@@ -291,9 +292,39 @@ public class Matrix {
 		    for (int i = 1;i <= rows;i++) {
 		    	for (int j = 1;j <= cols;j++) {
 		    		//find if minimum of right and down direction
-		    		t[i][j] = Math.min(t[i-1][j] + matrix[i-1][j-1], t[i][j-1] + matrix[i-1][j-1]);
+		    		t[i][j] = Math.min(t[i - 1][j] + matrix[i - 1][j - 1], t[i][j - 1] + matrix[i - 1][j - 1]);
 		    	}
 		    }
 		    return t[rows][cols];
+	}
+	
+	/**
+	 * Prints all possible paths from the top left cell to the bottom right cell. 
+	 * @param board: A 2D board which contains an m x n matrix of chars
+	 * @return An ArrayList of Strings, where each String represents a path with 
+	 * characters appended in the order of movement. 
+	 */
+	public ArrayList<String> printPaths(char[][] board){
+		StringBuilder str = new StringBuilder();
+		ArrayList<String> output = new ArrayList<>();	
+	    search(0,0,board,str,output);
+	    return output;
+	}
+	//This is a help method.
+	private void search(int i, int j, char[][] board, StringBuilder str, ArrayList<String> output) {
+		int rows = board.length - 1;
+		int cols = board[0].length - 1;
+		if(i > rows || j > cols) return ; //Out of range
+		str.append(board[i][j]);          //Mark the node.
+		
+		if(i == rows && j == cols) {      //Reach the end of board
+			output.add(str.toString());
+			str.deleteCharAt(str.length() - 1); //Un-Mark the node
+			return ;
+		}
+		//limited direction to down and right
+		search(i + 1,j,board,str,output);
+		search(i,j + 1,board,str,output);
+		str.deleteCharAt(str.length() - 1);    //Un-Mark the node
 	}
 }
