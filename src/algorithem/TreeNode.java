@@ -640,6 +640,7 @@ public class TreeNode {
 	}
 	
 	private TreeNode restoreTree(LinkedList<String> nodes) {
+		if(nodes.isEmpty()) return null; //Improve, will not throw exception at the end of list
 		String nodeData = nodes.remove();
 		if(nodeData.equals("null")) return null; //Root is null
 		TreeNode root = new TreeNode(Integer.valueOf(nodeData));
