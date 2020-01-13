@@ -63,24 +63,9 @@ public class TreeNode {
 	
 	//The diameter of a BST = The "Number of nodes on the longest path between two leaf nodes".
 	public int diameter(TreeNode root) {
-	    int[] diameter = diameterAndHeight(root);
-	    return diameter[0];
-	}
-
-	private int[] diameterAndHeight(TreeNode root) {
-	    int[] heightDiameter = {0,0}; // The first index store the diameter, the second store the height.
-	    if (root != null) {
-	         int[] left = diameterAndHeight(root.left);
-	         int[] right = diameterAndHeight(root.right);
-	         int height = Math.max(left[1],right[1]) + 1;
-	         int leftDiameter = left[0];
-	         int rightDiameter = right[0];
-	         int rootDiameter = right[1] + left[1] + 1;
-	         int finalDiameter = Math.max(rootDiameter, Math.max(leftDiameter,rightDiameter));
-	         heightDiameter[0] = finalDiameter;
-	         heightDiameter[1] = height;
-	    }
-	    return heightDiameter;
+		if (root == null) return 0;
+	    int rootDiameter = findHeight(root.left) + findHeight(root.right) + 1;
+	    return Math.max(rootDiameter, Math.max(diameter(root.left), diameter(root.right)));
 	}
 	
 	public static boolean validateBSTItr(TreeNode root) {
@@ -122,10 +107,8 @@ public class TreeNode {
 
 	public int findHeight(TreeNode root) {
 		if (root == null) return 0;
-		int left = findHeight(root.left);
-		int right = findHeight(root.right);
-		return left > right ? left + 1:right + 1;
-}
+		return Math.max(findHeight(root.left),findHeight(root.right)) + 1;
+	}
 
 	//Time complexity is O(log(n)).
 	public TreeNode findMinBST(TreeNode root) { //findMin for BST
