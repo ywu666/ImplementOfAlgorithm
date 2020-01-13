@@ -427,7 +427,7 @@ public class TreeNode {
 		ArrayList<Integer> inorder = new ArrayList<>();
 		Stack<TreeNode> stack = new Stack<TreeNode>();
 		while (true) {
-			while (root != null) {
+			while (root != null) { //iterator left
 				stack.push(root);
 				root = root.left;
 			}
@@ -525,7 +525,7 @@ public class TreeNode {
 		return depth;
 	}
 
-	public int pathLengthFromRoot(TreeNode root, int val) {
+	public int pathLengthFromRoot(TreeNode root, int val) { //Time complexity = O(n).
 		if(root == null) return 0;
 		int out = 0;
 		if ((root.data == val) || (out = pathLengthFromRoot(root.left,val)) > 0 || (out = pathLengthFromRoot(root.right,val)) > 0) {

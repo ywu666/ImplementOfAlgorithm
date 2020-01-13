@@ -71,6 +71,7 @@ public class Matrix {
 		flipItHoriontalAxis(matrix);
 	}
 
+	//Time complexity O(n).
 	public static ArrayList<Integer> findSpiral(int[][] matrix) { // print all the nodes in the CW
 		ArrayList<Integer> spiralOrder = new ArrayList<Integer>();
 		if (matrix == null || matrix.length == 0) return spiralOrder;
@@ -91,6 +92,7 @@ public class Matrix {
 				}
 				break;
 			}			
+			// go through the matrix in CW
 			for (int i = 0;i < cols - 1;i++) {
 				spiralOrder.add(matrix[x][y++]);
 			}

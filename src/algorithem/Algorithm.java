@@ -197,16 +197,13 @@ public class Algorithm {
 		int max = arr.length; 
 		// Iterate though input array, for every element a[i],
 		// increment a[a[i]%k] by k
-		for (int i = 0; i< arr.length; i++)
-		{  
+		for (int i = 0; i< arr.length; i++) {  
 			arr[arr[i] % max] += max;
 		}
 		// Find index of the maximum repeating element
 		int maxr = arr[0], result = 0;
-		for (int i = 1; i < arr.length; i++)
-		{
-			if (arr[i] > maxr)
-			{
+		for (int i = 1;i < arr.length;i++) {
+			if (arr[i] > maxr) {
 				maxr = arr[i];
 				result = i;
 			}
@@ -237,7 +234,7 @@ public class Algorithm {
 			outBuffer[i] = input.get(height - 1).get(i);
 		}
 
-		for (int r = height-2;r >= 0; r--) {
+		for (int r = height - 2;r >= 0;r--) {
 			ArrayList<Integer> row = input.get(r);
 			for (int i = 0;i < row.size();i++) {
 				outBuffer[i] = row.get(i) + Math.min(outBuffer[i], outBuffer[i + 1]);
@@ -312,13 +309,13 @@ public class Algorithm {
 	public static boolean splitArray(int[] arr) {
         if (arr.length == 0) return false;
         int arr_sum = 0; // calculate the sun of array
-        for (int item: arr) 
+        for (int item:arr) 
             arr_sum += item;
         
         // If sum is an odd number, it is impossible to split the array of elements evenly. 
         if (arr_sum % 2 != 0)   return false;
         // If sum is an even number, check if the summation to half is possible. 
-        return groupSum(0,arr,arr_sum/2);
+        return groupSum(0,arr,arr_sum / 2);
     }
 
 	/**
@@ -401,8 +398,8 @@ public class Algorithm {
 	public static int maxProfit(int[] prices){
 	    int profit = 0;
 	    for(int i = 1; i < prices.length; i++){
-	        if((prices[i] - prices[i-1]) > 0){
-	            profit += (prices[i] - prices[i-1]);
+	        if((prices[i] - prices[i - 1]) > 0){
+	            profit += (prices[i] - prices[i - 1]);
 	        }
 	    }
 	    return profit;
