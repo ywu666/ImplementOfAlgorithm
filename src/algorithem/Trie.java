@@ -10,11 +10,12 @@ class Trie {
 	public Trie() {
 		this.root = new TrieNode();
 	}
+	
 	public void insertWord(String word) {
 		if (word == null || word.equals("")) return ;
 		TrieNode curr = root;
 		HashMap<Character,TrieNode> childrens = curr.children;
-		for (int i = 0; i < word.length(); i++) {
+		for (int i = 0;i < word.length();i++) {
 			char ch = word.charAt(i);
 
 			if (childrens.containsKey(ch)) {
@@ -30,30 +31,19 @@ class Trie {
 	}
 
 	public Boolean searchWord(String word) {
-		TrieNode curr = root;
-		HashMap<Character,TrieNode> childrens = curr.children;
-
-		for (int i = 0; i < word.length(); i++) {
-			char ch = word.charAt(i);
-			if (i == word.length() - 1) curr.isLeaf = true;
-			if (childrens.containsKey(ch)) {
-				curr = childrens.get(ch);
-				childrens = curr.children;
-			} else {
-				return false;
-			}
-		}
-		return curr.isLeaf;
+		return search(word,true);
 	}
 
 	public Boolean searchPrefix(String word) {
-		//if (word == null || word.equals("")) return false;
+		return search(word,false);
+	}
+	
+	private boolean search(String word, boolean isWord) {
+		if (word == null || word.equals("")) return false;
 		TrieNode curr = root;
 		HashMap<Character,TrieNode> childrens = curr.children;
-
-		for (int i = 0; i < word.length(); i++) {
+		for (int i = 0;i < word.length();i++) {
 			char ch = word.charAt(i);
-			if (i == word.length() - 1) curr.isLeaf = true;
 			if (childrens.containsKey(ch)) {
 				curr = childrens.get(ch);
 				childrens = curr.children;
@@ -61,12 +51,16 @@ class Trie {
 				return false;
 			}
 		}     
-		return true;
+		if(isWord) { //search word or prefix
+			return curr.isLeaf;
+		}else {
+			return true;
+		}		
 	}
      
 	public ArrayList<String> boggleByot(char[][] board, ArrayList<String> dictionary){
 	    Trie prefixTree = new Trie();
-	    for(String word: dictionary){
+	    for(String word:dictionary){
 	        prefixTree.insertWord(word);
 	    }
 	    return boggleSearchWithDict(board,prefixTree);
@@ -77,8 +71,8 @@ class Trie {
 		int rows = board.length;
 		int cols = board[0].length;
 
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0;j < cols; j++) {
+		for (int i = 0;i < rows;i++) {
+			for (int j = 0;j < cols;j++) {
 				search(i,j,board,dictionary,"",output);
 			}
 		}
@@ -98,7 +92,7 @@ class Trie {
 		int rows = board.length;
 		int cols = board[0].length;
 
-		if (r > (rows - 1) || r < 0 || c> (cols-1) || c < 0 || !dictionary.searchPrefix(prefix) || board[r][c] == '@') {
+		if (r > (rows - 1) || r < 0 || c > (cols - 1) || c < 0 || !dictionary.searchPrefix(prefix) || board[r][c] == '@') {
 			return ;
 		}
 
@@ -110,10 +104,10 @@ class Trie {
 
 		board[r][c] = '@'; // Marked as visited
 
-		search(r+1,c,board,dictionary,s,output); // check up
-		search(r-1,c,board,dictionary,s,output); // check down
-		search(r,c+1,board,dictionary,s,output); // check left
-		search(r,c-1,board,dictionary,s,output); // check down
+		search(r + 1,c,board,dictionary,s,output); // check up
+		search(r - 1,c,board,dictionary,s,output); // check down
+		search(r,c + 1,board,dictionary,s,output); // check left
+		search(r,c - 1,board,dictionary,s,output); // check down
 
 		board[r][c] = ch; // unmark the board node
 	}
