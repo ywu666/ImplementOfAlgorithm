@@ -230,7 +230,7 @@ public class StringAlgorithm {
 		int maxSubstrStartIndex = 0;
 
 		// Mark all length 1 substrings as palindrome.
-		for(int i = 0; i < len; i++){
+		for(int i = 0;i < len;i++){
 			memo[i][i] = true;
 		}
 

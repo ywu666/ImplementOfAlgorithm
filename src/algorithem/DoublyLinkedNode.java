@@ -7,8 +7,8 @@ class DoublyLinkedNode {
 	public DoublyLinkedNode(int data) { this.data = data; }
 
 	public DoublyLinkedNode deleteAtPos(DoublyLinkedNode head, int pos) {
-		if (head == null )return null;
-		if (head.next == null)  return  (pos == 1) ? null:head;
+		if (head == null) return null;
+		if (head.next == null) return (pos == 1) ? null:head;
 		DoublyLinkedNode curr = head;
 		DoublyLinkedNode prev = curr;
 		int count = 1;

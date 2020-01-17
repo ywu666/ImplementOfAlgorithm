@@ -127,7 +127,7 @@ public class Algorithm {
 	 */
 	public static int bitSwapRequired(int a, int b) {
 		int count = 0;
-		for (int c = a^b;c != 0;c = c&(c-1)) { // ^ = XOR gate 
+		for (int c = a^b;c != 0;c = c & (c - 1)) { // ^ = XOR gate 
 			count++;
 		}
 		return count;
