@@ -182,7 +182,7 @@ public class TreeNode {
 	//and the paths from N->n1 and N->n2 are the shortest possible
 	public TreeNode findLCA(TreeNode root, TreeNode a, TreeNode b) {
 		if (root == null || a == null || b == null) return null;
-		if (root == a || root == b) return root;
+		if (root.data == a.data || root.data == b.data) return root;
 
 		TreeNode left = findLCA(root.left,a,b);
 		TreeNode right = findLCA(root.right,a,b);
@@ -331,7 +331,7 @@ public class TreeNode {
 	}
 	
 	public  ArrayList<Integer> rangeList = new ArrayList<Integer>();
-	public void printRangeBST(TreeNode root,int a,int b) {     //Time complexity = O(n)              
+	public void printRangeBST(TreeNode root, int a, int b) {     //Time complexity = O(n)              
 		if(root == null) return;
 		if(root.data >= a) { //Make sure the result is in ascending order
 			printRangeBST(root.left,a,b);
@@ -366,7 +366,7 @@ public class TreeNode {
 			root = s.pop();
 			preorderedList.add(root.data);
 			if (root.right != null) s.push(root.right);
-			if (root.left  != null) s.push(root.left);
+			if (root.left != null) s.push(root.left);
 		}
 		return preorderedList;
 	}
@@ -604,6 +604,7 @@ public class TreeNode {
 		if(str.length() > 0) str.deleteCharAt(0); //Delete the first ","
 		return str.toString();	
 	}
+	
 	
 	private StringBuilder serialize(TreeNode root, StringBuilder str) {
 		if(root == null) {
