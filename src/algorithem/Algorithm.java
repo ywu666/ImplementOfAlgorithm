@@ -50,7 +50,7 @@ public class Algorithm {
 		String binary = "";
 		while (val > 0) {
 			binary = val % 2 + binary;	
-			val = val/2;	        
+			val = val / 2;	        
 		}	        
 		return binary;
 	}
@@ -61,7 +61,7 @@ public class Algorithm {
 			return Integer.toString(val);
 		// Recursive case: binary rep = binary of the header + last digit (odd/even)
 		else {
-			return computeBinary(val/2) + computeBinary(val%2);
+			return computeBinary(val / 2) + computeBinary(val % 2);
 		}
 	}
 	
@@ -70,7 +70,7 @@ public class Algorithm {
 	    int actualPos = k % arr.length;
 	    reverse(arr,0,arr.length - 1);
 	    reverse(arr,0,arr.length - actualPos - 1);
-	    reverse(arr,arr.length - actualPos, arr.length - 1);
+	    reverse(arr,arr.length - actualPos,arr.length - 1);
 	    return arr;
 	}
 	
@@ -78,7 +78,7 @@ public class Algorithm {
 		int reverse = 0;
 		while (x != 0) {
 			reverse = reverse * 10 + x % 10;
-			x = x/10;
+			x = x / 10;
 		}
 		return reverse;
 	}
@@ -90,15 +90,15 @@ public class Algorithm {
 	}
 
 	public static boolean isPowOfTwo(int num) { //Time/Space complexity = O(1)
-		return (num & (num-1)) == 0;		
+		return (num & (num - 1)) == 0;		
 	}
 
 	public static double pow(double x, int n) { //Time Complexity = O(log(n))
 		if (n == 0) return 1.0;
 		if(n == 1) return x;
-		if (n < 0) return pow(1/x, -n);
-		if (n % 2 == 1) return x * pow(x, n-1); //Or x * pow(x*x, n/2);
-		return pow(x * x, n/2); //Cann't be replace, will influence the complexity.
+		if (n < 0) return pow(1/x,-n);
+		if (n % 2 == 1) return x * pow(x,n - 1); //Or x * pow(x*x, n/2);
+		return pow(x * x,n/2); //Cann't be replace, will influence the complexity.
 	}
 
 	public static int fib(int n) { //recursion Time complexity = O(2^n), Space complexity = O(1).
@@ -152,7 +152,7 @@ public class Algorithm {
 	
 	public static int findMissingNumber(int[] arr) { // where are is 1 to 10
 		int sum = 0;
-		for (int i = 0; i < arr.length; i++) {
+		for (int i = 0;i < arr.length;i++) {
 			sum += arr[i];
 		}
 		return 55 - sum;
@@ -163,7 +163,7 @@ public class Algorithm {
 		TreeSet<Integer> set = new TreeSet<>();
 		Arrays.sort(numbers);
 
-		for (int i = 1; i < numbers.length; i++) {
+		for (int i = 1;i < numbers.length;i++) {
 			if (numbers[i] == numbers[i - 1]) {
 				set.add(numbers[i]);
 			}
@@ -172,12 +172,12 @@ public class Algorithm {
 	}
 
 	public static int singleNumber(int[] arr) { // return the first number that appears once
-		Hashtable<Integer, Integer> table = new Hashtable<Integer, Integer>();
+		Hashtable<Integer,Integer> table = new Hashtable<Integer,Integer>();
 		for (int i = 0;i < arr.length;i++) {
 			if(table.containsKey(arr[i])) {
-				table.put(arr[i], table.get(arr[i])+1);
+				table.put(arr[i],table.get(arr[i]) + 1);
 			}else {
-				table.put(arr[i], 1);
+				table.put(arr[i],1);
 			}
 		}
 
@@ -197,7 +197,7 @@ public class Algorithm {
 		int max = arr.length; 
 		// Iterate though input array, for every element a[i],
 		// increment a[a[i]%k] by k
-		for (int i = 0; i< arr.length; i++) {  
+		for (int i = 0;i< arr.length;i++) {  
 			arr[arr[i] % max] += max;
 		}
 		// Find index of the maximum repeating element
@@ -219,8 +219,8 @@ public class Algorithm {
 		int maxGain = 0;
 		int min = arr[0];
 		for (int i = 1;i < arr.length;i++) {
-			min = Math.min(min, arr[i]);
-			maxGain = Math.max(maxGain, arr[i] - min);
+			min = Math.min(min,arr[i]);
+			maxGain = Math.max(maxGain,arr[i] - min);
 		}	
 		return maxGain;
 	}
@@ -230,7 +230,7 @@ public class Algorithm {
 		int outsize = input.get(height - 1).size();
 		int[] outBuffer = new int[outsize];
 
-		for (int i = 0; i < outsize;i++) { //initialize the out buffer 
+		for (int i = 0;i < outsize;i++) { //initialize the out buffer 
 			outBuffer[i] = input.get(height - 1).get(i);
 		}
 
@@ -276,7 +276,7 @@ public class Algorithm {
 			return (target == 0);
 		}else {
 			//case1: The target including the 1st element. check the remaining
-			if (groupSum(start + 1, arr, target - arr[start])) return true;
+			if (groupSum(start + 1,arr,target - arr[start])) return true;
 			//case2: Does not include the first element,check the remaining
 			if (groupSum(start + 1,arr,target)) return true;
 		}
@@ -358,7 +358,7 @@ public class Algorithm {
 		int low = 0;
 		int high = arr.length;
 		while (low < high) {
-			int mid = low + (high - low)/2;
+			int mid = low + (high - low) / 2;
 			if (arr[mid] > n) high = mid - 1;
 			if (arr[mid] < n) low = mid + 1;
 			return true; // if arr[mid] == n;
@@ -388,7 +388,7 @@ public class Algorithm {
 		}
 		int res = 0; // Calculate the number of combinations way
 		for (int i = 0;i * coins[curr_coin_index] <= amount;i++) {
-			res += makeChange(coins, amount - i * coins[curr_coin_index],next_coin_index);
+			res += makeChange(coins,amount - i * coins[curr_coin_index],next_coin_index);
 		}
 		return res;
 	}
@@ -397,7 +397,7 @@ public class Algorithm {
 	//Only added the positive difference
 	public static int maxProfit(int[] prices){
 	    int profit = 0;
-	    for(int i = 1; i < prices.length; i++){
+	    for(int i = 1;i < prices.length;i++){
 	        if((prices[i] - prices[i - 1]) > 0){
 	            profit += (prices[i] - prices[i - 1]);
 	        }
@@ -412,11 +412,11 @@ public class Algorithm {
 		prev.add(1);
 		result.add(prev);
 
-		for (int i = 2; i <= numRows;i++) {
+		for (int i = 2;i <= numRows;i++) {
 			ArrayList<Integer> curr = new ArrayList<>();
 
 			curr.add(1); // add First 
-			for (int j = 0; j < prev.size() - 1;j++) { //add Middle which is the combination of prev level
+			for (int j = 0;j < prev.size() - 1;j++) { //add Middle which is the combination of prev level
 				curr.add(prev.get(j) + prev.get(j + 1)); 
 			}
 			curr.add(1); //add last
@@ -442,7 +442,7 @@ public class Algorithm {
 			max_sum = arr[0];
 			max_end_index = 0;
 		}
-		for (int i = 1; i< arr.length;i++) {
+		for (int i = 1;i< arr.length;i++) {
 			int sum = curr_sum + arr[i];
 		    // If the maximum sum plus the current item is less than the item
             // Then we should set maximum sum to be the current item
@@ -495,7 +495,7 @@ public class Algorithm {
 	public static int[] selectionSort(int[] arr) {//improved performance over bubble sort
 		for (int i = 0; i < arr.length - 1; i++) {
 			int min_index = i;
-			for (int j = i+1;j < arr.length;j++) {
+			for (int j = i + 1;j < arr.length;j++) {
 				if (arr[j] < arr[min_index]) {
 					min_index = j;
 				}

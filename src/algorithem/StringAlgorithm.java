@@ -76,7 +76,7 @@ public class StringAlgorithm {
 			buffer[input2.charAt(i) - 'a']--;
 		}
 
-		for (int i = 0; i < buffer.length; i++) {
+		for (int i = 0;i < buffer.length;i++) {
 			if (buffer[i] != 0) {
 				return false;
 			}
@@ -87,7 +87,7 @@ public class StringAlgorithm {
 	public static boolean isPalindrom(String str) {
 		if (str == null || str.equals("")) return true;
 
-		for (int i = 0; i < str.length() / 2; i++) {
+		for (int i = 0;i < str.length() / 2;i++) {
 			if (str.charAt(i) != str.charAt(str.length() - 1 - i)) {
 				return false;
 			}
@@ -139,7 +139,7 @@ public class StringAlgorithm {
 		char first = str.charAt(0);
 		ArrayList<String> list = getPermutations(str.substring(1));
 
-		for (String word: list) {
+		for (String word:list) {
 			for (int i = 0;i <= word.length();i++) {
 				permutations.add(insert(word,first,i));
 			}
@@ -156,8 +156,8 @@ public class StringAlgorithm {
 	 */
 	public static boolean isIsomorphic(String str1, String str2) {
 		if (str1.length() != str2.length()) return false;
-		Hashtable<Character, Integer> table1 = new Hashtable<Character,Integer>();
-		Hashtable<Character, Integer> table2 = new Hashtable<Character,Integer>();
+		Hashtable<Character,Integer> table1 = new Hashtable<Character,Integer>();
+		Hashtable<Character,Integer> table2 = new Hashtable<Character,Integer>();
 		for (int  i = 0;i < str1.length();i++) {
 			Character ch1 = str1.charAt(i);
 			Integer val1 = table1.containsKey(ch1) ? table1.get(ch1) + 1:1; 
@@ -277,16 +277,16 @@ public class StringAlgorithm {
 			permutations.add(str);
 			return permutations;
 		}
-
+		
 		char first = str.charAt(0);
 		permutations.add(first + ""); //convert to string type
 		ArrayList<String> list = getCombPerms(str.substring(1));
-		for (String word: list) {
+		for (String word:list) {
 			for (int i = 0;i <= word.length();i++) {
 				permutations.add(insert(word,first,i));
 			}
 		}
-		permutations.addAll(list); // add all the combination 
+		permutations.addAll(list); //add all the combination 
 		return permutations;
 	}
 	
@@ -325,7 +325,7 @@ public class StringAlgorithm {
 			int i = 1;
 			while (i <= 3) {
 				if (remaining.length() < i) break;
-				String IpToAppend= remaining.substring(0,i);
+				String IpToAppend = remaining.substring(0,i);
 				String successor = remaining.substring(i);
 				if (IpToAppend.length() > 0) {
 					int num = Integer.parseInt(IpToAppend);
@@ -340,7 +340,7 @@ public class StringAlgorithm {
 	public static int longestNRSubstringLen(String input) {
 		if (input == null || input.equals("")) return 0;
 		Hashtable<Character,Integer> charTable = new Hashtable<>();
-		int i = 0, prev =0;
+		int i = 0, prev = 0;
 
 		for (char ch:input.toCharArray()) {
 			if (!charTable.containsKey(ch)) {
@@ -380,7 +380,7 @@ public class StringAlgorithm {
 		ArrayList<String> out = new ArrayList<>();
 		Deque<PhoneNode> stack = new LinkedList<>();
 		int len = digits.length();
-		for (Character ch:mapping.get(digits.charAt(0)).toCharArray()) { // push the first node on the stack
+		for (Character ch:mapping.get(digits.charAt(0)).toCharArray()) { //Initialize the first node into stack.
 			stack.addFirst(new PhoneNode(String.valueOf(ch),1));
 		}
 
@@ -425,7 +425,7 @@ public class StringAlgorithm {
 					int replaceDist = memo[i][j];
 					int insertDist = memo[i][j - 1] + 1;
 					int delateDist = memo[i - 1][j] + 1;
-					int minDist = Math.min(replaceDist, Math.min(insertDist, delateDist));
+					int minDist = Math.min(replaceDist, Math.min(insertDist,delateDist));
 					memo[i][j] = minDist;
 				}
 			}
