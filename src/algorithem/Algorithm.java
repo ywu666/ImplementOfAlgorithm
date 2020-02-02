@@ -361,7 +361,7 @@ public class Algorithm {
 			int mid = low + (high - low) / 2;
 			if (arr[mid] > n) high = mid - 1;
 			if (arr[mid] < n) low = mid + 1;
-			return true; // if arr[mid] == n;
+			if (arr[mid] == n) return true; 
 		}
 		return false;
 	}
