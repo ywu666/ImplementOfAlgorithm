@@ -152,8 +152,8 @@ public class Algorithm {
 	
 	public static int findMissingNumber(int[] arr) { // where are is 1 to 10
 		int sum = 0;
-		for (int i = 0;i < arr.length;i++) {
-			sum += arr[i];
+		for (int i:arr) {
+			sum += i;
 		}
 		return 55 - sum;
 	}
@@ -173,20 +173,20 @@ public class Algorithm {
 
 	public static int singleNumber(int[] arr) { // return the first number that appears once
 		Hashtable<Integer,Integer> table = new Hashtable<Integer,Integer>();
-		for (int i = 0;i < arr.length;i++) {
-			if(table.containsKey(arr[i])) {
-				table.put(arr[i],table.get(arr[i]) + 1);
+		for (int i:arr) {
+			if(table.containsKey(i)) {
+				table.put(i,table.get(i) + 1);
 			}else {
-				table.put(arr[i],1);
+				table.put(i,1);
 			}
 		}
 
-		for (int i = 0;i < arr.length;i++) {
-			if (table.get(arr[i]) == 1) {
-				return arr[i];
+		for (int i:arr) {
+			if (table.get(i) == 1) {
+				return i;
 			}
 		}
-		return 0;
+		return 0; // no single number
 	}
 	
 	/*This method return the integer with the maximum number of repetitions.
