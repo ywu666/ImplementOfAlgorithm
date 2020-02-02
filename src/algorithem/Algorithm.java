@@ -521,4 +521,44 @@ public class Algorithm {
 		}
 		return arr;
 	}
+	
+	/**
+	 * A Binary Heap is a Complete Binary Tree where items are stored in a special order 
+	 * such that value in a parent node is greater(or smaller) than the values in its two children nodes.
+	 * This heapSort is a max heap.
+	 * @param arr
+	 */
+	public static void heapSort(int[] arr) {
+		int length = arr.length;
+		for(int i = length / 2 - 1;i >= 0;i--) { // build the heap
+			heapify(arr,length,i);
+		}
+		
+		//One by one extract and element from heap
+		for(int i = length - 1;i >= 0;i--) { 
+			int temp = arr[0]; // swap the max to the start of array
+			arr[0] = arr[i];
+			arr[i] = temp;
+			
+			//call max heapify on the reduced heap
+			heapify(arr,i,0);
+		}
+	}
+	
+	private static void heapify(int[] arr, int n, int i) {
+		int largest = i;       //Initialize the largest as root
+		int left = 2 * i;      //The left node
+		int right = 2 * i + 1; //The right node
+		
+		if(left < n && arr[left] > arr[largest]) largest = left;
+		if(right < n && arr[right] > arr[largest]) largest = right;
+		if(largest != i) { // if the largest is not the root
+			int swap = arr[i];
+			arr[i] = arr[largest];
+			arr[largest] = swap;
+			
+			//recursively heapify the sub-tree
+			heapify(arr,n,largest); 
+		}	
+	}
 }
