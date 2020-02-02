@@ -355,6 +355,7 @@ public class Algorithm {
 	
 	//search algorithm
 	public static Boolean binarySearch(int[] arr, int n){ // Time complexity = O(log(n)).
+		Arrays.sort(arr);
 		int low = 0;
 		int high = arr.length;
 		while (low < high) {
