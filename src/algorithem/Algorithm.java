@@ -492,7 +492,53 @@ public class Algorithm {
 		return arrResult;
 	}
 
-	//sort Algorithm
+	//sort Algorithm	
+	public static void merge(int[] arr, int left, int right, int mid) {
+		int leftLength = mid - left + 1;
+		int rightLength = right - mid;
+		
+		//Create tempt arrays, copy data to tempt arrays
+		int[] arrLeft = new int[leftLength]; 
+		int[] arrRight = new int[rightLength];
+		for(int i = 0;i < leftLength;i++) {
+			arrLeft[i] = arr[left + i];
+		}
+		for(int i = 0;i < rightLength;i++) {
+			arrRight[i] = arr[mid + 1 + i];
+		}
+		
+		//Merge the tempt arrays to array
+		int l = 0, r = 0, merge = left;
+		while(l < leftLength && r < rightLength) {
+			if(arrLeft[l] <= arrRight[r]) {
+			    arr[merge++] = arrLeft[l++];
+			}else{
+				arr[merge++] = arrRight[r++];
+			}
+		}
+		
+		while(l < leftLength) {
+			arr[merge++] = arrLeft[l++];
+		}
+		while(r < rightLength) {
+			arr[merge++] = arrRight[r++];
+		}
+	}
+
+	private static void mergeSort(int[] arr, int left, int right) {	
+		if(left < right) {
+			int mid = (left + right) / 2;
+			mergeSort(arr,left,mid);
+			mergeSort(arr,mid + 1,right);	
+			merge(arr,left,right,mid);
+		}
+	}
+	
+	public static int[] mergeSort(int[] arr) {
+		mergeSort(arr,0,arr.length - 1);
+		return arr;
+	}
+	
 	public static int[] selectionSort(int[] arr) {//improved performance over bubble sort
 		for (int i = 0; i < arr.length - 1; i++) {
 			int min_index = i;
