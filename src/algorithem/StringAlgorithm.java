@@ -65,6 +65,12 @@ public class StringAlgorithm {
 		return text;
 	}
 	
+	/**
+	 * The order of character is not important, but the number for each character must be same.
+	 * @param String
+	 * @param String
+	 * @return true for anagram
+	 */
 	public static boolean isAnagram(String input1, String input2) { // the inputs are also lower case
 		if (input1 == null && input2 == null) return false;
 		if (input1.equals(input2)) return true;
@@ -339,15 +345,15 @@ public class StringAlgorithm {
 
 	public static int longestNRSubstringLen(String input) {
 		if (input == null || input.equals("")) return 0;
-		Hashtable<Character,Integer> charTable = new Hashtable<>();
-		int i = 0, prev = 0;
-
-		for (char ch:input.toCharArray()) {
-			if (!charTable.containsKey(ch)) {
-				charTable.put(ch,i++);
+		HashMap<Character,Integer> charTable = new HashMap<>();
+		int prev = 0;
+		char[] arr = input.toCharArray();
+		for (int i = 0;i < arr.length;i++) {
+			if (!charTable.containsKey(arr[i])) {
+				charTable.put(arr[i],i);
 			}else {
 				prev = Math.max(prev,charTable.size());
-				//i = charTable.get(ch);
+				i = charTable.get(arr[i]);
 				charTable.clear();
 			}
 		}
