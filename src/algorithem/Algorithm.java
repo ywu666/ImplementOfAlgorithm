@@ -75,12 +75,14 @@ public class Algorithm {
 	}
 	
 	public static int reverse(int x) {
-		int reverse = 0;
+		long reverse = 0;
+		int max = 0x7fffffff, min = 0x80000000;
 		while (x != 0) {
 			reverse = reverse * 10 + x % 10;
 			x = x / 10;
 		}
-		return reverse;
+		
+		return (reverse > max || reverse < min) ? 0:(int)reverse;
 	}
 
 	public static Boolean isPalindrome(int x) { 
