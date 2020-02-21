@@ -93,13 +93,29 @@ public class Algorithm {
 		return (num & (num - 1)) == 0;		
 	}
 
-	public static double pow(double x, int n) { //Time Complexity = O(log(n))
-		if (n == 0) return 1.0;
-		if(n == 1) return x;
-		if (n < 0) return pow(1/x,-n);
-		if (n % 2 == 1) return x * pow(x,n - 1); //Or x * pow(x*x, n/2);
-		return pow(x * x,n/2); //Cann't be replace, will influence the complexity.
-	}
+	private static double fastPow(double x, long n) {
+        if (n == 0) {
+            return 1.0;
+        }
+        double half = fastPow(x, n / 2);
+        if (n % 2 == 0) {
+            return half * half;
+        } else {
+            return half * half * x;
+        }
+    }
+	
+    public static double pow(double x, int n) { //Time complexity =  O(log(n)). 
+    	//The previous algorithm will have bug forAlgorithm.pow(2.000,-2147483648). 
+    	//the result is infinity rather than 0.
+        long N = n;
+        if (N < 0) {
+            x = 1 / x;
+            N = -N;
+        }
+        
+        return fastPow(x, N);
+    }
 
 	public static int fib(int n) { //recursion Time complexity = O(2^n), Space complexity = O(1).
 		if ( n == 0 ) return 0;
