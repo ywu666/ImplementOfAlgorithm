@@ -173,6 +173,47 @@ class ListNode {
 		return head;
 	}
 
+	/**
+	 * This method will reverse the list nodes between m and n, where 1<=m<n<=list.length
+	 * @return The head of the new list.
+	 */
+	public ListNode reverseBetweenItr(ListNode head, int m, int n) {
+		if(head == null) return null;
+		ListNode curr = head;
+		ListNode prev = curr;
+		//Find the start node to be reverse in the list
+		while(m > 1) {
+			prev = curr;
+			curr = curr.next;
+			m--;
+			n--;
+		}
+		
+	    //Two pointers that will fix the final connections
+		//tail = the m node which is the tail of the reverse list, con is the node before m
+		//which is a new head of reverse list
+		ListNode con = prev, tail = curr;
+		
+		//Iteratively reverse the listNodes until n = 0
+		ListNode next = null;
+		while(n > 0) { 
+			next = curr.next;
+			curr.next = prev;
+			prev = curr;
+			curr = next; 
+			n--;
+		}
+		
+		if(con != null) {
+			con.next = prev;
+		}else {
+			head = prev;
+		}
+		
+		tail.next = curr;
+		return head;
+	}
+	
 	// this method allowed to use the exact memory
 	public ListNode findNthNodeFromEnd(ListNode head, int n) {
 		if (head == null) return null;
