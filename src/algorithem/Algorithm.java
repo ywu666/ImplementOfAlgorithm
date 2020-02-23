@@ -415,15 +415,17 @@ public class Algorithm {
 	//The difference of all ascending pairs in the sequence.
 	//Only added the positive difference
 	public static int maxProfit(int[] prices){
-	    int profit = 0;
-	    for(int i = 1;i < prices.length;i++){
-	        if((prices[i] - prices[i - 1]) > 0){
-	            profit += (prices[i] - prices[i - 1]);
-	        }
-	    }
-	    return profit;
+		int minprice = Integer.MAX_VALUE;
+		int maxprofit = 0;
+		for (int i = 0; i < prices.length; i++) {
+			if (prices[i] < minprice)
+				minprice = prices[i];
+			else if (prices[i] - minprice > maxprofit)
+				maxprofit = prices[i] - minprice;
+		}
+		return maxprofit;
 	}
-	
+
 	public static ArrayList<ArrayList<Integer>> generatePascalTriangle(int numRows) {
 		ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
 		if (numRows == 0) return result;
@@ -448,7 +450,7 @@ public class Algorithm {
 	
 	/**
 	 * Find the contiguous subsequence that has the maximum sum among all
-	 * subsequences in the array (click the red text to learn more about subsequences). 
+	 * subsequences in the array 
 	 * @param arr = An array of Integer
 	 * @return  res[0] = max sum, res[1] = start index of max subsequence, res[2] = end index of max subsequence.
 	 */
