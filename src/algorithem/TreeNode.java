@@ -162,7 +162,7 @@ public class TreeNode {
 			}
 		}
 		return null;
-	}
+	} 
 
 	public TreeNode findDeepest(TreeNode root) { //Time complexity = O(n)
 		TreeNode deepest = null;
@@ -429,6 +429,7 @@ public class TreeNode {
 		Queue<TreeNode> nextLevel = new LinkedList<>();
 		currLevel.add(root);
 		ArrayList<Integer> level = new ArrayList<Integer>();
+		
 		while(!currLevel.isEmpty()){
 			TreeNode node = currLevel.poll();
 			level.add(node.data);
@@ -484,6 +485,25 @@ public class TreeNode {
 		}
 		return list;
 	}
+	
+	public int maxTreeDepth(TreeNode root) {
+        if(root == null) return 0;
+        int depth = 0;
+        Queue<TreeNode> currlvl = new LinkedList<>();
+        Queue<TreeNode> nextlvl = new LinkedList<>();
+        currlvl.add(root);
+        while(!currlvl.isEmpty()){
+            TreeNode curr = currlvl.poll();
+            if(curr.left != null) nextlvl.add(curr.left);
+            if(curr.right != null) nextlvl.add(curr.right);
+            if(currlvl.isEmpty()){
+                depth++;
+                currlvl = nextlvl;
+                nextlvl = new LinkedList<>();
+            }
+        }
+        return depth;
+    }
 	
 	public static int minTreeDepth(TreeNode root) { //Use level order. 
 		if(root == null) return 0;    
