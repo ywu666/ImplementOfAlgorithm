@@ -426,6 +426,35 @@ public class Algorithm {
 		return maxprofit;
 	}
 
+	enum Index{
+		BAD,GOOD,UNKNOWN;
+	}
+	
+	/**
+	 * Give you an positive int array, you are on the head of the array.
+	 * Every element in the array replaces the length you can jump. 
+	 * @param nums
+	 * @return True if you can arrive the end of list.
+	 */
+	public boolean canJump(int[] nums) {
+		Index[] memo = new Index[nums.length];
+		for (int i = 0; i < memo.length; i++) {
+			memo[i] = Index.UNKNOWN;
+		}
+		memo[memo.length - 1] = Index.GOOD;
+
+		for (int i = nums.length - 2; i >= 0; i--) {
+			int furthestJump = Math.min(i + nums[i], nums.length - 1);
+			for (int j = i + 1; j <= furthestJump; j++) {
+				if (memo[j] == Index.GOOD) {
+					memo[i] = Index.GOOD;
+					break;
+				}
+			}
+		}
+		return memo[0] == Index.GOOD;
+	}
+	
 	public static ArrayList<ArrayList<Integer>> generatePascalTriangle(int numRows) {
 		ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
 		if (numRows == 0) return result;
