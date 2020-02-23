@@ -168,6 +168,60 @@ public class Algorithm {
 	    }
 	}
 	
+	/**
+	 * Given array [1,2,3,…,n]，then it has n! permutations
+	 * Sort permutations and return the Kth permutation.
+	 */
+	public String getPermutation(int n, int k) {
+		 /**
+	        for n=4, k=15 find the permutation when k = 15 by using math
+	        
+	        1 + getPermutation(2,3,4) (3!)         
+	        2 + getPermutation(1,3,4) (3!)         3, 1 + getPermutation(2,4)(2!)
+	        3 + getPermutation(1,2,4) (3!)-------> 3, 2 + getPermutation(1,4)(2!)-------> 3, 2, 1 + getPermutation(4)(1!)-------> 3214
+	        4 + getPermutation(1,2,3) (3!)         3, 4 + getPermutation(1,2)(2!)         3, 2, 4 + getPermutation(1)(1!)
+	        
+	        Assure the 1st bit:
+	            k = 14(from 0 t count )
+	            index = k / (n-1)! = 2, the 1st bit of the 15th permutation is 3 
+	            //renew k
+	            k = k - index*(n-1)! = 2
+	       Assure the 2nd bit:
+	            k = 2
+	            index = k / (n-2)! = 1, the 2nd bit of the 15th permutation is 2
+	            //renew k
+	            k = k - index*(n-2)! = 0
+	        Assure the 3rd bit:
+	            k = 0
+	            index = k / (n-3)! = 0, the 3rd bit of the 15th permutation is 1
+	            //renew k
+	            k = k - index*(n-3)! = 0
+	        Assure the 4th bit:
+	            k = 0
+	            index = k / (n-4)! = 0, the 4th bit of the 15th permutation is 4
+	        when n=4, the 15th permutation is 3214 
+	        **/
+
+		 StringBuilder sb = new StringBuilder();
+		 List<Integer> candidates = new ArrayList<>();
+		 int[] factorials = new int[n + 1];
+		 factorials[0] = 1;
+		 int fact = 1;
+		 for(int i = 1;i <= n;++i) {
+			 candidates.add(i);
+			 fact *= i;
+			 factorials[i] = fact;
+		 }
+		 k -= 1;
+		 for(int i = n-1;i >= 0;--i) {
+
+			 int index = k / factorials[i];
+			 sb.append(candidates.remove(index));
+			 k -= index * factorials[i];
+		 }
+		 return sb.toString();
+    }
+	 
 	public static int findMissingNumber(int[] arr) { // where are is 1 to 10
 		int sum = 0;
 		for (int i:arr) {
